@@ -14,9 +14,9 @@ import { RootObject, Match } from "@/types"
 import Matches from "@/components/Matches"
 import { ThemedText } from "@/components/ThemedText"
 import { Colors } from "@/constants/Colors"
-import { API_KEY } from "@env"
+// import { API_KEY } from "@env"
 
-// const API_KEY = ""
+const API_KEY = "21eefc54c328459fb9bda4b65ca99bae"
 
 const colors = {
   WHITE: "#fff",
@@ -72,14 +72,15 @@ export default function HomeScreen() {
         backgroundColor: Colors[colorScheme ?? "light"].background,
       }}
     >
-      <ThemedText type="title" style={{ margin: 20 }}>
-        Promiedos
+      <ThemedText style={styles.title}>
+        PROMIEDOS
       </ThemedText>
       <ScrollView
         contentContainerStyle={{
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: Colors[colorScheme ?? "light"].background
         }}
         style={styles.container}
       >
@@ -90,6 +91,12 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 35,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 20
+  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -114,7 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     backgroundColor: "red",
-    borderColor: "black",
+    borderColor: "#333",
     width: "100%",
     textAlign: "center",
     margin: 5,

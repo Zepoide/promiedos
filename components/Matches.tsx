@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TextInput,
+  Dimensions,
 } from "react-native"
 import { ThemedText } from "@/components/ThemedText"
 import { ThemedView } from "@/components/ThemedView"
@@ -25,6 +26,9 @@ const colors = {
   SHARK: "#242526",
   SHUTTLE_GREY: "#565E67",
 }
+
+const { width } = Dimensions.get('window');
+
 export default function Matches({ matches }: { matches: Match[] }) {
   return (
     <ScrollView
@@ -45,8 +49,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
             >
               <View style={styles.teamName}>
                 <ThemedText
-                  style={{ textAlign: "right" }}
-                  type="defaultSemiBold"
+                  style={styles.textTeamName}
                 >
                   {homeTeam.shortName}
                 </ThemedText>
@@ -58,7 +61,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
                 />
               </View>
               <View style={{ width: "auto" }}>
-                <ThemedText type="defaultSemiBold">
+                <ThemedText style={styles.score}>
                   {score.fullTime.home} - {score.fullTime.away}
                 </ThemedText>
               </View>
@@ -70,8 +73,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
               </View>
               <View style={styles.teamName}>
                 <ThemedText
-                  style={{ textAlign: "left" }}
-                  type="defaultSemiBold"
+                style={styles.textTeamName}
                 >
                   {awayTeam.shortName}
                 </ThemedText>
@@ -91,23 +93,30 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly",
-    width: "100%",
+    alignItems: "center",
+    maxWidth: "100%",
     borderRadius: 5,
     textAlign: "center",
-    margin: 5,
-    padding: 5,
-    gap: 20,
+    marginVertical: 5,
+    padding: 10,
+    gap: 30,
   },
   teamName: {
-    width: "20%",
-    flex: 1,
+    width: "40%",
+    // flex: 1,
+  },
+  textTeamName: {
+    textAlign: "center",
+    paddingVertical: 10,
+    fontSize: width * 0.035,
+    fontWeight: "bold"
   },
   score: {
-    fontSize: 25,
-    textAlign: "auto",
+    fontSize: width * 0.045,
+    textAlign: "center",
   },
   teamLogo: {
-    width: 25,
-    height: 25,
+    width: 30,
+    height: 30,
   },
 })
