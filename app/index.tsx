@@ -16,7 +16,7 @@ import { ThemedText } from "@/components/ThemedText"
 import { Colors } from "@/constants/Colors"
 // import { API_KEY } from "@env"
 
-const API_KEY = "21eefc54c328459fb9bda4b65ca99bae"
+const API_KEY = String
 
 const colors = {
   WHITE: "#fff",
