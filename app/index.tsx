@@ -1,22 +1,12 @@
-import { StyleSheet, Platform, useColorScheme } from "react-native"
-import {
-  SafeAreaView,
-  View,
-  Text,
-  Image,
-  ScrollView,
-  TextInput,
-} from "react-native"
-
-import ParallaxScrollView from "@/components/ParallaxScrollView"
+import { StyleSheet, useColorScheme } from "react-native"
+import { SafeAreaView, ScrollView } from "react-native"
 import { useEffect, useState } from "react"
 import { RootObject, Match } from "@/types"
 import Matches from "@/components/Matches"
 import { ThemedText } from "@/components/ThemedText"
 import { Colors } from "@/constants/Colors"
-// import { API_KEY } from "@env"
 
-const API_KEY = String
+const API_KEY = process.env.EXPO_PUBLIC_API_KEY!
 
 const colors = {
   WHITE: "#fff",
@@ -36,7 +26,7 @@ export default function HomeScreen() {
 
   const fetchMatches = async () => {
     const url =
-      "https://api.football-data.org/v4/competitions/2152/matches?season=2024&stage=LAST_16"
+      "https://api.football-data.org/v4/competitions/2152/matches?season=2024&stage=QUARTER_FINALS"
 
     try {
       const response = await fetch(url, {
@@ -72,15 +62,13 @@ export default function HomeScreen() {
         backgroundColor: Colors[colorScheme ?? "light"].background,
       }}
     >
-      <ThemedText style={styles.title}>
-        PROMIEDOS
-      </ThemedText>
+      <ThemedText style={styles.title}>PROMIEDOS</ThemedText>
       <ScrollView
         contentContainerStyle={{
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: Colors[colorScheme ?? "light"].background
+          backgroundColor: Colors[colorScheme ?? "light"].background,
         }}
         style={styles.container}
       >
@@ -95,7 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: "bold",
     textAlign: "center",
-    padding: 20
+    padding: 20,
   },
   titleContainer: {
     flexDirection: "row",

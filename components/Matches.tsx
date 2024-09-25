@@ -27,7 +27,7 @@ const colors = {
   SHUTTLE_GREY: "#565E67",
 }
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window")
 
 export default function Matches({ matches }: { matches: Match[] }) {
   return (
@@ -48,9 +48,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
               darkColor={colors.SHARK}
             >
               <View style={styles.teamName}>
-                <ThemedText
-                  style={styles.textTeamName}
-                >
+                <ThemedText style={styles.textTeamName}>
                   {homeTeam.shortName}
                 </ThemedText>
               </View>
@@ -72,9 +70,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
                 />
               </View>
               <View style={styles.teamName}>
-                <ThemedText
-                style={styles.textTeamName}
-                >
+                <ThemedText style={styles.textTeamName}>
                   {awayTeam.shortName}
                 </ThemedText>
               </View>
@@ -109,7 +105,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingVertical: 10,
     fontSize: width * 0.035,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   score: {
     fontSize: width * 0.045,
