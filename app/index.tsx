@@ -26,7 +26,7 @@ export default function HomeScreen() {
 
   const fetchMatches = async () => {
     const url =
-      "https://api.football-data.org/v4/competitions/2152/matches?season=2024&stage=QUARTER_FINALS"
+      "https://api.football-data.org/v4/competitions/2152/matches?season=2024&stage=LAST_16"
 
     try {
       const response = await fetch(url, {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 35,
     fontWeight: "bold",
-    textAlign: "center",
+    textAlign: "left",
     padding: 20,
   },
   titleContainer: {
