@@ -1,11 +1,11 @@
-import { Tabs } from "expo-router"
-
-import { Colors } from "@/constants/Colors"
-import { useColorScheme } from "@/hooks/useColorScheme"
-import { TabBarIcon } from "@/components/navigation/TabBarIcon"
+import React from "react";
+import { Tabs } from "expo-router";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme()
+  const colorScheme = useColorScheme();
   return (
     <Tabs
       screenOptions={{
@@ -41,5 +41,5 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
-  )
+  );
 }

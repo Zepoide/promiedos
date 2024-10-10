@@ -1,32 +1,36 @@
-import { StyleSheet, useColorScheme } from "react-native"
-import { SafeAreaView, ScrollView } from "react-native"
-import { useEffect, useState } from "react"
-import { RootObject, Match } from "@/types"
-import Matches from "@/components/Matches"
-import { ThemedText } from "@/components/ThemedText"
-import { Colors } from "@/constants/Colors"
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  useColorScheme,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
+import { RootObject, Match } from "@/types";
+import Matches from "@/components/Matches";
+import { ThemedText } from "@/components/ThemedText";
+import { Colors } from "@/constants/Colors";
 
-const API_KEY = process.env.EXPO_PUBLIC_API_KEY!
+const API_KEY = process.env.EXPO_PUBLIC_API_KEY!;
 
-const colors = {
-  WHITE: "#fff",
-  BLACK: "#000",
-  ALTO: "#dfdfdf",
-  GREY: "#808080",
-  EBONY_CLAY: "#292d3e",
-  HEATHER: "#bfc7d5",
-  LYNCH: "#697098",
-  SHARK: "#242526",
-  SHUTTLE_GREY: "#565E67",
-}
+// const colors = {
+//   WHITE: "#fff",
+//   BLACK: "#000",
+//   ALTO: "#dfdfdf",
+//   GREY: "#808080",
+//   EBONY_CLAY: "#292d3e",
+//   HEATHER: "#bfc7d5",
+//   LYNCH: "#697098",
+//   SHARK: "#242526",
+//   SHUTTLE_GREY: "#565E67",
+// };
 
 export default function HomeScreen() {
-  const [matches, setMatches] = useState<Match[]>()
-  const colorScheme = useColorScheme()
+  const [matches, setMatches] = useState<Match[]>();
+  const colorScheme = useColorScheme();
 
   const fetchMatches = async () => {
     const url =
-      "https://api.football-data.org/v4/competitions/2152/matches?season=2024&stage=LAST_16"
+      "https://api.football-data.org/v4/competitions/2152/matches?season=2024&stage=LAST_16";
 
     try {
       const response = await fetch(url, {
@@ -35,22 +39,22 @@ export default function HomeScreen() {
           "Content-Type": "application/json",
           "X-Auth-Token": API_KEY,
         },
-      })
+      });
       if (!response.ok) {
-        throw Error(`HTTP error! status: ${response.status}`)
+        throw Error(`HTTP error! status: ${response.status}`);
       }
-      const data: RootObject = await response.json()
+      const data: RootObject = await response.json();
 
-      setMatches(data.matches)
+      setMatches(data.matches);
     } catch (error) {
-      console.error("Error fetching data:", error)
-      return undefined
+      console.error("Error fetching data:", error);
+      return undefined;
     }
-  }
+  };
 
   useEffect(() => {
-    fetchMatches()
-  }, [])
+    fetchMatches();
+  }, []);
 
   return (
     <SafeAreaView
@@ -75,7 +79,7 @@ export default function HomeScreen() {
         {!!matches && <Matches matches={matches}></Matches>}
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -116,4 +120,4 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   teamName: { fontSize: 30, textAlign: "center" },
-})
+});

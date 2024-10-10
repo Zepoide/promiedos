@@ -1,19 +1,8 @@
-import { StyleSheet, Platform } from "react-native"
-import {
-  SafeAreaView,
-  View,
-  Text,
-  Image,
-  ScrollView,
-  TextInput,
-  Dimensions,
-} from "react-native"
-import { ThemedText } from "@/components/ThemedText"
-import { ThemedView } from "@/components/ThemedView"
-import ParallaxScrollView from "@/components/ParallaxScrollView"
-import { useEffect, useState } from "react"
-import { RootObject, Match } from "../types"
-import { Colors } from "@/constants/Colors"
+import { StyleSheet, View, Image, ScrollView, Dimensions } from "react-native";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { Match } from "../types";
+import { Colors } from "@/constants/Colors";
 
 const colors = {
   WHITE: "#fff",
@@ -25,9 +14,9 @@ const colors = {
   LYNCH: "#697098",
   SHARK: "#242526",
   SHUTTLE_GREY: "#565E67",
-}
+};
 
-const { width } = Dimensions.get("window")
+const { width } = Dimensions.get("window");
 
 export default function Matches({ matches }: { matches: Match[] }) {
   return (
@@ -75,10 +64,10 @@ export default function Matches({ matches }: { matches: Match[] }) {
                 </ThemedText>
               </View>
             </ThemedView>
-          )
+          );
         })}
     </ScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -115,4 +104,4 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
-})
+});
