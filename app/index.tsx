@@ -4,6 +4,7 @@ import {
   useColorScheme,
   SafeAreaView,
   ScrollView,
+  Text,
 } from "react-native";
 import { RootObject, Match } from "@/types";
 import Matches from "@/components/Matches";
@@ -65,6 +66,7 @@ export default function HomeScreen() {
         width: "auto",
         backgroundColor: Colors[colorScheme ?? "light"].background,
       }}
+      className="bg-red-700"
     >
       <ThemedText style={styles.title}>PROMIEDOS</ThemedText>
       <ScrollView
