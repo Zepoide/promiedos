@@ -25,7 +25,6 @@ const Profile = () => {
         width: "auto",
         backgroundColor: Colors[colorScheme ?? "light"].background,
       }}
-      className="bg-red-700"
     >
       <ThemedText style={styles.title}>PROFILE</ThemedText>
 

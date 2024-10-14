@@ -19,7 +19,7 @@ export const Colors = {
   },
   dark: {
     text: "#ECEDEE",
-    primary: "#1D1D1D",
+    primary: "#1B1B1B",
     secondary: "#262626",
     background: "#151718",
     tint: tintColorDark,

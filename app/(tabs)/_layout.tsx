@@ -8,24 +8,6 @@ export default function TabLayout() {
   const colorScheme = useColorScheme() || "light";
   return (
     <Tabs
-      // screenOptions={{
-      //     tabBarActiveTintColor: "white",
-      //     tabBarInactiveTintColor: "white",
-      //     tabBarShowLabel: false,
-      //     tabBarStyle: {
-      //       backgroundColor: "#333333",
-      //       borderRadius: 50,
-      //       paddingBottom: 0, // ios only
-      //       overflow: "hidden",
-      //       marginHorizontal: 20,
-      //       marginBottom: 20,
-      //       height: 78,
-      //       display: "flex",
-      //       justifyContent: "space-between",
-      //       alignItems: "center",
-      //       flexDirection: "row",
-      //       position: "absolute",
-      //     },
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         headerShown: false,
@@ -58,12 +40,12 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="register"
         options={{
           tabBarButton: () => null,
         }}
-      />
+      /> */}
     </Tabs>
   );
 }

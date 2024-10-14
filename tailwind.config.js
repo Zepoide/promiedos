@@ -3,7 +3,9 @@
 const tintColorLight = "#000000";
 const tintColorDark = "#84DC7B";
 
+
 module.exports = {
+
   content: [
     "./app/**/*.{js,jsx,ts,tsx}",
     "./screens/**/*.{js,jsx,ts,tsx}",
@@ -24,7 +26,7 @@ module.exports = {
         },
         dark: {
           text: "#ECEDEE",
-          primary: "#84DC7B",
+          primary: "#1B1B1B",
           secondary: "#262626",
           background: "#151718",
           tint: tintColorDark,
@@ -36,4 +38,5 @@ module.exports = {
     },
     plugins: [],
   },
+
 };

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { TouchableOpacity, useColorScheme, FlatList } from "react-native";
+import { FlatList, View, SafeAreaView, Pressable } from "react-native";
+import { useColorScheme } from "nativewind";
 import PagerView from "react-native-pager-view";
 import { Colors } from "@/constants/Colors";
 import { ThemedText } from "@/components/ThemedText";
@@ -7,7 +8,9 @@ import { ThemedView } from "@/components/ThemedView";
 import { generateDates, formatDate } from "@/lib/utils";
 
 const Home = () => {
-  const theme = useColorScheme() || "dark";
+  const { colorScheme, toggleColorScheme } = useColorScheme();
+
+  // const colorScheme = useColorScheme() || "dark";
 
   const pagerRef = useRef<PagerView>(null);
   const flatListRef = useRef<FlatList<string>>(null);
@@ -49,24 +52,37 @@ const Home = () => {
   }, [dates]);
 
   return (
-    <ThemedView className="flex-1 flex flex-column justify-center ">
-      <ThemedView className="flex-row justify-center items-center h-[50px]">
-        <ThemedText className="text-2xl font-bold">TO DO:Header</ThemedText>
-      </ThemedView>
-      <ThemedView className="flex-row justify-center items-center">
+    <SafeAreaView
+      style={{
+        flexDirection: "column",
+        justifyContent: "center",
+        alignContent: "center",
+        flex: 1,
+        backgroundColor: Colors[colorScheme ?? "dark"].primary,
+      }}
+    >
+      <View className="flex-row justify-between items-center h-[50px] bg-white dark:bg-[#1B1B1B]">
+        <ThemedText className="text-2xl font-extrabold p-3">
+          Promiedos
+        </ThemedText>
+        <Pressable onPress={() => toggleColorScheme()}>
+          <ThemedText>CLick {colorScheme}</ThemedText>
+        </Pressable>
+      </View>
+      <View className="flex-row justify-center items-center">
         <FlatList
           ref={flatListRef}
           renderItem={({ item, index }) => (
-            <TouchableOpacity
+            <Pressable
               onPress={() => handleDatePress(item, index)}
-              className={`p-3 w-[100px] flex justify-center items-center border-solid border-b-2 ${selectedDate === item ? " border-light-tint  dark:border-dark-tint" : "border-transparent"}`}
+              className={`p-3 w-[100px] flex justify-center items-center border-solid border-b-2 ${selectedDate === item ? " border-light-tint  dark:border-[#84DC7B]" : "border-transparent"}`}
             >
               <ThemedText
-                className={`text-base font-bold ${selectedDate === item ? `$text-${theme}-text` : "text-gray-500"}`}
+                className={`text-base font-bold ${selectedDate === item ? `$text-${colorScheme}-text` : "text-gray-500"}`}
               >
                 {formatDate(item)}
               </ThemedText>
-            </TouchableOpacity>
+            </Pressable>
           )}
           data={dates}
           horizontal
@@ -74,7 +90,7 @@ const Home = () => {
           contentContainerStyle={{
             flexDirection: "row",
             justifyContent: "center",
-            backgroundColor: Colors[theme].primary,
+            backgroundColor: colorScheme === "light" ? "#fff" : "#1B1B1B",
           }}
           getItemLayout={(data, index) => ({
             length: 100,
@@ -89,8 +105,8 @@ const Home = () => {
             });
           }}
         ></FlatList>
-      </ThemedView>
-      <ThemedView className="flex-1 ">
+      </View>
+      <View className="flex-1 ">
         <PagerView
           ref={pagerRef}
           className="flex-1"
@@ -100,14 +116,14 @@ const Home = () => {
           {dates.map((date, index) => (
             <ThemedView
               key={index}
-              className=" flex justify-center items-center"
+              className=" flex justify-center items-center bg-white dark:bg-black"
             >
               <ThemedText>{date}</ThemedText>
             </ThemedView>
           ))}
         </PagerView>
-      </ThemedView>
-    </ThemedView>
+      </View>
+    </SafeAreaView>
   );
 };
 
