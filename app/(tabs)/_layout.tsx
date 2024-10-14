@@ -1,11 +1,12 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { useColorScheme } from "nativewind";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme() || "light";
+  const { colorScheme, toggleColorScheme } = useColorScheme();
+
   return (
     <Tabs
       screenOptions={{

@@ -10,8 +10,6 @@ import { generateDates, formatDate } from "@/lib/utils";
 const Home = () => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
 
-  // const colorScheme = useColorScheme() || "dark";
-
   const pagerRef = useRef<PagerView>(null);
   const flatListRef = useRef<FlatList<string>>(null);
 
@@ -61,14 +59,17 @@ const Home = () => {
         backgroundColor: Colors[colorScheme ?? "dark"].primary,
       }}
     >
-      <View className="flex-row justify-between items-center h-[50px] bg-white dark:bg-[#1B1B1B]">
+      <ThemedView className="flex-row justify-between items-center bg-white dark:bg-dark-primary">
         <ThemedText className="text-2xl font-extrabold p-3">
-          Promiedos
+          PROMIEDOS
         </ThemedText>
-        <Pressable onPress={() => toggleColorScheme()}>
-          <ThemedText>CLick {colorScheme}</ThemedText>
+        <Pressable
+          onPress={() => toggleColorScheme()}
+          className="border-solid border-2 border-gray-500 p-3 rounded-md"
+        >
+          <ThemedText>Change Theme</ThemedText>
         </Pressable>
-      </View>
+      </ThemedView>
       <View className="flex-row justify-center items-center">
         <FlatList
           ref={flatListRef}
