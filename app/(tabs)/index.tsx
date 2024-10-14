@@ -17,19 +17,19 @@ const Home = () => {
   const [selectedDate, setSelectedDate] = useState<string>(today);
 
   const [dates, setDates] = useState(generateDates(today));
-  const onPageScroll = (event: { nativeEvent: { position: number } }) => {
-    setSelectedDate(dates[event.nativeEvent.position]);
+
+  const onPageSelected = (event: { nativeEvent: { position: number } }) => {
+    setDates(generateDates(dates[event.nativeEvent.position]));
   };
 
   const scrollToPage = (index: number) => {
     if (pagerRef.current) {
-      pagerRef.current.setPage(index);
+      pagerRef.current.setPageWithoutAnimation(index);
     }
   };
 
   const scrollToDate = (index: number) => {
     if (flatListRef.current) {
-      console.log("scrolling to", index, dates[index]);
       flatListRef.current.scrollToIndex({
         index,
         animated: true,
@@ -39,14 +39,13 @@ const Home = () => {
   };
 
   const handleDatePress = (chosenDate: string, index: number) => {
-    // setDates(generateDates(chosenDate));
-    setSelectedDate(chosenDate);
-    scrollToPage(index);
-    scrollToDate(index);
+    setDates(generateDates(chosenDate));
   };
 
   useEffect(() => {
-    console.log(dates[7]);
+    setSelectedDate(dates[7]);
+    scrollToDate(7);
+    scrollToPage(7);
   }, [dates]);
 
   return (
@@ -89,7 +88,7 @@ const Home = () => {
           ref={pagerRef}
           className="flex-1"
           initialPage={7}
-          onPageScroll={onPageScroll}
+          onPageSelected={onPageSelected}
         >
           {dates.map((date, index) => (
             <ThemedView
