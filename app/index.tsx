@@ -5,25 +5,15 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
+  View,
 } from "react-native";
 import { RootObject, Match } from "@/types";
 import Matches from "@/components/Matches";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
+import { Link, Redirect } from "expo-router";
 
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY!;
-
-// const colors = {
-//   WHITE: "#fff",
-//   BLACK: "#000",
-//   ALTO: "#dfdfdf",
-//   GREY: "#808080",
-//   EBONY_CLAY: "#292d3e",
-//   HEATHER: "#bfc7d5",
-//   LYNCH: "#697098",
-//   SHARK: "#242526",
-//   SHUTTLE_GREY: "#565E67",
-// };
 
 export default function HomeScreen() {
   const [matches, setMatches] = useState<Match[]>();
@@ -53,73 +43,78 @@ export default function HomeScreen() {
     }
   };
 
-  useEffect(() => {
-    fetchMatches();
-  }, []);
+  // useEffect(() => {
+  //   fetchMatches();
+  // }, []);
 
   return (
-    <SafeAreaView
-      style={{
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-        flex: 1,
-        width: "auto",
-        backgroundColor: Colors[colorScheme ?? "light"].background,
-      }}
-      className="bg-red-700"
-    >
-      <ThemedText style={styles.title}>PROMIEDOS</ThemedText>
-      <ScrollView
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: Colors[colorScheme ?? "light"].background,
-        }}
-        style={styles.container}
-      >
-        {!!matches && <Matches matches={matches}></Matches>}
-      </ScrollView>
-    </SafeAreaView>
+    // <SafeAreaView
+    //   style={{
+    //     flexDirection: "column",
+    //     justifyContent: "space-evenly",
+    //     flex: 1,
+    //     width: "auto",
+    //     backgroundColor: Colors[colorScheme ?? "light"].background,
+    //   }}
+    // >
+    //   <ThemedText style={styles.title}>PROMIEDOS</ThemedText>
+    //   <ScrollView
+    //     contentContainerStyle={{
+    //       flex: 1,
+    //       justifyContent: "center",
+    //       alignItems: "center",
+    //       backgroundColor: Colors[colorScheme ?? "light"].background,
+    //     }}
+    //     style={styles.container}
+    //   >
+    //     {!!matches && <Matches matches={matches}></Matches>}
+    //   </ScrollView>
+    // </SafeAreaView>
+    // <SafeAreaView className="bg-light-background dark:bg-dark-background flex justify-center items-center flex-1 w-full">
+    //   <Link href="/(tabs)">
+    //     <Text className="text-2xl">Go Home</Text>
+    //   </Link>
+    // </SafeAreaView>
+    <Redirect href="/(tabs)" />
   );
 }
 
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 35,
-    fontWeight: "bold",
-    textAlign: "left",
-    padding: 20,
-  },
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-  container: {
-    flexDirection: "column",
-  },
-  matchInfo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    backgroundColor: "red",
-    borderColor: "#333",
-    width: "100%",
-    textAlign: "center",
-    margin: 5,
-    padding: 5,
-  },
-  teamName: { fontSize: 30, textAlign: "center" },
-});
+// const styles = StyleSheet.create({
+//   title: {
+//     fontSize: 35,
+//     fontWeight: "bold",
+//     textAlign: "left",
+//     padding: 20,
+//   },
+//   titleContainer: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//     gap: 8,
+//   },
+//   stepContainer: {
+//     gap: 8,
+//     marginBottom: 8,
+//   },
+//   reactLogo: {
+//     height: 178,
+//     width: 290,
+//     bottom: 0,
+//     left: 0,
+//     position: "absolute",
+//   },
+//   container: {
+//     flexDirection: "column",
+//   },
+//   matchInfo: {
+//     flex: 1,
+//     flexDirection: "row",
+//     justifyContent: "space-evenly",
+//     backgroundColor: "red",
+//     borderColor: "#333",
+//     width: "100%",
+//     textAlign: "center",
+//     margin: 5,
+//     padding: 5,
+//   },
+//   teamName: { fontSize: 30, textAlign: "center" },
+// });
