@@ -1,4 +1,4 @@
-import { Text, type TextProps, useColorScheme } from "react-native";
+import { Text, type TextProps } from "react-native";
 
 export type ThemedTextProps = TextProps & {
   className?: string;
