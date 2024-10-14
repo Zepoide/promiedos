@@ -6,46 +6,44 @@ import {
   useColorScheme,
   TextInput,
   Pressable,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import React from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { ThemedView } from "@/components/ThemedView";
 import { Link } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
+import ThemedInputUser from "@/components/ThemedInputUser";
 
 const Profile = () => {
   const colorScheme = useColorScheme();
 
   return (
-    <SafeAreaView
-      style={{
-        flexDirection: "column",
-        justifyContent: "space-evenly",
-        flex: 1,
-        width: "auto",
-        backgroundColor: Colors[colorScheme ?? "light"].background,
-      }}
-    >
-      <ThemedText style={styles.title}>PROFILE</ThemedText>
-
-      <ThemedView className="flex-col gap-3 justify-center items-center">
-        <ThemedText className="text-3xl">Log In</ThemedText>
-        <TextInput
-          placeholder="username"
-          className="p-5 text-3xl w-10/12 pl-2 text-white"
-        ></TextInput>
-        <TextInput
-          placeholder="password"
-          className="p-5 text-3xl w-10/12 pl-2 text-white"
-        ></TextInput>
-        <ThemedView className="flex-row">
-          <ThemedText>Dont have an account? </ThemedText>
-          <Link href={"/register"}>
-            <ThemedText>Register</ThemedText>
-          </Link>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView
+        style={{
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+          flex: 1,
+          width: "auto",
+          backgroundColor: Colors[colorScheme ?? "light"].background,
+        }}
+      >
+        <ThemedView className="flex-col gap-3 justify-center items-center">
+          <ThemedText className="text-3xl">Log In</ThemedText>
+          <ThemedInputUser name="Email" icon_name="envelope" />
+          <ThemedInputUser name="Password" icon_name="lock" />
+          <ThemedView className="flex-row">
+            <ThemedText>Dont have an account? </ThemedText>
+            <Link href={"/register"}>
+              <ThemedText>Register</ThemedText>
+            </Link>
+          </ThemedView>
         </ThemedView>
-      </ThemedView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
