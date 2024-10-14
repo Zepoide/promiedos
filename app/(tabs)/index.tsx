@@ -50,15 +50,22 @@ const Home = () => {
 
   return (
     <ThemedView className="flex-1 flex flex-column justify-center ">
+      <ThemedView className="flex-row justify-center items-center h-[50px]">
+        <ThemedText className="text-2xl font-bold">TO DO:Header</ThemedText>
+      </ThemedView>
       <ThemedView className="flex-row justify-center items-center">
         <FlatList
           ref={flatListRef}
           renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => handleDatePress(item, index)}
-              className={`p-3 w-[100px] flex justify-center items-center border-solid border-b-2 ${selectedDate === item ? " border-light-tint  dark:border-dark-tint" : ""}`}
+              className={`p-3 w-[100px] flex justify-center items-center border-solid border-b-2 ${selectedDate === item ? " border-light-tint  dark:border-dark-tint" : "border-transparent"}`}
             >
-              <ThemedText className="">{formatDate(item)}</ThemedText>
+              <ThemedText
+                className={`text-base font-bold ${selectedDate === item ? `$text-${theme}-text` : "text-gray-500"}`}
+              >
+                {formatDate(item)}
+              </ThemedText>
             </TouchableOpacity>
           )}
           data={dates}
