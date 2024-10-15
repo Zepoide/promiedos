@@ -1,20 +1,56 @@
-import { View, Text, Pressable } from "react-native";
-import { useColorScheme } from "nativewind";
+import {
+  SafeAreaView,
+  useColorScheme,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import React from "react";
+import { ThemedText } from "@/components/ThemedText";
+import { Colors } from "@/constants/Colors";
 import { ThemedView } from "@/components/ThemedView";
+import { Link } from "expo-router";
+import ThemedInputUser from "@/components/ThemedInputUser";
 
 const Register = () => {
-  const { colorScheme, toggleColorScheme } = useColorScheme();
+  const colorScheme = useColorScheme();
+
   return (
-    <ThemedView
-      type="primary"
-      className="flex-1 items-center justify-center bg-dark"
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
     >
-      <Text>Register</Text>
-      <Pressable onPress={toggleColorScheme}>
-        <Text>Toggle Color Scheme {colorScheme}</Text>
-      </Pressable>
-    </ThemedView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <SafeAreaView
+          style={{
+            flexDirection: "column",
+            justifyContent: "space-evenly",
+            flex: 1,
+            width: "auto",
+            backgroundColor: Colors[colorScheme ?? "light"].background,
+          }}
+        >
+          <ThemedView className="flex-col gap-3 justify-center items-center">
+            <ThemedText className="text-3xl">Register</ThemedText>
+            <ThemedInputUser name="Username" icon_name="user" />
+            <ThemedInputUser name="Email" icon_name="envelope" />
+            <ThemedInputUser name="Password" icon_name="lock" type="password" />
+            <ThemedInputUser
+              name="Check Password"
+              icon_name="lock"
+              type="password"
+            />
+            <ThemedView className="flex-row">
+              <ThemedText>Have an account? </ThemedText>
+              <Link href={"/register"}>
+                <ThemedText>Log In</ThemedText>
+              </Link>
+            </ThemedView>
+          </ThemedView>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
