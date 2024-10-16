@@ -41,14 +41,16 @@ const Profile = () => {
         >
           <ThemedView className="flex-col gap-3 justify-center items-center">
             <ThemedText className="text-2xl">Log In</ThemedText>
-            <ThemedInputUser name="Email" icon_name="envelope" />
-            <ThemedInputUser name="Password" icon_name="lock" />
-            <SubmitButton title="Log In" onPress={handleLogin} />
-            <ThemedView className="flex-row">
-              <ThemedText>Dont have an account? </ThemedText>
-              <Link href={"/register"}>
-                <ThemedText>Sign Up</ThemedText>
-              </Link>
+            <ThemedView className="flex-col items-center w-full">
+              <ThemedInputUser name="Email" icon_name="envelope" />
+              <ThemedInputUser name="Password" icon_name="lock" />
+              <SubmitButton title="Log In" onPress={handleLogin} />
+              <ThemedView className="flex-row mt-3">
+                <ThemedText>Dont have an account? </ThemedText>
+                <Link href={"/register"}>
+                  <ThemedText>Sign Up</ThemedText>
+                </Link>
+              </ThemedView>
             </ThemedView>
           </ThemedView>
         </SafeAreaView>
