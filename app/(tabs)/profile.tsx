@@ -12,14 +12,22 @@ import { Colors } from "@/constants/Colors";
 import { ThemedView } from "@/components/ThemedView";
 import { Link } from "expo-router";
 import ThemedInputUser from "@/components/ThemedInputUser";
+import SubmitButton from "@/components/SubmitButton";
 
 const Profile = () => {
   const colorScheme = useColorScheme();
 
+  const handleLogin = () => {
+    return;
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
+      style={{
+        flex: 1,
+        backgroundColor: Colors[colorScheme ?? "light"].background,
+      }}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <SafeAreaView
@@ -32,9 +40,10 @@ const Profile = () => {
           }}
         >
           <ThemedView className="flex-col gap-3 justify-center items-center">
-            <ThemedText className="text-3xl">Log In</ThemedText>
+            <ThemedText className="text-2xl">Log In</ThemedText>
             <ThemedInputUser name="Email" icon_name="envelope" />
             <ThemedInputUser name="Password" icon_name="lock" />
+            <SubmitButton title="Log In" onPress={handleLogin} />
             <ThemedView className="flex-row">
               <ThemedText>Dont have an account? </ThemedText>
               <Link href={"/register"}>

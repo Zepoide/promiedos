@@ -1,16 +1,28 @@
-import { TextInput, useColorScheme, TouchableOpacity } from "react-native";
+import {
+  TextInput,
+  useColorScheme,
+  TouchableOpacity,
+  TextInputProps,
+} from "react-native";
 import React, { useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 
-export type ThemedInputUser = {
+export type ThemedInputUser = TextInputProps & {
   name: string;
   icon_name: any;
   type?: string;
+  error?: any;
 };
 
-const ThemedInputUser = ({ name, icon_name, type }: ThemedInputUser) => {
+const ThemedInputUser = ({
+  name,
+  icon_name,
+  type,
+  error,
+  ...props
+}: ThemedInputUser) => {
   const colorScheme = useColorScheme();
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -20,16 +32,18 @@ const ThemedInputUser = ({ name, icon_name, type }: ThemedInputUser) => {
   };
 
   return (
-    <ThemedView className="w-10/12 flex-row gap-4 cursor-text items-center m-0 border-white border-b-2 focus:border-green-500 transition-all duration-600 ease-in-out">
+    <ThemedView
+      className={`w-10/12 m-0 flex-row items-center cursor-text border-white border-b-2 ${error ? "border-red-500" : "border-white focus:border-green-500"} transition-all duration-600 ease-in-out`}
+    >
       <FontAwesome
         name={icon_name}
-        size={24}
+        size={20}
         color={
           isFocused
             ? Colors[colorScheme ?? "light"].iconBright
             : Colors[colorScheme ?? "light"].icon
         }
-        className="border-solid border border-white"
+        style={{ width: "10%", textAlign: "center" }}
       />
       <TextInput
         placeholder={name}
@@ -39,15 +53,19 @@ const ThemedInputUser = ({ name, icon_name, type }: ThemedInputUser) => {
         importantForAutofill="no"
         autoCapitalize="none"
         autoCorrect={false}
-        className="p-5 text-3xl w-10/12 pl-2 text-white"
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        className="flex-1 h-20 px-4 align-middle text-xl text-white"
+        {...props}
       />
       {type === "password" && (
-        <TouchableOpacity onPress={togglePasswordVisibility}>
+        <TouchableOpacity
+          onPress={togglePasswordVisibility}
+          style={{ paddingLeft: 16 }}
+        >
           <FontAwesome
             name={showPassword ? "eye-slash" : "eye"}
-            size={24}
+            size={20}
             color={Colors[colorScheme ?? "light"].icon}
           />
         </TouchableOpacity>
