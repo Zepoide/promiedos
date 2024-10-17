@@ -85,7 +85,7 @@ const simulateDataFetching = (delay = 1000): Promise<Match[]> => {
 
 const CompetitionMatches = (match: Match) => {
   return (
-    <ThemedView className=" m-2  ">
+    <ThemedView className="m-2">
       <ThemedView
         type="secondary"
         className="flex flex-row p-2 h-11 items-center rounded-t-lg   "
@@ -132,7 +132,7 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
   }
 
   return (
-    <ThemedView className="flex-1 flex justify-center  bg-white dark:bg-black">
+    <ThemedView className="flex-1 flex justify-center w-full ">
       <FlatList
         data={data}
         renderItem={({ item }) => (
