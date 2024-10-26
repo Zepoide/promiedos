@@ -21,7 +21,7 @@ export default function useStandings(): Standing[] | null {
   const fetchStandings = async () => {
     const response = await fetch("http://192.168.0.151:8080/standings");
     const data = await response.json();
-
+    console.log(data);
     setStandings(data);
   };
 

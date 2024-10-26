@@ -1,6 +1,5 @@
 import {
   SafeAreaView,
-  useColorScheme,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
@@ -13,9 +12,10 @@ import { ThemedView } from "@/components/ThemedView";
 import { Link } from "expo-router";
 import ThemedInputUser from "@/components/ThemedInputUser";
 import SubmitButton from "@/components/SubmitButton";
+import { useColorScheme } from "nativewind";
 
 const Profile = () => {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   const handleLogin = () => {
     return;

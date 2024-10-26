@@ -1,10 +1,17 @@
 import React from "react";
-import { FlatList, View, ActivityIndicator, Image } from "react-native";
+import {
+  FlatList,
+  View,
+  ActivityIndicator,
+  Image,
+  Pressable,
+} from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useQuery } from "@tanstack/react-query";
 import { type Match } from "@/types/types";
 import MatchInfo from "./MatchInfo";
+import { Link } from "expo-router";
 
 interface MatchesPerDayProps {
   date: string;
@@ -90,8 +97,10 @@ const CompetitionMatches = (match: Match) => {
         type="secondary"
         className="flex flex-row p-2 h-11 items-center rounded-t-lg   "
       >
-        <ThemedText className="font-bold text-l mr-3"> ★ </ThemedText>
-        <ThemedText className=" font-extrabold text-l">La Liga</ThemedText>
+        <Link href={`/standings`}>
+          <ThemedText className="font-bold text-l mr-3"> ★ </ThemedText>
+          <ThemedText className=" font-extrabold text-l">La Liga</ThemedText>
+        </Link>
       </ThemedView>
       <MatchInfo match={match}></MatchInfo>
       <MatchInfo match={match}></MatchInfo>

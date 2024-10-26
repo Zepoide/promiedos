@@ -21,3 +21,27 @@ export interface Match {
   status: string;
   venue: Stadium;
 }
+
+type CompetitionDetails = {
+  id: string;
+  name: string;
+  country: string;
+  logo: string | null;
+  standings: Standings[];
+  matches: ?Match[];
+};
+
+type Standings = {
+  id: number;
+  competitionId: string;
+  teamId: string;
+  position: number;
+  played: number;
+  win: number;
+  loss: number;
+  draw: number;
+  goals_for: number;
+  goals_against: number;
+  points: number;
+  form: string;
+};

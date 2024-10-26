@@ -122,14 +122,7 @@ const Home = () => {
               key={index}
               className=" flex justify-center items-center"
             >
-              {6 <= index || index <= 9 ? (
-                <>
-                  <ThemedText>{date}</ThemedText>
-                  <MatchesPerDay date={date} />
-                </>
-              ) : (
-                ""
-              )}
+              {6 <= index || index <= 9 ? <MatchesPerDay date={date} /> : ""}
             </ThemedView>
           ))}
         </PagerView>

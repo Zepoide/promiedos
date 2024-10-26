@@ -1,13 +1,9 @@
-import {
-  TextInput,
-  useColorScheme,
-  TouchableOpacity,
-  TextInputProps,
-} from "react-native";
+import { TextInput, TouchableOpacity, TextInputProps } from "react-native";
 import React, { useState } from "react";
 import { ThemedView } from "./ThemedView";
 import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "nativewind";
 
 export type ThemedInputUser = TextInputProps & {
   name: string;
@@ -23,7 +19,7 @@ const ThemedInputUser = ({
   error,
   ...props
 }: ThemedInputUser) => {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -55,7 +51,7 @@ const ThemedInputUser = ({
         autoCorrect={false}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        className="flex-1 h-20 px-4 align-middle text-xl text-white"
+        className="flex-1 h-20 px-4 align-middle text-xl text-black dark:text-white"
         {...props}
       />
       {type === "password" && (

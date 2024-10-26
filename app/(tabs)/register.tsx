@@ -2,7 +2,6 @@
 import React from "react";
 import {
   SafeAreaView,
-  useColorScheme,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
@@ -15,9 +14,10 @@ import { Link } from "expo-router";
 import SubmitButton from "@/components/SubmitButton";
 import { useForm } from "react-hook-form";
 import ControllerForm from "@/components/ControllerForm";
+import { useColorScheme } from "nativewind";
 
 const Register = () => {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
   const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   type FormData = {
     username: string;

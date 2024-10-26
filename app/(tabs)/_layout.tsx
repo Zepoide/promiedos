@@ -50,3 +50,13 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+
+{
+  /* <Stack screenOptions={{ gestureEnabled: true }}>
+  <Stack.Screen name="index" options={{ headerShown: false }} />
+  <Stack.Screen name="competition/[id]" />
+  <Stack.Screen name="profile" />
+  <Stack.Screen name="register" />
+  <Stack.Screen name="standings" options={{ headerShown: false }} />
+</Stack>; */
+}
