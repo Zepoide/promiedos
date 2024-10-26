@@ -7,7 +7,7 @@ export type ThemedTextProps = TextProps & {
 export function ThemedText({ className, ...otherProps }: ThemedTextProps) {
   return (
     <Text
-      className={`text-black dark:text-[#ECEDEE] ${className}`}
+      className={`text-black dark:text-[#ECEDEE] m-0 ${className}`}
       {...otherProps}
     />
   );

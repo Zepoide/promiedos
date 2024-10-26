@@ -6,6 +6,8 @@ import { Colors } from "@/constants/Colors";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { generateDates, formatDate } from "@/lib/utils";
+import Matches from "@/components/Matches";
+import MatchesPerDay from "@/components/MatchesPerDay";
 
 const Home = () => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
@@ -116,10 +118,18 @@ const Home = () => {
         >
           {dates.map((date, index) => (
             <ThemedView
+              type="background"
               key={index}
-              className=" flex justify-center items-center bg-white dark:bg-black"
+              className=" flex justify-center items-center"
             >
-              <ThemedText>{date}</ThemedText>
+              {6 <= index || index <= 9 ? (
+                <>
+                  <ThemedText>{date}</ThemedText>
+                  <MatchesPerDay date={date} />
+                </>
+              ) : (
+                ""
+              )}
             </ThemedView>
           ))}
         </PagerView>
