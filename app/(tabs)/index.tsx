@@ -9,6 +9,7 @@ import { generateDates, formatDate } from "@/lib/utils";
 import Matches from "@/components/Matches";
 import MatchesPerDay from "@/components/MatchesPerDay";
 
+
 const Home = () => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
 
@@ -130,6 +131,7 @@ const Home = () => {
               ) : (
                 ""
               )}
+
             </ThemedView>
           ))}
         </PagerView>

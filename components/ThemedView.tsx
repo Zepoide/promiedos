@@ -33,6 +33,7 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 
+
 export type ThemedViewProps = ViewProps & {
   type?: "background" | "primary" | "secondary";
 };
@@ -40,6 +41,7 @@ export type ThemedViewProps = ViewProps & {
 export function ThemedView({ style, type, ...otherProps }: ThemedViewProps) {
   // const backgroundColor = useThemeColor({}, type);
   const { colorScheme } = useColorScheme();
+
 
   return (
     <View
