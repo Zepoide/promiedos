@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, Stack } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
@@ -41,12 +41,12 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* <Tabs.Screen
-        name="register"
+      <Tabs.Screen
+        name="(details)"
         options={{
           tabBarButton: () => null,
         }}
-      /> */}
+      />
     </Tabs>
   );
 }

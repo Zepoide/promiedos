@@ -22,26 +22,26 @@ export interface Match {
   venue: Stadium;
 }
 
-type CompetitionDetails = {
+export interface CompetitionDetails {
   id: string;
   name: string;
   country: string;
   logo: string | null;
   standings: Standings[];
   matches: ?Match[];
-};
+}
 
-type Standings = {
-  id: number;
+export interface Standings {
   competitionId: string;
-  teamId: string;
-  position: number;
-  played: number;
-  win: number;
-  loss: number;
   draw: number;
-  goals_for: number;
-  goals_against: number;
-  points: number;
   form: string;
-};
+  goals_against: number;
+  goals_for: number;
+  id: number;
+  loss: number;
+  played: number;
+  points: number;
+  position: number;
+  teamId: string;
+  win: number;
+}

@@ -1,21 +1,6 @@
 import { useEffect, useState } from "react";
 
-export interface Standing {
-  competitionId: string;
-  draw: number;
-  form: string;
-  goals_against: number;
-  goals_for: number;
-  id: number;
-  loss: number;
-  played: number;
-  points: number;
-  position: number;
-  teamId: string;
-  win: number;
-}
-
-export default function useStandings(): Standing[] | null {
+export default function useStandings(): Standings[] | null {
   const [standings, setStandings] = useState(null);
 
   const fetchStandings = async () => {
