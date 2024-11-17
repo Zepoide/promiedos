@@ -3,17 +3,29 @@ import Container from "@/components/Container";
 import { ThemedText } from "@/components/ThemedText";
 import useCompetition from "@/hooks/useCompetition";
 import { ThemedView } from "@/components/ThemedView";
-import { Image } from "react-native";
+import { Button, Image, Pressable } from "react-native";
 import { countries } from "@/constants/Countries";
 import CustomTabView from "@/components/CustomTabView";
+import BackButton from "@/components/BackButton";
+import { useState } from "react";
+import FollowButton from "@/components/FollowButton";
 
 const CompetitionDetails = () => {
   const { id } = useLocalSearchParams();
   const competitionId = Array.isArray(id) ? id[0] : id;
   const { competitionInfo, isLoading, error } = useCompetition(competitionId);
+  const [following, setFollowing] = useState(false);
+
+  const followCompetition = () => {
+    setFollowing(!following);
+  };
 
   if (isLoading) {
-    return <ThemedText>Loading...</ThemedText>;
+    return (
+      <Container>
+        <ThemedText>Loading...</ThemedText>
+      </Container>
+    );
   }
 
   const FirstRoute = () => (
@@ -23,7 +35,7 @@ const CompetitionDetails = () => {
   );
 
   const SecondRoute = () => (
-    <ThemedView className="flex-1 items-center justify-center bg-purple-700">
+    <ThemedView className="flex-1 h-[2500px] items-center justify-center bg-purple-700">
       <ThemedText className="text-white">Second Tab Content</ThemedText>
     </ThemedView>
   );
@@ -31,6 +43,10 @@ const CompetitionDetails = () => {
   if (competitionInfo) {
     return (
       <Container>
+        <ThemedView className=" flex flex-row justify-between items-center mx-2">
+          <BackButton />
+          <FollowButton onPress={followCompetition} following={following} />
+        </ThemedView>
         <ThemedView className="flex flex-row justify-start m-3 p-3">
           <ThemedView className="basis-1/5">
             <Image

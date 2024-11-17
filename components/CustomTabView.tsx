@@ -35,7 +35,7 @@ export default function CustomTabView({ tabs, pages }: CustomTabViewProps) {
       {...props}
       renderLabel={({ route, focused }) => (
         <ThemedText
-          className={`text-sm ${focused ? "text-white" : "text-gray-500"}`}
+          className={`text-sm ${focused ? "text-black dark:text-white" : "text-gray-500"}`}
         >
           {route.title}
         </ThemedText>
