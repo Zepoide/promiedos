@@ -10,12 +10,9 @@ interface MatchInfoProps {
 
 const MatchInfo = ({ match }: MatchInfoProps) => {
   return (
-    <ThemedView
-      type="primary"
-      className="flex flex-row justify-evenly items-center w-full p-5 rounded-b-lg"
-    >
+    <ThemedView className="flex flex-row justify-center gap-2 w-full p-5">
       {/* Home Team */}
-      <ThemedView className="flex flex-row justify-end items-center flex-[2.5]">
+      <ThemedView className="flex  justify-end items-center">
         <ThemedText className="font-semibold text-base">
           {/* {match.homeTeamId} */}
           River Plate
@@ -23,7 +20,7 @@ const MatchInfo = ({ match }: MatchInfoProps) => {
       </ThemedView>
 
       {/* Home Team Logo */}
-      <ThemedView className="flex justify-center items-center flex-[1]">
+      <ThemedView className="flex justify-center items-center ">
         <Image
           resizeMode="contain"
           source={{ uri: "https://crests.football-data.org/6667.png" }}
@@ -32,7 +29,7 @@ const MatchInfo = ({ match }: MatchInfoProps) => {
       </ThemedView>
 
       {/* Match Time */}
-      <ThemedView className="flex justify-center items-center flex-[0.8]">
+      <ThemedView className="flex justify-center items-center ">
         <ThemedText className="text-[#8D8D8D] font-bold">
           {new Date(match.start_time)
             .toLocaleTimeString()
@@ -43,7 +40,7 @@ const MatchInfo = ({ match }: MatchInfoProps) => {
       </ThemedView>
 
       {/* Away Team Logo */}
-      <ThemedView className="flex justify-center items-center flex-[1]">
+      <ThemedView className="flex justify-center items-center ">
         <Image
           resizeMode="contain"
           source={{
@@ -54,7 +51,7 @@ const MatchInfo = ({ match }: MatchInfoProps) => {
       </ThemedView>
 
       {/* Away Team */}
-      <ThemedView className="flex flex-row justify-start  flex-[2.5]">
+      <ThemedView className="flex flex-row justify-start  ">
         <ThemedText className="font-semibold text-base ">
           {/* {match.awayTeamId} */}
           Velez Sarfield

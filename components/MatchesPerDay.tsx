@@ -14,7 +14,7 @@ import MatchInfo from "./MatchInfo";
 import { Link } from "expo-router";
 
 interface MatchesPerDayProps {
-  date: string;
+  date: Date;
 }
 
 const simulateDataFetching = (delay = 1000): Promise<Match[]> => {
@@ -108,10 +108,12 @@ const CompetitionMatches = (match: Match) => {
           <ThemedText className=" font-extrabold text-l">La Liga</ThemedText>
         </Link>
       </ThemedView>
-      <MatchInfo match={match}></MatchInfo>
-      <MatchInfo match={match}></MatchInfo>
-      <MatchInfo match={match}></MatchInfo>
-      <MatchInfo match={match}></MatchInfo>
+      <ThemedView type="primary" className="rounded-b-lg">
+        <MatchInfo match={match}></MatchInfo>
+        <MatchInfo match={match}></MatchInfo>
+        <MatchInfo match={match}></MatchInfo>
+        <MatchInfo match={match}></MatchInfo>
+      </ThemedView>
     </ThemedView>
   );
 };
@@ -130,24 +132,11 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
     );
   }
 
-  if (!data) {
-    return (
-      <ThemedView className="flex-1 flex justify-center items-center bg-white dark:bg-black">
-        <ThemedText>No data available</ThemedText>
-      </ThemedView>
-    );
-  }
-
-  if (error) {
-    return (
-      <ThemedView className="flex-1 flex justify-center items-center bg-white dark:bg-black">
-        <ThemedText>Error: {(error as Error).message}</ThemedText>
-      </ThemedView>
-    );
-  }
-
   return (
-    <ThemedView className="flex-1 flex justify-center w-full ">
+    <ThemedView
+      type="background"
+      className="flex-1 flex justify-center w-full "
+    >
       <FlatList
         data={data}
         renderItem={({ item }) => (

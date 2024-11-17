@@ -1,22 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, Dimensions } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
-import fetchCompetitionDetails from "@/api/fetchCompetitionDetails";
-import { CompetitionDetails } from "@/types/types";
-import { useQuery } from "@tanstack/react-query";
-import { Image } from "react-native";
-import { ThemedView } from "@/components/ThemedView";
-import { useLocalSearchParams } from "expo-router";
 
 interface CustomTabViewProps {
   tabs: string[];
   pages: Function[];
+  initialPage?: number;
 }
 
-export default function CustomTabView({ tabs, pages }: CustomTabViewProps) {
-  const [index, setIndex] = useState(0);
+export default function CustomTabView({
+  tabs,
+  pages,
+  initialPage = 0,
+}: CustomTabViewProps) {
+  const [index, setIndex] = useState(initialPage);
   const [routes] = useState(
     tabs.map((tab) => {
       return { key: tab, title: tab };
