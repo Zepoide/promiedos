@@ -101,7 +101,7 @@ const CompetitionMatches = (match: Match) => {
           push
           href={{
             pathname: "/(details)/competition/[id]",
-            params: { id: 1 },
+            params: { id: "sr:season:114317" },
           }}
         >
           <ThemedText className="font-bold text-l mr-3"> ★ </ThemedText>

@@ -1,3 +1,5 @@
+import { countries } from "@/constants/Countries";
+
 export interface Stadium {
   id: string;
   name: string;
@@ -22,10 +24,11 @@ export interface Match {
   venue: Stadium;
 }
 
+type CountryCode = keyof typeof countries;
 export interface CompetitionDetails {
   id: string;
   name: string;
-  country: string;
+  country: CountryCode;
   logo: string | null;
   standings: Standings[];
   matches: ?Match[];

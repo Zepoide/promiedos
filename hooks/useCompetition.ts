@@ -6,13 +6,12 @@ const SERVER_URL = process.env.EXPO_PUBLIC_SERVER_URL;
 interface UseCompetitionResult {
   competitionInfo: CompetitionDetails | undefined;
   isLoading: boolean;
-  error: unknown;
+  error: Error | null;
 }
 
 export default function useCompetition(id: string): UseCompetitionResult {
   async function fetchCompetitionDetails(id: string): Promise<any> {
     try {
-      console.log("fetchCompetitionDetails called with id:", id);
       const response = await fetch(`${SERVER_URL}/competition/${id}`, {
         method: "GET",
         headers: {
