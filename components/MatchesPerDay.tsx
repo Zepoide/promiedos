@@ -97,7 +97,13 @@ const CompetitionMatches = (match: Match) => {
         type="secondary"
         className="flex flex-row p-2 h-11 items-center rounded-t-lg   "
       >
-        <Link href={`/standings`}>
+        <Link
+          push
+          href={{
+            pathname: "/(details)/competition/[id]",
+            params: { id: "sr:season:114317" },
+          }}
+        >
           <ThemedText className="font-bold text-l mr-3"> ★ </ThemedText>
           <ThemedText className=" font-extrabold text-l">La Liga</ThemedText>
         </Link>
