@@ -3,9 +3,10 @@ import { Tabs, Stack } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function TabLayout() {
-  const { colorScheme, toggleColorScheme } = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   return (
     <Tabs
@@ -20,12 +21,17 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Partidos",
+          title: "Matches",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "football" : "football-outline"}
               color={color}
             />
+            // <MaterialCommunityIcons
+            //   name="soccer-field"
+            //   color={color}
+            //   size={24}
+            // />
           ),
         }}
       />

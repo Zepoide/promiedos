@@ -1,18 +1,18 @@
-import { CompetitionDetails } from "@/types/types";
+import { GroupedMatches } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 
 const SERVER_URL = process.env.EXPO_PUBLIC_SERVER_URL;
 
-interface UseCompetitionResult {
-  competitionInfo: CompetitionDetails | undefined;
+interface UseMatchesResult {
+  data: GroupedMatches[] | undefined;
   isLoading: boolean;
   error: Error | null;
 }
 
-export default function useCompetition(id: string): UseCompetitionResult {
-  async function fetchCompetitionDetails(id: string): Promise<any> {
+export default function useMatches(date: Date): UseMatchesResult {
+  async function fetchMatchInfo(date: Date): Promise<any> {
     try {
-      const response = await fetch(`${SERVER_URL}/competition/${id}`, {
+      const response = await fetch(`${SERVER_URL}/matches?date=${date}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -33,13 +33,9 @@ export default function useCompetition(id: string): UseCompetitionResult {
     }
   }
 
-  const {
-    data: competitionInfo,
-    isLoading,
-    error,
-  } = useQuery<CompetitionDetails>({
-    queryKey: ["competition", id],
-    queryFn: () => fetchCompetitionDetails(id),
+  const { data, isLoading, error } = useQuery<GroupedMatches[]>({
+    queryKey: [`matches-${date}`],
+    queryFn: () => fetchMatchInfo(date),
   });
-  return { competitionInfo, isLoading, error };
+  return { data, isLoading, error };
 }
