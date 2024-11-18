@@ -28,7 +28,7 @@ type CountryCode = keyof typeof countries;
 export interface CompetitionDetails {
   id: string;
   name: string;
-  country: CountryCode;
+  country: string;
   logo: string | null;
   standings: Standings[];
   matches: ?Match[];
@@ -47,4 +47,38 @@ export interface Standings {
   position: number;
   teamId: string;
   win: number;
+}
+
+export interface Competition {
+  id: string;
+  name: string;
+  country: string;
+  logo: string | null;
+}
+export interface GroupedMatches {
+  competitionId: string;
+  competition: Competition;
+  matches: MatchPreview[];
+}
+
+export interface MatchPreview {
+  id: string;
+  competitionId: string;
+  homeTeamId: string;
+  awayTeamId: string;
+  start_time: string; // ISO date string
+  scoreHome: number;
+  scoreAway: number;
+  status: string; // e.g., "closed", "scheduled", etc.
+  round: number;
+  stadiumId: string;
+  competition: Competition;
+  homeTeam: {
+    name: string;
+    logo: string | null;
+  };
+  awayTeam: {
+    name: string;
+    logo: string | null;
+  };
 }

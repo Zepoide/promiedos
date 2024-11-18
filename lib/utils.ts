@@ -1,3 +1,5 @@
+import { iso3ToIso2Map } from "../constants/Countries";
+
 export const generateDates = (startDate: Date): Date[] => {
   const dates = [];
   const start = new Date(startDate);
@@ -35,9 +37,14 @@ export const formatDate = (date: Date): string => {
   }
 
   const options: Intl.DateTimeFormatOptions = {
+    weekday: "short",
     day: "2-digit",
     month: "short",
   };
 
   return targetDate.toLocaleDateString("en-GB", options).replace(",", "");
+};
+
+export const iso2Code = (string: string): string => {
+  return iso3ToIso2Map[string];
 };

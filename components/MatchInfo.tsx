@@ -2,45 +2,35 @@ import React from "react";
 import { Image } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Match } from "../types/types";
+import { MatchPreview } from "../types/types";
 
 interface MatchInfoProps {
-  match: Match;
+  match: MatchPreview;
 }
 
 const MatchInfo = ({ match }: MatchInfoProps) => {
   return (
-    <ThemedView className="flex flex-row justify-center gap-2 w-full p-5">
-      {/* Home Team */}
-      <ThemedView className="flex  justify-end items-center">
-        <ThemedText className="font-semibold text-base">
-          {/* {match.homeTeamId} */}
-          River Plate
+    <ThemedView className="flex-1 flex-row justify-around w-full py-4 px-5 border-t border-[#fafafa] dark:border-zinc-800">
+      <ThemedView className="flex-1 flex-col justify-center items-end mr-2 ">
+        <ThemedText className="font-semibold text-sm text-right">
+          {match.homeTeam.name}
         </ThemedText>
       </ThemedView>
-
-      {/* Home Team Logo */}
-      <ThemedView className="flex justify-center items-center ">
+      <ThemedView className="flex flex-row justify-evenly itemes-center m-auto gap-x-2">
         <Image
           resizeMode="contain"
           source={{ uri: "https://crests.football-data.org/6667.png" }}
-          className="w-[25px] h-[25px]"
+          className="w-6 h-6"
         />
-      </ThemedView>
 
-      {/* Match Time */}
-      <ThemedView className="flex justify-center items-center ">
-        <ThemedText className="text-[#8D8D8D] font-bold">
+        <ThemedText className="text-gray-500 m-auto font-bold">
           {new Date(match.start_time)
             .toLocaleTimeString()
             .split(":")
             .slice(0, 2)
             .join(":")}
         </ThemedText>
-      </ThemedView>
 
-      {/* Away Team Logo */}
-      <ThemedView className="flex justify-center items-center ">
         <Image
           resizeMode="contain"
           source={{
@@ -49,12 +39,9 @@ const MatchInfo = ({ match }: MatchInfoProps) => {
           className="w-[25px] h-[25px]"
         />
       </ThemedView>
-
-      {/* Away Team */}
-      <ThemedView className="flex flex-row justify-start  ">
-        <ThemedText className="font-semibold text-base ">
-          {/* {match.awayTeamId} */}
-          Velez Sarfield
+      <ThemedView className="flex-1 flex-row items-center ml-2">
+        <ThemedText className="font-semibold text-sm text-left">
+          {match.awayTeam.name}
         </ThemedText>
       </ThemedView>
     </ThemedView>

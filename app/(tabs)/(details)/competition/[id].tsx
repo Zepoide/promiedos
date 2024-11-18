@@ -62,7 +62,7 @@ const CompetitionDetails = () => {
               {competitionInfo.name}
             </ThemedText>
             <ThemedText className="text-gray-500">
-              {countries[competitionInfo.country]}
+              {countries[competitionInfo.country as keyof typeof countries]}
             </ThemedText>
           </ThemedView>
         </ThemedView>

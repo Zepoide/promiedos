@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "./ThemedView";
 
 interface CustomTabViewProps {
   tabs: string[];
@@ -32,7 +33,7 @@ export default function CustomTabView({
       {...props}
       renderLabel={({ route, focused }) => (
         <ThemedText
-          className={`text-sm ${focused ? "text-black dark:text-white" : "text-gray-500"}`}
+          className={`text-sm ${focused ? "text-black dark:text-white " : "text-gray-500"}`}
         >
           {route.title}
         </ThemedText>

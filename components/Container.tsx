@@ -12,6 +12,7 @@ const Container = ({ children }: { children: ReactNode }) => {
         flex: 1,
         backgroundColor: Colors[colorScheme ?? "dark"].primary,
       }}
+      edges={["top", "left", "right"]}
     >
       {children}
     </SafeAreaView>

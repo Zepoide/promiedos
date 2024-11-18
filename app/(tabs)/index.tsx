@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable } from "react-native";
+import { Pressable, Switch, TouchableOpacity } from "react-native";
 import { useColorScheme } from "nativewind";
 import { formatDate, generateDates } from "@/lib/utils";
 import Container from "@/components/Container";
@@ -7,6 +7,8 @@ import CustomTabView from "@/components/CustomTabView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import MatchesPerDay from "@/components/MatchesPerDay";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import Icon from "@/components/Icon";
 
 const HomeScreen = () => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
@@ -15,16 +17,25 @@ const HomeScreen = () => {
 
   return (
     <Container>
-      <ThemedView className="flex-row justify-between items-center bg-white dark:bg-dark-primary">
+      <ThemedView
+        type="primary"
+        className="flex-row justify-between items-center "
+      >
         <ThemedText className="text-2xl font-extrabold p-3">
           PROMIEDOS
         </ThemedText>
-        <Pressable
-          onPress={() => toggleColorScheme()}
-          className="border-solid border-2 border-gray-500 p-3 rounded-md"
-        >
-          <ThemedText>Change Theme</ThemedText>
-        </Pressable>
+        <ThemedView className="flex flex-row items-center">
+          <TouchableOpacity
+            onPress={() => toggleColorScheme()}
+            activeOpacity={0.8}
+            className="p-3"
+          >
+            <Icon
+              name={`${colorScheme === "light" ? "sunny-outline" : "moon-outline"}`}
+              size={24}
+            />
+          </TouchableOpacity>
+        </ThemedView>
       </ThemedView>
       <CustomTabView
         tabs={dates.map((date) => formatDate(date))}
