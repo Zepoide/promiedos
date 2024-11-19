@@ -45,7 +45,7 @@ export interface Standings {
   played: number;
   points: number;
   position: number;
-  teamId: string;
+  team: Team;
   win: number;
 }
 

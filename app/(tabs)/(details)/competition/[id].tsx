@@ -9,6 +9,7 @@ import CustomTabView from "@/components/CustomTabView";
 import BackButton from "@/components/BackButton";
 import { useState } from "react";
 import FollowButton from "@/components/FollowButton";
+import TableStandings from "@/components/TableStandings";
 
 const CompetitionDetails = () => {
   const { id } = useLocalSearchParams();
@@ -41,6 +42,7 @@ const CompetitionDetails = () => {
   );
 
   if (competitionInfo) {
+    console.log(competitionInfo);
     return (
       <Container>
         <ThemedView className=" flex flex-row justify-between items-center mx-2">
@@ -79,7 +81,12 @@ const CompetitionDetails = () => {
             "Videos",
           ]}
           pages={[
-            FirstRoute,
+            () => (
+              <TableStandings
+                columns={["#", "Team", "J", "GD", "PTS"]}
+                competitionId={competitionId}
+              />
+            ),
             SecondRoute,
             FirstRoute,
             SecondRoute,

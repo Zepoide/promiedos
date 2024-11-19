@@ -2,69 +2,765 @@ import React from "react";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
 import { ScrollView, Image } from "react-native";
+import { Standings } from "@/types/types";
+import useStandings from "@/hooks/useStandings";
 
 interface TableProps {
-    columns: string[];
-    data: (string | number)[][];
+  columns: string[];
+  competitionId: string;
 }
 
-const Table: React.FC<TableProps> = ({ columns, data }) => {
-    return (
-        <ThemedView className="bg-white dark:bg-dark-secondary m-4 p-2 rounded-lg flex-1">
-            {/* Table Header */}
-            <ThemedView className="flex-row justify-start dark:bg-dark-secondary mb-0.5">
-                {columns.map((col, index) => (
-                    <ThemedText
-                        key={index}
-                        className={`p-2 mb-1 text-xs bg-white dark:bg-dark-secondary text-center ${
-                            index === 1 ? "w-[54%] text-left" : "w-[12%]"
-                        }`}
-                    >
-                        {col}
-                    </ThemedText>
-                ))}
-            </ThemedView>
-            {/* Table Rows */}
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {data.map((row, rowIndex) => (
-                    <ThemedView
-                        key={rowIndex}
-                        className={`flex-row justify-between items-center bg-white dark:bg-dark-secondary p-2 mb-0.5 ${
-                            rowIndex === 0
-                                ? "border-l-2 border-green-500 pl-1.5"
-                                : ""
-                        }`}
-                    >
-                        {row.map((cell, cellIndex) => (
-                            <React.Fragment key={cellIndex}>
-                                {cellIndex === 1 ? (
-                                    <ThemedView className="pl-2">
-                                        <Image
-                                            resizeMode="contain"
-                                            source={{
-                                                uri: cell as string,
-                                            }}
-                                            className="w-[20px] h-[20px]"
-                                        />
-                                    </ThemedView>
-                                ) : (
-                                    <ThemedText
-                                        className={`text-center text-xs text-gray-600 dark:text-gray-200 ${
-                                            cellIndex === 2
-                                                ? "w-[49%] text-left pl-2"
-                                                : "w-[12%]"
-                                        } ${cellIndex === 0 ? "text-right mr-4 w-[5%]" : ""}`}
-                                    >
-                                        {cell}
-                                    </ThemedText>
-                                )}
-                            </React.Fragment>
-                        ))}
-                    </ThemedView>
-                ))}
-            </ScrollView>
-        </ThemedView>
-    );
+const Table: React.FC<TableProps> = ({ columns, competitionId }) => {
+  const { standings, isLoading } = useStandings(competitionId);
+  //   const standings = [
+  //     {
+  //       id: 5648,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3208",
+  //       position: 1,
+  //       played: 22,
+  //       win: 12,
+  //       loss: 3,
+  //       draw: 7,
+  //       goals_for: 35,
+  //       goals_against: 15,
+  //       points: 43,
+  //       form: "DDDWD",
+  //       team: {
+  //         id: "sr:competitor:3208",
+  //         name: "Velez Sarsfield",
+  //         shortName: "VEL",
+  //         city: "Buenos Aires",
+  //         country: "ARG",
+  //         managerName: "Quinteros, Gustavo",
+  //         stadiumId: "sr:venue:1079",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Escudo_del_Club_Atl%C3%A9tico_V%C3%A9lez_Sarsfield.svg/140px-Escudo_del_Club_Atl%C3%A9tico_V%C3%A9lez_Sarsfield.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5692,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:7629",
+  //       position: 2,
+  //       played: 22,
+  //       win: 11,
+  //       loss: 2,
+  //       draw: 9,
+  //       goals_for: 25,
+  //       goals_against: 11,
+  //       points: 42,
+  //       form: "WDDWW",
+  //       team: {
+  //         id: "sr:competitor:7629",
+  //         name: "CA Huracan",
+  //         shortName: "HUR",
+  //         city: "Buenos Aires",
+  //         country: "ARG",
+  //         managerName: "Kudelka, Frank",
+  //         stadiumId: "sr:venue:12021",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Emblema_oficial_del_Club_Atl%C3%A9tico_Hurac%C3%A1n.svg/98px-Emblema_oficial_del_Club_Atl%C3%A9tico_Hurac%C3%A1n.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5694,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3215",
+  //       position: 3,
+  //       played: 22,
+  //       win: 11,
+  //       loss: 7,
+  //       draw: 4,
+  //       goals_for: 32,
+  //       goals_against: 21,
+  //       points: 37,
+  //       form: "WLWWW",
+  //       team: {
+  //         id: "sr:competitor:3215",
+  //         name: "Racing Club Avellaneda",
+  //         shortName: "RAC",
+  //         city: "Buenos Aires",
+  //         country: "ARG",
+  //         managerName: "Costas, Gustavo",
+  //         stadiumId: "sr:venue:1082",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/132px-Escudo_de_Racing_Club_%282014%29.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5695,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3211",
+  //       position: 4,
+  //       played: 22,
+  //       win: 9,
+  //       loss: 4,
+  //       draw: 9,
+  //       goals_for: 30,
+  //       goals_against: 16,
+  //       points: 36,
+  //       form: "DDWWW",
+  //       team: {
+  //         id: "sr:competitor:3211",
+  //         name: "CA River Plate (ARG)",
+  //         shortName: "RIV",
+  //         city: "Buenos Aires",
+  //         country: "ARG",
+  //         managerName: "Gallardo, Marcelo",
+  //         stadiumId: "sr:venue:1009",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Escudo_del_C_A_River_Plate.svg/129px-Escudo_del_C_A_River_Plate.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5696,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3210",
+  //       position: 5,
+  //       played: 22,
+  //       win: 9,
+  //       loss: 4,
+  //       draw: 9,
+  //       goals_for: 26,
+  //       goals_against: 22,
+  //       points: 36,
+  //       form: "LDDLW",
+  //       team: {
+  //         id: "sr:competitor:3210",
+  //         name: "CA Talleres de Cordoba",
+  //         shortName: "CAT",
+  //         city: "Cordoba",
+  //         country: "ARG",
+  //         managerName: "Medina, Alexander",
+  //         stadiumId: "sr:venue:2388",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Escudo_Talleres_2015.svg/154px-Escudo_Talleres_2015.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5697,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3204",
+  //       position: 6,
+  //       played: 22,
+  //       win: 10,
+  //       loss: 6,
+  //       draw: 6,
+  //       goals_for: 24,
+  //       goals_against: 21,
+  //       points: 36,
+  //       form: "LWWLW",
+  //       team: {
+  //         id: "sr:competitor:3204",
+  //         name: "Union de Santa Fe",
+  //         shortName: "UNI",
+  //         city: "Santa Fe de la Vera Cruz",
+  //         country: "ARG",
+  //         managerName: "Gonzalez, Kily",
+  //         stadiumId: "sr:venue:4754",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Escudo_club_Atl%C3%A9tico_Uni%C3%B3n_de_santa_fe.svg/512px-Escudo_club_Atl%C3%A9tico_Uni%C3%B3n_de_santa_fe.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5698,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:36833",
+  //       position: 7,
+  //       played: 22,
+  //       win: 9,
+  //       loss: 7,
+  //       draw: 6,
+  //       goals_for: 21,
+  //       goals_against: 22,
+  //       points: 33,
+  //       form: "LWDWL",
+  //       team: {
+  //         id: "sr:competitor:36833",
+  //         name: "Atletico Tucuman",
+  //         shortName: "CAT",
+  //         city: "San Miguel de Tucuman",
+  //         country: "ARG",
+  //         managerName: "Sava, Facundo",
+  //         stadiumId: "sr:venue:12017",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Escudo_del_Club_Atletico_Tucuman.svg/136px-Escudo_del_Club_Atletico_Tucuman.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5706,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3202",
+  //       position: 8,
+  //       played: 22,
+  //       win: 8,
+  //       loss: 7,
+  //       draw: 7,
+  //       goals_for: 27,
+  //       goals_against: 23,
+  //       points: 31,
+  //       form: "LDLWW",
+  //       team: {
+  //         id: "sr:competitor:3202",
+  //         name: "Boca Juniors",
+  //         shortName: "BOC",
+  //         city: "Buenos Aires",
+  //         country: "ARG",
+  //         managerName: "Gago, Fernando",
+  //         stadiumId: "sr:venue:44628",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/CABJ70.png/138px-CABJ70.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5716,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:191648",
+  //       position: 9,
+  //       played: 22,
+  //       win: 8,
+  //       loss: 7,
+  //       draw: 7,
+  //       goals_for: 23,
+  //       goals_against: 23,
+  //       points: 31,
+  //       form: "WDDDD",
+  //       team: {
+  //         id: "sr:competitor:191648",
+  //         name: "Deportivo Riestra",
+  //         shortName: "RIE",
+  //         city: "Flores",
+  //         country: "ARG",
+  //         managerName: "Fabbiani, Cristian",
+  //         stadiumId: "sr:venue:17150",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Escudo_del_Club_Deportivo_Riestra.svg/138px-Escudo_del_Club_Deportivo_Riestra.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5718,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3209",
+  //       position: 10,
+  //       played: 22,
+  //       win: 6,
+  //       loss: 4,
+  //       draw: 12,
+  //       goals_for: 19,
+  //       goals_against: 14,
+  //       points: 30,
+  //       form: "WDDWL",
+  //       team: {
+  //         id: "sr:competitor:3209",
+  //         name: "CA Independiente Avellaneda",
+  //         shortName: "CAI",
+  //         city: "Buenos Aires",
+  //         country: "ARG",
+  //         managerName: "Vaccari, Julio",
+  //         stadiumId: "sr:venue:1099",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Escudo_del_Club_Atl%C3%A9tico_Independiente.svg/152px-Escudo_del_Club_Atl%C3%A9tico_Independiente.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5720,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3203",
+  //       position: 11,
+  //       played: 22,
+  //       win: 7,
+  //       loss: 6,
+  //       draw: 9,
+  //       goals_for: 27,
+  //       goals_against: 25,
+  //       points: 30,
+  //       form: "LDLDW",
+  //       team: {
+  //         id: "sr:competitor:3203",
+  //         name: "CA Belgrano de Cordoba",
+  //         shortName: "BEL",
+  //         city: "Cordoba",
+  //         country: "ARG",
+  //         managerName: "Cruz Real, Juan",
+  //         stadiumId: "sr:venue:4750",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Escudo_Oficial_del_Club_Atl%C3%A9tico_Belgrano.png/190px-Escudo_Oficial_del_Club_Atl%C3%A9tico_Belgrano.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5722,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3206",
+  //       position: 12,
+  //       played: 22,
+  //       win: 7,
+  //       loss: 6,
+  //       draw: 9,
+  //       goals_for: 25,
+  //       goals_against: 23,
+  //       points: 30,
+  //       form: "WDDDD",
+  //       team: {
+  //         id: "sr:competitor:3206",
+  //         name: "Estudiantes de La Plata",
+  //         shortName: "ELP",
+  //         city: "La Plata",
+  //         country: "ARG",
+  //         managerName: "Dominguez, Eduardo",
+  //         stadiumId: "sr:venue:1007",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Escudo_de_Estudiantes_de_La_Plata.svg/125px-Escudo_de_Estudiantes_de_La_Plata.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5724,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:36837",
+  //       position: 13,
+  //       played: 22,
+  //       win: 7,
+  //       loss: 6,
+  //       draw: 9,
+  //       goals_for: 17,
+  //       goals_against: 16,
+  //       points: 30,
+  //       form: "WWDDD",
+  //       team: {
+  //         id: "sr:competitor:36837",
+  //         name: "CA Platense",
+  //         shortName: "PLA",
+  //         city: "Florida",
+  //         country: "ARG",
+  //         managerName: "Gomez, Sergio",
+  //         stadiumId: "sr:venue:12712",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Escudo_del_Club_Alt%C3%A9tico_Platense.svg/127px-Escudo_del_Club_Alt%C3%A9tico_Platense.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5726,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:4937",
+  //       position: 14,
+  //       played: 22,
+  //       win: 8,
+  //       loss: 9,
+  //       draw: 5,
+  //       goals_for: 28,
+  //       goals_against: 25,
+  //       points: 29,
+  //       form: "LDLLL",
+  //       team: {
+  //         id: "sr:competitor:4937",
+  //         name: "Instituto AC Cordoba",
+  //         shortName: "IAC",
+  //         city: "Cordoba",
+  //         country: "ARG",
+  //         managerName: "Dabove, Diego",
+  //         stadiumId: "sr:venue:12033",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Escudo_Instituto_Atletico_Central_Cordoba.png/157px-Escudo_Instituto_Atletico_Central_Cordoba.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5728,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3205",
+  //       position: 15,
+  //       played: 22,
+  //       win: 7,
+  //       loss: 7,
+  //       draw: 8,
+  //       goals_for: 20,
+  //       goals_against: 19,
+  //       points: 29,
+  //       form: "DLDDW",
+  //       team: {
+  //         id: "sr:competitor:3205",
+  //         name: "Gimnasia Y Esgrima La Plata",
+  //         shortName: "GLP",
+  //         city: "La Plata",
+  //         country: "ARG",
+  //         managerName: "Mendez, Marcelo",
+  //         stadiumId: "sr:venue:12003",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Club-de-gimnasia-y-esgrima-la-plata-escudo.png/160px-Club-de-gimnasia-y-esgrima-la-plata-escudo.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5730,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:6074",
+  //       position: 16,
+  //       played: 22,
+  //       win: 6,
+  //       loss: 6,
+  //       draw: 10,
+  //       goals_for: 23,
+  //       goals_against: 24,
+  //       points: 28,
+  //       form: "WDDLL",
+  //       team: {
+  //         id: "sr:competitor:6074",
+  //         name: "CD Godoy Cruz",
+  //         shortName: "GOD",
+  //         city: "Mendoza",
+  //         country: "ARG",
+  //         managerName: "Oldra, Daniel",
+  //         stadiumId: "sr:venue:15676",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Logo_of_CD_Godoy_Cruz_Antonio_Tomba.png/161px-Logo_of_CD_Godoy_Cruz_Antonio_Tomba.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5732,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3201",
+  //       position: 17,
+  //       played: 22,
+  //       win: 7,
+  //       loss: 8,
+  //       draw: 7,
+  //       goals_for: 18,
+  //       goals_against: 19,
+  //       points: 28,
+  //       form: "WLWDW",
+  //       team: {
+  //         id: "sr:competitor:3201",
+  //         name: "CA San Lorenzo de Almagro",
+  //         shortName: "SLO",
+  //         city: "Flores",
+  //         country: "ARG",
+  //         managerName: "Russo, Miguel Angel",
+  //         stadiumId: "sr:venue:14324",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Escudo_del_Club_Atl%C3%A9tico_San_Lorenzo_de_Almagro.svg/160px-Escudo_del_Club_Atl%C3%A9tico_San_Lorenzo_de_Almagro.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5734,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3218",
+  //       position: 18,
+  //       played: 22,
+  //       win: 6,
+  //       loss: 7,
+  //       draw: 9,
+  //       goals_for: 22,
+  //       goals_against: 28,
+  //       points: 27,
+  //       form: "LLWWD",
+  //       team: {
+  //         id: "sr:competitor:3218",
+  //         name: "Atletico Lanus",
+  //         shortName: "LAN",
+  //         city: "Buenos Aires",
+  //         country: "ARG",
+  //         managerName: "Zielinski, Ricardo",
+  //         stadiumId: "sr:venue:981",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Escudo_de_Lan%C3%BAs.14.png/150px-Escudo_de_Lan%C3%BAs.14.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5736,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:7628",
+  //       position: 19,
+  //       played: 22,
+  //       win: 6,
+  //       loss: 8,
+  //       draw: 8,
+  //       goals_for: 25,
+  //       goals_against: 28,
+  //       points: 26,
+  //       form: "WDDLL",
+  //       team: {
+  //         id: "sr:competitor:7628",
+  //         name: "CA Tigre",
+  //         shortName: "TIG",
+  //         city: "Buenos Aires",
+  //         country: "ARG",
+  //         managerName: "Dominguez, Sebastian",
+  //         stadiumId: "sr:venue:4738",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Escudo_del_Club_Atl%C3%A9tico_Tigre_-_2019.svg/125px-Escudo_del_Club_Atl%C3%A9tico_Tigre_-_2019.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5738,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3216",
+  //       position: 20,
+  //       played: 22,
+  //       win: 7,
+  //       loss: 10,
+  //       draw: 5,
+  //       goals_for: 18,
+  //       goals_against: 22,
+  //       points: 26,
+  //       form: "WLDLW",
+  //       team: {
+  //         id: "sr:competitor:3216",
+  //         name: "Argentinos Juniors",
+  //         shortName: "ARG",
+  //         city: "Buenos Aires",
+  //         country: "ARG",
+  //         managerName: "Zermatten, Cristian",
+  //         stadiumId: "sr:venue:613",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Asociacion_Atletica_Argentinos_Juniors.svg/160px-Asociacion_Atletica_Argentinos_Juniors.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5740,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3217",
+  //       position: 21,
+  //       played: 22,
+  //       win: 6,
+  //       loss: 9,
+  //       draw: 7,
+  //       goals_for: 23,
+  //       goals_against: 22,
+  //       points: 25,
+  //       form: "DDLDL",
+  //       team: {
+  //         id: "sr:competitor:3217",
+  //         name: "CA Rosario Central",
+  //         shortName: "ROS",
+  //         city: "Rosario",
+  //         country: "ARG",
+  //         managerName: "Holan, Ariel",
+  //         stadiumId: "sr:venue:1329",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Rosario_Central_shield.jpg/250px-Rosario_Central_shield.jpg",
+  //       },
+  //     },
+  //     {
+  //       id: 5742,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:65676",
+  //       position: 22,
+  //       played: 22,
+  //       win: 6,
+  //       loss: 9,
+  //       draw: 7,
+  //       goals_for: 23,
+  //       goals_against: 28,
+  //       points: 25,
+  //       form: "WDLDD",
+  //       team: {
+  //         id: "sr:competitor:65676",
+  //         name: "CA Central Cordoba SE",
+  //         shortName: "CC",
+  //         city: "Santiago del Estero",
+  //         country: "ARG",
+  //         managerName: "De Felippe, Omar",
+  //         stadiumId: "sr:venue:49307",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Escudo_del_Club_Central_C%C3%B3rdoba_de_Santiago_del_Estero.svg/150px-Escudo_del_Club_Central_C%C3%B3rdoba_de_Santiago_del_Estero.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5759,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:36839",
+  //       position: 23,
+  //       played: 22,
+  //       win: 6,
+  //       loss: 9,
+  //       draw: 7,
+  //       goals_for: 23,
+  //       goals_against: 30,
+  //       points: 25,
+  //       form: "LDWWW",
+  //       team: {
+  //         id: "sr:competitor:36839",
+  //         name: "Defensa y Justicia",
+  //         shortName: "DYJ",
+  //         city: "Gobernador Julio A. Costa",
+  //         country: "ARG",
+  //         managerName: "De Muner, Pablo Daniel",
+  //         stadiumId: "sr:venue:12025",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Escudo_del_Club_Social_y_Deportivo_Defensa_y_Justicia.svg/160px-Escudo_del_Club_Social_y_Deportivo_Defensa_y_Justicia.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5760,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:36842",
+  //       position: 24,
+  //       played: 22,
+  //       win: 6,
+  //       loss: 9,
+  //       draw: 7,
+  //       goals_for: 15,
+  //       goals_against: 23,
+  //       points: 25,
+  //       form: "LWDDL",
+  //       team: {
+  //         id: "sr:competitor:36842",
+  //         name: "Independiente Rivadavia",
+  //         shortName: "IRM",
+  //         city: "Mendoza",
+  //         country: "ARG",
+  //         managerName: "Berti, Alfredo Jesus",
+  //         stadiumId: "sr:venue:12031",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Escudo_del_Club_Independiente_Rivadavia.svg/159px-Escudo_del_Club_Independiente_Rivadavia.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5761,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3219",
+  //       position: 25,
+  //       played: 22,
+  //       win: 5,
+  //       loss: 10,
+  //       draw: 7,
+  //       goals_for: 20,
+  //       goals_against: 28,
+  //       points: 22,
+  //       form: "DWLDL",
+  //       team: {
+  //         id: "sr:competitor:3219",
+  //         name: "CA Banfield",
+  //         shortName: "BAN",
+  //         city: "Buenos Aires",
+  //         country: "ARG",
+  //         managerName: "Munua, Gustavo",
+  //         stadiumId: "sr:venue:634",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/CA_Banfield_%282014%29.svg/98px-CA_Banfield_%282014%29.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5762,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:42338",
+  //       position: 26,
+  //       played: 22,
+  //       win: 4,
+  //       loss: 9,
+  //       draw: 9,
+  //       goals_for: 15,
+  //       goals_against: 23,
+  //       points: 21,
+  //       form: "DDDLL",
+  //       team: {
+  //         id: "sr:competitor:42338",
+  //         name: "CA Sarmiento Junin",
+  //         shortName: "CAS",
+  //         city: "Junin",
+  //         country: "ARG",
+  //         managerName: "Funes, Martin",
+  //         stadiumId: "sr:venue:8975",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Escudo_del_Club_Atl%C3%A9tico_Sarmiento_de_Jun%C3%ADn.svg/163px-Escudo_del_Club_Atl%C3%A9tico_Sarmiento_de_Jun%C3%ADn.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5763,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:3212",
+  //       position: 27,
+  //       played: 22,
+  //       win: 5,
+  //       loss: 11,
+  //       draw: 6,
+  //       goals_for: 15,
+  //       goals_against: 29,
+  //       points: 21,
+  //       form: "LDLLL",
+  //       team: {
+  //         id: "sr:competitor:3212",
+  //         name: "Newell's Old Boys",
+  //         shortName: "NOB",
+  //         city: "Rosario",
+  //         country: "ARG",
+  //         managerName: "Lunari, Ricardo",
+  //         stadiumId: "sr:venue:1567",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Escudo_del_Club_Atl%C3%A9tico_Newell%27s_Old_Boys_de_Rosario.svg/130px-Escudo_del_Club_Atl%C3%A9tico_Newell%27s_Old_Boys_de_Rosario.svg.png",
+  //       },
+  //     },
+  //     {
+  //       id: 5764,
+  //       competitionId: "sr:season:114317",
+  //       teamId: "sr:competitor:65668",
+  //       position: 28,
+  //       played: 22,
+  //       win: 3,
+  //       loss: 12,
+  //       draw: 7,
+  //       goals_for: 10,
+  //       goals_against: 29,
+  //       points: 16,
+  //       form: "LDWLL",
+  //       team: {
+  //         id: "sr:competitor:65668",
+  //         name: "Barracas Central",
+  //         shortName: "BAR",
+  //         city: "Barracas",
+  //         country: "ARG",
+  //         managerName: "Insua, Ruben Dario",
+  //         stadiumId: "sr:venue:69401",
+  //         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Barracas_central_logo.svg/124px-Barracas_central_logo.svg.png",
+  //       },
+  //     },
+  //   ];
+
+  const a = 1;
+  if (isLoading) {
+    return <ThemedText>Loading...</ThemedText>;
+  }
+
+  console.log(typeof standings);
+
+  const data = standings?.map((item) => {
+    const goalDifference = item.goals_for - item.goals_against;
+    const formattedGoalDifference =
+      goalDifference > 0 ? `+${goalDifference}` : `${goalDifference}`;
+    return [
+      item.position,
+      item.team.logo,
+      item.team.name,
+      item.played,
+      formattedGoalDifference,
+      item.points,
+    ];
+  });
+  console.log(data);
+
+  return (
+    <ThemedView type="secondary" className="m-4 p-2 rounded-lg flex-1">
+      {/* Table Header */}
+      <ThemedView className="flex-row justify-start dark:bg-dark-secondary mb-0.5">
+        {columns.map((col, index) => (
+          <ThemedText
+            key={index}
+            className={`p-2 mb-1 text-xs bg-white dark:bg-dark-secondary text-center ${
+              index === 1 ? "w-[54%] text-left" : "w-[12%]"
+            }`}
+          >
+            {col}
+          </ThemedText>
+        ))}
+      </ThemedView>
+      {/* Table Rows */}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {data?.map((row, rowIndex) => (
+          <ThemedView
+            key={rowIndex}
+            className={`flex-row justify-between items-center bg-white dark:bg-dark-secondary p-2 mb-0.5 ${
+              rowIndex === 0 ? "border-l-2 border-green-500 pl-1.5" : ""
+            }`}
+          >
+            {row.map((cell, cellIndex) => (
+              <React.Fragment key={cellIndex}>
+                {cellIndex === 1 ? (
+                  <ThemedView className="pl-2">
+                    <Image
+                      resizeMode="contain"
+                      source={{
+                        uri: cell as string,
+                      }}
+                      className="w-[20px] h-[20px]"
+                    />
+                  </ThemedView>
+                ) : (
+                  <ThemedText
+                    className={`text-center text-xs text-gray-600 dark:text-gray-200 ${
+                      cellIndex === 2 ? "w-[49%] text-left pl-2" : "w-[12%]"
+                    } ${cellIndex === 0 ? "text-right mr-4 w-[5%]" : ""}`}
+                  >
+                    {cell}
+                  </ThemedText>
+                )}
+              </React.Fragment>
+            ))}
+          </ThemedView>
+        ))}
+      </ScrollView>
+    </ThemedView>
+  );
 };
 
 export default Table;
