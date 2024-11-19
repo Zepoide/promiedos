@@ -33,9 +33,7 @@ const Standings = () => {
 
     const riverLogo = "https://crests.football-data.org/6667.png";
 
-    // TODO: arreglar la llamada de hooks, no funciona el fetch de datos
-
-    const data = competitionInfo.map((item) => {
+    const data = competitionInfo?.map((item) => {
         const goalDifference = item.goals_for - item.goals_against;
         const formattedGoalDifference =
             goalDifference > 0 ? `+${goalDifference}` : `${goalDifference}`;
@@ -49,32 +47,6 @@ const Standings = () => {
             item.points,
         ];
     });
-
-    const pagerRef = useRef<PagerView>(null);
-    const flatListRef = useRef<FlatList<string>>(null);
-
-    const [selectedSection, setSelectedSection] = useState(sections[0]);
-    const [selectedInfo, setSelectedInfo] = useState(info[0]);
-
-    const handleSectionPress = (section: string, index: number) => {
-        setSelectedSection(section);
-        flatListRef.current?.scrollToIndex({
-            index,
-            animated: true,
-            viewPosition: 0.5,
-        });
-        pagerRef.current?.setPageWithoutAnimation(index);
-    };
-
-    const handleInfoPress = (info: string, index: number) => {
-        setSelectedInfo(info);
-        flatListRef.current?.scrollToIndex({
-            index,
-            animated: true,
-            viewPosition: 0.5,
-        });
-        pagerRef.current?.setPageWithoutAnimation(index);
-    };
 
     const columns = ["#", "Team", "J", "GD", "PTS"];
 
@@ -91,70 +63,6 @@ const Standings = () => {
                 <ThemedText className="text-2xl font-extrabold p-3">
                     STANDINGS
                 </ThemedText>
-            </ThemedView>
-            <ThemedView className="flex-row justify-center items-center">
-                <FlatList
-                    ref={flatListRef}
-                    data={sections}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{
-                        justifyContent: "center",
-                        backgroundColor:
-                            colorScheme === "light" ? "#fff" : "#1B1B1B",
-                        height: 80,
-                    }}
-                    renderItem={({ item, index }) => (
-                        <Pressable
-                            onPress={() => handleSectionPress(item, index)}
-                            className={`p-3 flex justify-center items-center border-b-2 ${selectedSection === item ? "border-light-tint dark:border-[#84DC7B]" : "border-transparent"}`}
-                        >
-                            <ThemedText
-                                className={`text-base font-bold ${selectedSection === item ? `text-${colorScheme}-text` : "text-gray-500"}`}
-                            >
-                                {item}
-                            </ThemedText>
-                        </Pressable>
-                    )}
-                    getItemLayout={(_, index) => ({
-                        length: 100,
-                        offset: 100 * index,
-                        index,
-                    })}
-                />
-            </ThemedView>
-            <ThemedView className="flex-row justify-center items-center">
-                <FlatList
-                    ref={flatListRef}
-                    data={info}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{
-                        justifyContent: "center",
-                        backgroundColor: Colors[colorScheme ?? "dark"].primary,
-                        borderRadius: 24,
-                        marginTop: 20,
-                        gap: 6,
-                        height: 40,
-                    }}
-                    renderItem={({ item, index }) => (
-                        <Pressable
-                            onPress={() => handleInfoPress(item, index)}
-                            className={`p-1 flex justify-center items-center rounded-full duration-300 ease-in-out ${selectedInfo === item ? "bg-gray-500" : "bg-transparent"}`}
-                        >
-                            <ThemedText
-                                className={`text-base font-bold ${selectedInfo === item ? `text-green-400` : "text-white"}`}
-                            >
-                                {item}
-                            </ThemedText>
-                        </Pressable>
-                    )}
-                    getItemLayout={(_, index) => ({
-                        length: 100,
-                        offset: 100 * index,
-                        index,
-                    })}
-                />
             </ThemedView>
 
             <TableStandings columns={columns} data={data} />
