@@ -3,43 +3,47 @@ import { Tabs, Stack } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function TabLayout() {
-    const { colorScheme, toggleColorScheme } = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
-    return (
-        <Tabs
-            screenOptions={{
-                tabBarActiveTintColor: Colors[colorScheme].tint,
-                headerShown: false,
-                tabBarStyle: {
-                    backgroundColor: Colors[colorScheme].primary,
-                },
-            }}
-        >
-            <Tabs.Screen
-                name="index"
-                options={{
-                    title: "Partidos",
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
-                            name={focused ? "football" : "football-outline"}
-                            color={color}
-                        />
-                    ),
-                }}
+  return (
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme].tint,
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: Colors[colorScheme].primary,
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Matches",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "football" : "football-outline"}
+              color={color}
             />
-            <Tabs.Screen
-                name="profile"
-                options={{
-                    title: "User",
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
-                            name={focused ? "person" : "person-outline"}
-                            color={color}
-                        />
-                    ),
-                }}
+            // <MaterialCommunityIcons
+            //   name="soccer-field"
+            //   color={color}
+            //   size={24}
+            // />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "User",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "person" : "person-outline"}
+              color={color}
+
             />
             <Tabs.Screen
                 name="standings"

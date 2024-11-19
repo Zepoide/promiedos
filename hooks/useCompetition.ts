@@ -36,13 +36,14 @@ export default function useCompetition(id: string): UseCompetitionResult {
         }
     }
 
-    const {
-        data: competitionInfo,
-        isLoading,
-        error,
-    } = useQuery<CompetitionDetails>({
-        queryKey: ["competition"],
-        queryFn: () => fetchCompetitionDetails(id),
-    });
-    return { competitionInfo, isLoading, error };
+  const {
+    data: competitionInfo,
+    isLoading,
+    error,
+  } = useQuery<CompetitionDetails>({
+    queryKey: ["competition", id],
+    queryFn: () => fetchCompetitionDetails(id),
+  });
+  return { competitionInfo, isLoading, error };
+
 }
