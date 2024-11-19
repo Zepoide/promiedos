@@ -4,8 +4,6 @@ import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import useMatches from "@/hooks/useMatches";
 import CompetitionMatches from "./CompetitionMatches";
-import { Collapsible } from "./Collapsible";
-import MatchInfo from "./MatchInfo";
 
 interface MatchesPerDayProps {
   date: Date;

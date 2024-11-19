@@ -19,7 +19,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: "Matches",
           tabBarIcon: ({ color, focused }) => (
@@ -35,24 +35,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "User",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "person" : "person-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="(details)"
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
+      <Stack.Screen name="(details)" />
     </Tabs>
   );
 }

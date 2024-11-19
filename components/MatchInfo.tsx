@@ -19,7 +19,11 @@ const MatchInfo = ({ match }: MatchInfoProps) => {
       <ThemedView className="flex flex-row justify-evenly itemes-center m-auto gap-x-2">
         <Image
           resizeMode="contain"
-          source={{ uri: "https://crests.football-data.org/6667.png" }}
+          source={{
+            uri:
+              match.homeTeam.logo ||
+              "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
+          }}
           className="w-6 h-6"
         />
 
@@ -34,9 +38,11 @@ const MatchInfo = ({ match }: MatchInfoProps) => {
         <Image
           resizeMode="contain"
           source={{
-            uri: "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
+            uri:
+              match.awayTeam.logo ||
+              "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
           }}
-          className="w-[25px] h-[25px]"
+          className="w-6 h-6"
         />
       </ThemedView>
       <ThemedView className="flex-1 flex-row items-center ml-2">
