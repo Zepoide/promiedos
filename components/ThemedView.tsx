@@ -30,17 +30,24 @@
 import { View, type ViewProps } from "react-native";
 
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "nativewind";
 
 export type ThemedViewProps = ViewProps & {
   type?: "background" | "primary" | "secondary";
 };
 
-export function ThemedView({
-  style,
-  type = "background",
-  ...otherProps
-}: ThemedViewProps) {
-  const backgroundColor = useThemeColor({}, type);
+export function ThemedView({ style, type, ...otherProps }: ThemedViewProps) {
+  // const backgroundColor = useThemeColor({}, type);
+  const { colorScheme } = useColorScheme();
 
-  return <View style={[{ backgroundColor }, style]} {...otherProps} />;
+  return (
+    <View
+      style={[
+        { backgroundColor: type ? Colors[colorScheme][type] : "transparent" },
+        style,
+      ]}
+      {...otherProps}
+    />
+  );
 }

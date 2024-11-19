@@ -1,11 +1,12 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, Stack } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function TabLayout() {
-  const { colorScheme, toggleColorScheme } = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   return (
     <Tabs
@@ -13,40 +14,38 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Colors[colorScheme].background,
+          backgroundColor: Colors[colorScheme].primary,
         },
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: "Partidos",
+          title: "Matches",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "football" : "football-outline"}
               color={color}
             />
+            // <MaterialCommunityIcons
+            //   name="soccer-field"
+            //   color={color}
+            //   size={24}
+            // />
           ),
         }}
       />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "User",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "person" : "person-outline"}
-              color={color}
-            />
-          ),
-        }}
-      />
-      {/* <Tabs.Screen
-        name="register"
-        options={{
-          tabBarButton: () => null,
-        }}
-      /> */}
+      <Stack.Screen name="(details)" />
     </Tabs>
   );
+}
+
+{
+  /* <Stack screenOptions={{ gestureEnabled: true }}>
+  <Stack.Screen name="index" options={{ headerShown: false }} />
+  <Stack.Screen name="competition/[id]" />
+  <Stack.Screen name="profile" />
+  <Stack.Screen name="register" />
+  <Stack.Screen name="standings" options={{ headerShown: false }} />
+</Stack>; */
 }

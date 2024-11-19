@@ -1,32 +1,38 @@
-export const generateDates = (startDate: string): string[] => {
+import { iso3ToIso2Map } from "../constants/Countries";
+
+export const generateDates = (startDate: Date): Date[] => {
   const dates = [];
   const start = new Date(startDate);
 
   for (let i = -6; i <= 6; i++) {
     const date = new Date(start);
     date.setDate(start.getDate() + i);
-    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-    dates.push(formattedDate);
+    dates.push(date);
   }
   return dates;
 };
 
-export const formatDate = (dateString: string): string => {
-  const [year, month, day] = dateString.split("-").map(Number);
+export const formatDate = (date: Date): string => {
+  const normalizeDate = (d: Date): Date => {
+    const normalized = new Date(d);
+    normalized.setHours(0, 0, 0, 0);
+    return normalized;
+  };
 
-  const date = new Date(year, month - 1, day);
-  const today = new Date();
+  const today = normalizeDate(new Date());
   const tomorrow = new Date(today);
   const yesterday = new Date(today);
 
   tomorrow.setDate(today.getDate() + 1);
   yesterday.setDate(today.getDate() - 1);
 
-  if (date.toDateString() === today.toDateString()) {
+  const targetDate = normalizeDate(date);
+
+  if (targetDate.getTime() === today.getTime()) {
     return "Today";
-  } else if (date.toDateString() === tomorrow.toDateString()) {
+  } else if (targetDate.getTime() === tomorrow.getTime()) {
     return "Tomorrow";
-  } else if (date.toDateString() === yesterday.toDateString()) {
+  } else if (targetDate.getTime() === yesterday.getTime()) {
     return "Yesterday";
   }
 
@@ -36,5 +42,19 @@ export const formatDate = (dateString: string): string => {
     month: "short",
   };
 
-  return date.toLocaleDateString("en-GB", options).replace(",", "");
+  return targetDate.toLocaleDateString("en-GB", options).replace(",", "");
+};
+
+export const iso2Code = (string: string): string => {
+  return iso3ToIso2Map[string];
+};
+
+export const decodeBase64Url = (base64Url: string): string => {
+  // In the browser, use atob to decode base64 URL
+  if (typeof atob !== "undefined") {
+    return atob(base64Url.replace(/-/g, "+").replace(/_/g, "/"));
+  }
+
+  // In Node.js, use Buffer for base64 decoding
+  return Buffer.from(base64Url, "base64").toString("utf-8");
 };
