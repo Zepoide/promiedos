@@ -19,7 +19,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: "Matches",
           tabBarIcon: ({ color, focused }) => (
@@ -35,46 +35,13 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "User",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "person" : "person-outline"}
-              color={color}
-
-            />
-            <Tabs.Screen
-                name="standings"
-                options={{
-                    title: "Standings",
-                    tabBarIcon: ({ color, focused }) => (
-                        <TabBarIcon
-                            name={focused ? "trophy" : "trophy-outline"}
-                            color={color}
-                        />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="register"
-                options={{
-                    tabBarButton: () => null,
-                }}
-            />
-            <Tabs.Screen
-                name="(details)"
-                options={{
-                    tabBarButton: () => null,
-                }}
-            />
-        </Tabs>
-    );
+      <Stack.Screen name="(details)" />
+    </Tabs>
+  );
 }
 
 {
-    /* <Stack screenOptions={{ gestureEnabled: true }}>
+  /* <Stack screenOptions={{ gestureEnabled: true }}>
   <Stack.Screen name="index" options={{ headerShown: false }} />
   <Stack.Screen name="competition/[id]" />
   <Stack.Screen name="profile" />

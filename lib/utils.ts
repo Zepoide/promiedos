@@ -48,3 +48,13 @@ export const formatDate = (date: Date): string => {
 export const iso2Code = (string: string): string => {
   return iso3ToIso2Map[string];
 };
+
+export const decodeBase64Url = (base64Url: string): string => {
+  // In the browser, use atob to decode base64 URL
+  if (typeof atob !== "undefined") {
+    return atob(base64Url.replace(/-/g, "+").replace(/_/g, "/"));
+  }
+
+  // In Node.js, use Buffer for base64 decoding
+  return Buffer.from(base64Url, "base64").toString("utf-8");
+};

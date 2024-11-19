@@ -1,24 +1,29 @@
-// pages/Register.tsx
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import { ThemedView } from "@/components/ThemedView";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import SubmitButton from "@/components/SubmitButton";
 import { useForm } from "react-hook-form";
 import ControllerForm from "@/components/ControllerForm";
 import { useColorScheme } from "nativewind";
+import apiService from "@/services/api.service";
+import Icon from "@/components/Icon";
 
 const Register = () => {
   const { colorScheme } = useColorScheme();
+  const router = useRouter();
   const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   type FormData = {
     username: string;
     email: string;
@@ -32,9 +37,19 @@ const Register = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const handleRegister = (data: any) => {
-    // Implement your registration logic here
-    console.log(data);
+  const handleRegister = async ({ username, email, password }: FormData) => {
+    try {
+      const response = await apiService.post("/auth/register", {
+        username,
+        email,
+        password,
+      });
+      if (response.ok) {
+        router.push("/login");
+      }
+    } catch (error: any) {
+      Alert.alert("Error", error.message);
+    }
   };
 
   return (
@@ -53,6 +68,7 @@ const Register = () => {
             flex: 1,
             width: "auto",
             backgroundColor: Colors[colorScheme ?? "light"].background,
+            position: "relative",
           }}
         >
           <ThemedView className="flex-col gap-3 justify-center items-center">
@@ -129,13 +145,16 @@ const Register = () => {
 
             <ThemedView className="flex-row">
               <ThemedText>Have an account? </ThemedText>
-              <Link href={"/profile"}>
+              <Link replace href={"/login"}>
                 <ThemedText>Log In</ThemedText>
               </Link>
             </ThemedView>
           </ThemedView>
         </SafeAreaView>
       </TouchableWithoutFeedback>
+      <Link href="/(tabs)/home">
+        <ThemedText>HOLA</ThemedText>
+      </Link>
     </KeyboardAvoidingView>
   );
 };
