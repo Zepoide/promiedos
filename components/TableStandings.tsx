@@ -1,13 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
-import {
-    ScrollView,
-    Image,
-    TouchableOpacity,
-    Animated,
-    Easing,
-} from "react-native";
+import { ScrollView, Image, TouchableOpacity } from "react-native";
 import useStandings from "@/hooks/useStandings";
 
 interface TableProps {
@@ -24,14 +18,14 @@ const Table: React.FC<TableProps> = ({
     const { standings, isLoading } = useStandings(competitionId);
     const tabs = ["Resumed", "Complete", "W/L"];
 
-    const columns2 = [
+    const differentTabs = [
         ["#", "Team", "P", "GD", "PTS"],
         ["#", "Team", "P", "W", "D", "L", "+/-", "GD", "PTS"],
         ["#", "Team", "Last 5 games"],
     ];
 
     const [activeTab, setActiveTab] = useState(initialTab);
-    const columns = columns2[activeTab];
+    const columns = differentTabs[activeTab];
 
     if (isLoading) {
         return <ThemedText>Loading...</ThemedText>;
