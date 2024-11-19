@@ -43,22 +43,38 @@ export default function TabLayout() {
             <TabBarIcon
               name={focused ? "person" : "person-outline"}
               color={color}
+
             />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="(details)"
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-    </Tabs>
-  );
+            <Tabs.Screen
+                name="standings"
+                options={{
+                    title: "Standings",
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon
+                            name={focused ? "trophy" : "trophy-outline"}
+                            color={color}
+                        />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="register"
+                options={{
+                    tabBarButton: () => null,
+                }}
+            />
+            <Tabs.Screen
+                name="(details)"
+                options={{
+                    tabBarButton: () => null,
+                }}
+            />
+        </Tabs>
+    );
 }
 
 {
-  /* <Stack screenOptions={{ gestureEnabled: true }}>
+    /* <Stack screenOptions={{ gestureEnabled: true }}>
   <Stack.Screen name="index" options={{ headerShown: false }} />
   <Stack.Screen name="competition/[id]" />
   <Stack.Screen name="profile" />

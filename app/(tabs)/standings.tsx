@@ -1,91 +1,78 @@
-import { SafeAreaView, ActivityIndicator, Image } from "react-native";
-import React from "react";
-
-import { Colors } from "@/constants/Colors";
-import { ThemedView } from "@/components/ThemedView";
-import { ThemedText } from "@/components/ThemedText";
+import { SafeAreaView, FlatList, Pressable, ScrollView } from "react-native";
 import { useColorScheme } from "nativewind";
-import useStandings from "@/hooks/useStandings";
-import fetchCompetitionDetails from "@/api/fetchCompetitionDetails";
-import { CompetitionDetails } from "@/types/types";
-import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useRef, useState } from "react";
+import { ThemedText } from "@/components/ThemedText";
+import { Colors } from "@/constants/Colors";
+import PagerView from "react-native-pager-view";
+import { ThemedView } from "@/components/ThemedView";
+import TableStandings from "@/components/TableStandings";
+import useCompetition from "@/hooks/useCompetition";
 
-const Competition = () => {
-  const { colorScheme } = useColorScheme();
+const sections = [
+    "Standings",
+    "Matches",
+    "News",
+    "Estad. Jugador",
+    "Estad. Equipos",
+    "Fichajes",
+    "TOTW",
+    "Temporadas",
+];
 
-  //   const standings = useStandings();
+const info = ["Resumed", "Complete", "W/L"];
 
-  const {
-    data: competitionInfo,
-    isLoading,
-    error,
-  } = useQuery<CompetitionDetails>({
-    queryKey: ["competition"],
-    queryFn: () => fetchCompetitionDetails("sr:season:114317"),
-  });
-  console.log(competitionInfo?.standings);
-  return (
-    <SafeAreaView style={{ backgroundColor: Colors[colorScheme].primary }}>
-      <ThemedView className=" flex justify-center items-center p-3">
-        {isLoading && (
-          <ActivityIndicator size="large" color={Colors[colorScheme].text} />
-        )}
-        {error && (
-          <ThemedText className="text-red-500">
-            Error: {(error as Error).message}
-          </ThemedText>
-        )}
-        {competitionInfo && (
-          <ThemedView className="flex flex-row justify-start w-full p-3 gap-3 items-center">
-            <Image
-              source={{
-                uri: "https://upload.wikimedia.org/wikipedia/commons/8/85/Logo_lpf_afa.png",
-              }}
-              resizeMode="contain"
-              style={{ width: 50, height: 50 }}
-            />
-            <ThemedView>
-              <ThemedText className="text-2xl font-extrabold">
-                {competitionInfo.name}
-              </ThemedText>
-              <ThemedText className="text-gray-500 capitalize font-semibold ">
-                {competitionInfo.country}
-              </ThemedText>
+const Standings = () => {
+    const { colorScheme } = useColorScheme();
+
+    const { competitionInfo, isLoading, error } =
+        useCompetition("sr:season:114317");
+
+    if (isLoading) {
+        return <ThemedText>Loading...</ThemedText>;
+    }
+
+    const riverLogo = "https://crests.football-data.org/6667.png";
+
+    const data = competitionInfo?.map((item) => {
+        const goalDifference = item.goals_for - item.goals_against;
+        const formattedGoalDifference =
+            goalDifference > 0 ? `+${goalDifference}` : `${goalDifference}`;
+        const logo = item.team.logo ? item.team.logo : riverLogo;
+        return [
+            item.position,
+            logo,
+            item.team.name,
+            item.played,
+            formattedGoalDifference,
+            item.points,
+        ];
+    });
+
+    const columns = ["#", "Team", "J", "GD", "PTS"];
+
+    return (
+        <SafeAreaView
+            style={{
+                flexDirection: "column",
+                alignContent: "center",
+                flex: 1,
+                backgroundColor: Colors[colorScheme ?? "dark"].background,
+            }}
+        >
+            <ThemedView className="flex-row justify-between items-center bg-white dark:bg-dark-primary">
+                <ThemedText className="text-2xl font-extrabold p-3">
+                    STANDINGS
+                </ThemedText>
             </ThemedView>
-          </ThemedView>
-        )}
-      </ThemedView>
-      <ThemedView
-        type="background"
-        className="flex h-full justify-center items-center"
-      >
-        {competitionInfo?.standings.map((standing) => (
-          <ThemedView className="flex-row">
-            <ThemedText>
-              {standing.teamId}
-              {"   "}{" "}
-            </ThemedText>
-            <ThemedText>
-              {standing.points}
-              {"   "}{" "}
-            </ThemedText>
-            <ThemedText>
-              {standing.played}
-              {"   "}{" "}
-            </ThemedText>
-            <ThemedText>
-              {standing.win}
-              {"   "}{" "}
-            </ThemedText>
-            <ThemedText>
-              {standing.loss}
-              {"  "}{" "}
-            </ThemedText>
-          </ThemedView>
-        ))}
-      </ThemedView>
-    </SafeAreaView>
-  );
+
+            <TableStandings columns={columns} data={data} />
+
+            <ThemedView className="w-full flex-row items-center pl-6 pb-2">
+                <ThemedView className="w-3 h-3 bg-green-500 mr-2 rounded-sm" />
+                <ThemedText>Campeon Liga Argentina</ThemedText>
+            </ThemedView>
+        </SafeAreaView>
+    );
 };
 
-export default Competition;
+export default Standings;
