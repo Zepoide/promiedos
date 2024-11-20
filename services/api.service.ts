@@ -46,7 +46,8 @@ export class ApiService {
       "Content-Type": "application/json",
       ...aditionalHeaders,
     };
-    console.log("headers", headers);
+    // console.log("headers", headers);
+
     const response = await fetch(this.baseUrl + endpoint, {
       method: "PUT",
       body: JSON.stringify(body),

@@ -13,6 +13,7 @@ const HomeScreen = () => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
   const today = new Date();
   const [dates, setDates] = useState(generateDates(today));
+  const { user } = useAuthorizedUser();
 
   return (
     <Container>

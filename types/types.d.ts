@@ -2,14 +2,14 @@ import { countries } from "@/constants/Countries";
 import MatchDetails from "../app/(details)/match/[id]";
 
 export interface Stadium {
-  id: string;
-  name: string;
-  capacity: number;
-  city_name: string;
-  country_name: string;
-  map_coordinates: string;
-  country_code: string;
-  timezone: string;
+    id: string;
+    name: string;
+    capacity: number;
+    city_name: string;
+    country_name: string;
+    map_coordinates: string;
+    country_code: string;
+    timezone: string;
 }
 
 export interface Match {
@@ -35,39 +35,39 @@ export interface Match {
 
 type CountryCode = keyof typeof countries;
 export interface CompetitionDetails {
-  id: string;
-  name: string;
-  country: string;
-  logo: string | null;
-  standings: Standings[];
-  matches: ?Match[];
+    id: string;
+    name: string;
+    country: string;
+    logo: string | null;
+    standings: Standings[];
+    matches: ?Match[];
 }
 
 export interface Standings {
-  competitionId: string;
-  draw: number;
-  form: string;
-  goals_against: number;
-  goals_for: number;
-  id: number;
-  loss: number;
-  played: number;
-  points: number;
-  position: number;
-  team: Team;
-  win: number;
+    competitionId: string;
+    draw: number;
+    form: string;
+    goals_against: number;
+    goals_for: number;
+    id: number;
+    loss: number;
+    played: number;
+    points: number;
+    position: number;
+    team: Team;
+    win: number;
 }
 
 export interface Competition {
-  id: string;
-  name: string;
-  country: string;
-  logo: string | null;
+    id: string;
+    name: string;
+    country: string;
+    logo: string | null;
 }
 export interface GroupedMatches {
-  competitionId: string;
-  competition: Competition;
-  matches: MatchPreview[];
+    competitionId: string;
+    competition: Competition;
+    matches: IMatchPreview[];
 }
 
 export interface IMatchPreview {
