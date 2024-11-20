@@ -1,8 +1,7 @@
 import React from "react";
-import { Tabs, Stack } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function TabLayout() {
