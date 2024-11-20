@@ -22,9 +22,12 @@ export default function FollowedTeams({ teamsIds }: { teamsIds: any }) {
 
   if (isLoading) return <ThemedText>Loading...</ThemedText>;
 
-  if (!followedTeams) {
-    console.log(followedTeams);
-    return <ThemedText>You do not follow any team</ThemedText>;
+  if (followedTeams?.length === 0) {
+    return (
+      <ThemedText className="font-bold text-center text-xl m-auto">
+        You do not follow any team
+      </ThemedText>
+    );
   }
   return (
     <FlatList
@@ -36,6 +39,7 @@ export default function FollowedTeams({ teamsIds }: { teamsIds: any }) {
           url={item.logo!}
           color={item.primary_color}
           text_color={item.number_color}
+          type="team"
         />
       )}
       numColumns={2}

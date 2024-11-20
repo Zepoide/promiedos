@@ -26,10 +26,9 @@ export default function FollowedCompetitions({
 
   if (isLoading) return <ThemedText>Loading...</ThemedText>;
 
-  if (!followedCompetitions) {
-    console.log(followedCompetitions);
+  if (followedCompetitions?.length === 0) {
     return (
-      <ThemedText className="font-bold text-center text-xl">
+      <ThemedText className="font-bold text-center text-xl m-auto">
         You do not follow any Competition
       </ThemedText>
     );
@@ -46,6 +45,7 @@ export default function FollowedCompetitions({
           url={item.logo!}
           color={item.primary_color}
           text_color={item.number_color}
+          type="competition"
         />
       )}
       numColumns={2}

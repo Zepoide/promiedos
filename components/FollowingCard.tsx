@@ -10,6 +10,7 @@ interface FollowingProps {
   id: string;
   color?: string;
   text_color?: string;
+  type: "competition" | "team";
 }
 
 const FollowingCard = ({
@@ -18,11 +19,12 @@ const FollowingCard = ({
   color,
   id,
   text_color,
+  type,
 }: FollowingProps) => {
   const router = useRouter();
 
   const handleFollowingPress = () => {
-    router.push(`/(details)/team/${id}`);
+    router.push(`/(details)/${type}/${id}`);
     return;
   };
   return (

@@ -20,7 +20,7 @@ const CompetitionDetails = () => {
   const { competitionInfo, isLoading } = useCompetition(competitionId);
   const { user, editUser } = useAuthorizedUser();
   const [following, setFollowing] = useState(
-    user.folllowedCompetitions.some((competitionId) => competitionId === id)
+    user.folllowedCompetitions.some(({ id }) => id === competitionId)
   );
 
   console.log("competitionInfo", competitionInfo);
