@@ -3,7 +3,7 @@ import Container from "@/components/Container";
 import { ThemedText } from "@/components/ThemedText";
 import useCompetition from "@/hooks/useCompetition";
 import { ThemedView } from "@/components/ThemedView";
-import { Button, Image, Pressable } from "react-native";
+import { Image } from "react-native";
 import { countries } from "@/constants/Countries";
 import CustomTabView from "@/components/CustomTabView";
 import BackButton from "@/components/BackButton";
@@ -42,7 +42,6 @@ const CompetitionDetails = () => {
   );
 
   if (competitionInfo) {
-    console.log(competitionInfo);
     return (
       <Container>
         <ThemedView className=" flex flex-row justify-between items-center mx-2">

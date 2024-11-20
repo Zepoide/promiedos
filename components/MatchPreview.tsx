@@ -19,7 +19,7 @@ const MatchPreviewComponent = ({ match }: MatchPreviewProps) => {
     >
       <ThemedView
         type="primary"
-        className="flex-1 flex-row justify-around w-full py-4 px-5 border-b border-[#fafafa] dark:border-zinc-800"
+        className="flex-1 flex-row justify-around w-full py-4 rounded-b-lg px-5 border-b border-[#fafafa] dark:border-zinc-800"
       >
         <ThemedView className="flex-1 flex-col justify-center items-end mr-2 ">
           <ThemedText className="font-semibold text-sm text-right">
