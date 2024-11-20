@@ -3,6 +3,7 @@ import {
   AuthContextType,
   UserPayload,
 } from "@/context/AuthContext";
+import apiService from "@/services/api.service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useContext, useEffect } from "react";
@@ -35,6 +36,7 @@ export function useNotAuthorizedUser(): (user: UserPayload) => void {
 export function useAuthorizedUser(): {
   user: UserPayload;
   setUser: (user: UserPayload | null) => void;
+  editUser: (user: UserPayload | null) => void;
 } {
   const { user, setUser } = useUser();
   useEffect(() => {
@@ -48,5 +50,15 @@ export function useAuthorizedUser(): {
   return {
     user: user as UserPayload,
     setUser,
+    editUser: async (data: any) => {
+      const jwt = await AsyncStorage.getItem("jwt");
+      if (!jwt) throw new Error("Inicia sesión para editar tus datos");
+      const response = await apiService.put("/user/update", data, {
+        Authorization: jwt,
+      });
+      const updatedUser = await response.json();
+
+      setUser(updatedUser);
+    },
   };
 }

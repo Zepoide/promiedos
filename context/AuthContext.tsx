@@ -11,7 +11,7 @@ interface UserPayload {
   id: number;
   username: string;
   followedTeams: string[];
-  followedCompetitions: string[];
+  folllowedCompetitions: string[];
 }
 
 type AuthContextType = {
