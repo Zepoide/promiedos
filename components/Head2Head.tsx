@@ -8,6 +8,7 @@ import { ThemedView } from "./ThemedView";
 import { View, Text, FlatList } from "react-native";
 import MatchPreview from "./MatchPreview";
 import { formatDate } from "../lib/utils";
+import { ActivityIndicator } from "react-native";
 
 const Head2Head = ({ matchId }: { matchId: string }) => {
   const { data, isLoading, error } = useQuery<H2HData>({
@@ -18,7 +19,7 @@ const Head2Head = ({ matchId }: { matchId: string }) => {
   if (isLoading) {
     return (
       <Container>
-        <ThemedText>Loading...</ThemedText>
+        <ActivityIndicator size="large" color="green" />
       </Container>
     );
   }

@@ -11,6 +11,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { formatDate } from "@/lib/utils";
 import { useColorScheme } from "nativewind";
 import TeamForm from "./TeamForm";
+import { ActivityIndicator } from "react-native";
 
 const MatchInfo = ({ matchId }: { matchId: string }) => {
   const { colorScheme } = useColorScheme();
@@ -26,7 +27,7 @@ const MatchInfo = ({ matchId }: { matchId: string }) => {
   if (isLoading) {
     return (
       <Container>
-        <ThemedText>Loading...</ThemedText>
+        <ActivityIndicator size="large" color="green" />
       </Container>
     );
   }

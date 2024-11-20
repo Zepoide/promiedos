@@ -13,6 +13,7 @@ import CustomTabView from "@/components/CustomTabView";
 import TableStandings from "@/components/TableStandings";
 import Head2Head from "@/components/Head2Head";
 import MatchInfo from "@/components/MatchInfo";
+import { ActivityIndicator } from "react-native";
 
 const MatchDetails = () => {
   const { id } = useLocalSearchParams();
@@ -23,11 +24,10 @@ const MatchDetails = () => {
   if (isLoading) {
     return (
       <Container>
-        <ThemedText>Loading...</ThemedText>
+        <ActivityIndicator size="large" color="green" />
       </Container>
     );
   }
-
   if (!match) {
     return (
       <Container>

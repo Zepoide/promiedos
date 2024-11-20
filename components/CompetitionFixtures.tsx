@@ -7,6 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { IMatchInfo } from "@/types/types";
 import { formatDate } from "@/lib/utils";
 import MatchPreview from "@/components/MatchPreview";
+import { ActivityIndicator } from "react-native";
+import Container from "./Container";
 
 interface Props {
   competitionId: string;
@@ -24,9 +26,9 @@ const CompetitionFixtures = ({ competitionId }: Props) => {
 
   if (isLoading) {
     return (
-      <ThemedView>
-        <ThemedText>Loading...</ThemedText>
-      </ThemedView>
+      <Container>
+        <ActivityIndicator size="large" color="green" />
+      </Container>
     );
   }
 

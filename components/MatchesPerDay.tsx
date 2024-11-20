@@ -9,6 +9,7 @@ import { FollowedTeamsResponse } from "@/types/types";
 import apiService from "@/services/api.service";
 import { useQuery } from "@tanstack/react-query";
 import MatchPreview from "./MatchPreview";
+import Container from "./Container";
 
 interface MatchesPerDayProps {
   date: Date;
@@ -29,9 +30,9 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
 
   if (isLoading) {
     return (
-      <ThemedView className="flex-1 flex justify-center items-center bg-white dark:bg-black">
-        <ActivityIndicator size="large" color="red" />
-      </ThemedView>
+      <Container>
+        <ActivityIndicator size="large" color="green" />
+      </Container>
     );
   }
 

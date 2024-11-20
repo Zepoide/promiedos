@@ -6,6 +6,7 @@ import apiService from "@/services/api.service";
 import { useQuery } from "@tanstack/react-query";
 import { ThemedView } from "./ThemedView";
 import { Image } from "react-native";
+import { ActivityIndicator } from "react-native";
 
 interface TeamFormsProps {
   teamId: string;
@@ -25,7 +26,7 @@ const TeamForm = ({ teamId, skip }: TeamFormsProps) => {
   if (isLoading) {
     return (
       <Container>
-        <ThemedText>Loading...</ThemedText>
+        <ActivityIndicator size="large" color="green" />
       </Container>
     );
   }

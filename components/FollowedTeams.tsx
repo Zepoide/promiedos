@@ -5,7 +5,8 @@ import { Team } from "@/types/types";
 import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "@/services/api.service";
-
+import { ActivityIndicator } from "react-native";
+import Container from "./Container";
 export default function FollowedTeams({ teamsIds }: { teamsIds: any }) {
   const { user } = useAuthorizedUser();
   //   const followedTeams = user.followedTeams;
@@ -20,7 +21,13 @@ export default function FollowedTeams({ teamsIds }: { teamsIds: any }) {
     queryKey: [`team-${teamsIds}-summary`],
   });
 
-  if (isLoading) return <ThemedText>Loading...</ThemedText>;
+  if (isLoading) {
+    return (
+      <Container>
+        <ActivityIndicator size="large" color="green" />
+      </Container>
+    );
+  }
 
   if (followedTeams?.length === 0) {
     return (

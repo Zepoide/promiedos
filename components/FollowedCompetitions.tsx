@@ -5,6 +5,8 @@ import { Team } from "@/types/types";
 import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "@/services/api.service";
+import { ActivityIndicator } from "react-native";
+import Container from "./Container";
 
 export default function FollowedCompetitions({
   competitionsIds,
@@ -24,7 +26,13 @@ export default function FollowedCompetitions({
     queryKey: [`competition-${competitionsIds}-info`],
   });
 
-  if (isLoading) return <ThemedText>Loading...</ThemedText>;
+  if (isLoading) {
+    return (
+      <Container>
+        <ActivityIndicator size="large" color="green" />
+      </Container>
+    );
+  }
 
   if (followedCompetitions?.length === 0) {
     return (

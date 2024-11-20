@@ -13,6 +13,7 @@ import TableStandings from "@/components/TableStandings";
 import apiService from "@/services/api.service";
 import { useAuthorizedUser } from "@/hooks/useUser";
 import CompetitionFixtures from "@/components/CompetitionFixtures";
+import { ActivityIndicator } from "react-native";
 
 const CompetitionDetails = () => {
   const { id } = useLocalSearchParams();
@@ -46,7 +47,7 @@ const CompetitionDetails = () => {
   if (isLoading) {
     return (
       <Container>
-        <ThemedText>Loading...</ThemedText>
+        <ActivityIndicator size="large" color="green" />
       </Container>
     );
   }

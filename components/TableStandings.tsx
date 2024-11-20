@@ -3,6 +3,8 @@ import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
 import { ScrollView, Image, TouchableOpacity } from "react-native";
 import useStandings from "@/hooks/useStandings";
+import { ActivityIndicator } from "react-native";
+import Container from "./Container";
 
 interface TableProps {
   competitionId: string;
@@ -28,9 +30,12 @@ const Table: React.FC<TableProps> = ({
   const columns = differentTabs[activeTab];
 
   if (isLoading) {
-    return <ThemedText>Loading...</ThemedText>;
+    return (
+      <Container>
+        <ActivityIndicator size="large" color="green" />
+      </Container>
+    );
   }
-
   const data = standings?.map((item) => {
     const goalDifference = item.goals_for - item.goals_against;
     const formattedGoalDifference =

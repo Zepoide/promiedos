@@ -17,6 +17,7 @@ import StadiumInfo from "@/components/StadiumInfo";
 import { ScrollView } from "react-native-gesture-handler";
 import { useLocalSearchParams } from "expo-router";
 import { useAuthorizedUser } from "@/hooks/useUser";
+import { ActivityIndicator } from "react-native";
 
 const Overview = ({ teamId }: { teamId: string }) => {
   const recentMatches = [
@@ -64,11 +65,10 @@ const Overview = ({ teamId }: { teamId: string }) => {
   if (isLoading) {
     return (
       <Container>
-        <ThemedText>Loading...</ThemedText>
+        <ActivityIndicator size="large" color="green" />
       </Container>
     );
   }
-
   if (!teamInfo) {
     return (
       <Container>
