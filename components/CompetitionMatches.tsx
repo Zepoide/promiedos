@@ -9,6 +9,7 @@ import { Competition } from "../types/types";
 import { flags } from "../constants/Flags";
 import { countries } from "@/constants/Countries";
 import Icon from "./Icon";
+import { useAuthorizedUser } from "@/hooks/useUser";
 
 const CompetitionMatches = ({
   competition,
@@ -21,7 +22,7 @@ const CompetitionMatches = ({
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <ThemedView className="mt-2 mx-2">
+    <ThemedView className="mt-2 mx-2 ">
       <ThemedView
         type="secondary"
         className={`flex flex-row p-3 justify-between items-center ${isOpen ? "rounded-t-lg" : "rounded-lg"} `}

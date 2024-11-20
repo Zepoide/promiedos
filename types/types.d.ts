@@ -164,3 +164,77 @@ export interface IMatchInfo {
     capacity: number;
   };
 }
+
+export interface TeamSummaryResponse {
+  team: {
+    id: string;
+    name: string;
+    shortName: string;
+    city: string;
+    country: string;
+    managerName: string;
+    stadiumId: string;
+    logo: string;
+    stadium: {
+      id: string;
+      name: string;
+      city: string;
+      country: string;
+      capacity: number;
+    };
+  };
+  next_match: {
+    id: string;
+    competitionId: string;
+    homeTeamId: string;
+    awayTeamId: string;
+    start_time: string; // ISO8601 format
+    scoreHome: number | null;
+    scoreAway: number | null;
+    status: string;
+    round: number;
+    stadiumId: string;
+    homeTeam: {
+      logo: string;
+      name: string;
+    };
+    awayTeam: {
+      logo: string;
+      name: string;
+    };
+    competition: {
+      name: string;
+    };
+  };
+  last_5_matches: {
+    id: string;
+    competitionId: string;
+    homeTeamId: string;
+    awayTeamId: string;
+    start_time: string; // ISO8601 format
+    scoreHome: number | null;
+    scoreAway: number | null;
+    status: string;
+    round: number;
+    stadiumId: string;
+    homeTeam: {
+      logo: string;
+      name: string;
+    };
+    awayTeam: {
+      logo: string;
+      name: string;
+    };
+  }[];
+}
+
+export interface Team {
+  id: string;
+  name: string;
+  shortName: string;
+  city: string;
+  country: string;
+  managerName: string;
+  stadiumId: string;
+  logo: string;
+}

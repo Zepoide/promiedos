@@ -2,11 +2,11 @@ import { View, Text } from "react-native";
 import React from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Image } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
 import { countries } from "@/constants/Countries";
 import BackButton from "@/components/BackButton";
 import Container from "@/components/Container";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import useMatch from "@/hooks/useMatch";
 import { formatDate } from "@/lib/utils";
 import CustomTabView from "@/components/CustomTabView";
@@ -18,6 +18,7 @@ const MatchDetails = () => {
   const { id } = useLocalSearchParams();
   const matchId = Array.isArray(id) ? id[0] : id;
   const { data: match, isLoading, error } = useMatch(matchId);
+  const router = useRouter();
 
   if (isLoading) {
     return (
@@ -35,8 +36,6 @@ const MatchDetails = () => {
     );
   }
 
-  console.log(match.homeTeamId, match.awayTeamId);
-
   return (
     <Container>
       <ThemedView className=" flex flex-row justify-between items-center mx-2">
@@ -44,15 +43,20 @@ const MatchDetails = () => {
       </ThemedView>
       <ThemedView className="flex flex-row justify-evenly items-center p-2">
         <ThemedView className="w-4/12 flex justify-center flex-col items-center gap-y-2">
-          <Image
-            resizeMode="contain"
-            source={{
-              uri:
-                match.homeTeam.logo ||
-                "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
-            }}
-            className="w-12 h-12"
-          />
+          <TouchableOpacity
+            onPress={() => router.push(`/team/${match.homeTeam.id}`)}
+          >
+            <Image
+              resizeMode="contain"
+              source={{
+                uri:
+                  match.homeTeam.logo ||
+                  "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
+              }}
+              className="w-12 h-12"
+            />
+          </TouchableOpacity>
+
           {/* <ThemedText className="text-center font-semibold">
             {match.homeTeam.name}
           </ThemedText> */}
@@ -69,15 +73,19 @@ const MatchDetails = () => {
           </ThemedText>
         </ThemedView>
         <ThemedView className="w-4/12 flex justify-center flex-col items-center  gap-y-2">
-          <Image
-            resizeMode="contain"
-            source={{
-              uri:
-                match.awayTeam.logo ||
-                "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
-            }}
-            className="w-12 h-12"
-          />
+          <TouchableOpacity
+            onPress={() => router.push(`/team/${match.awayTeam.id}`)}
+          >
+            <Image
+              resizeMode="contain"
+              source={{
+                uri:
+                  match.awayTeam.logo ||
+                  "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
+              }}
+              className="w-12 h-12"
+            />
+          </TouchableOpacity>
           {/* <ThemedText className="text-center font-semibold">
             {match.awayTeam.name}
           </ThemedText> */}
