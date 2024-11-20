@@ -235,5 +235,5 @@ const Table: React.FC<TableProps> = ({
       </ThemedView>
     </>
   );
-
+};
 export default Table;

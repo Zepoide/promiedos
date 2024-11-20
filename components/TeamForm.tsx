@@ -64,6 +64,7 @@ const TeamForm = ({ teamId, skip }: TeamFormsProps) => {
         >
           <Image
             source={{ uri: match.homeTeam?.logo || "" }}
+            defaultSource={require("@/assets/images/logo-placeholder.png")}
             resizeMode="contain"
             className="w-6 h-6"
           />
@@ -83,6 +84,7 @@ const TeamForm = ({ teamId, skip }: TeamFormsProps) => {
           <Image
             source={{ uri: match.awayTeam?.logo || "" }}
             resizeMode="contain"
+            defaultSource={require("@/assets/images/logo-placeholder.png")}
             className="w-6 h-6"
           />
         </ThemedView>
