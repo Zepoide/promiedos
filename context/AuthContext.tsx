@@ -9,7 +9,8 @@ import React, {
 
 interface UserPayload {
   id: number;
-  username: string;
+  name: string;
+  email: string;
   followedTeams: {
     id: string;
   }[];
