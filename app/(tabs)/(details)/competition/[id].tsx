@@ -10,15 +10,21 @@ import BackButton from "@/components/BackButton";
 import { useState } from "react";
 import FollowButton from "@/components/FollowButton";
 import TableStandings from "@/components/TableStandings";
+import apiService from "@/services/api.service";
+import { useAuthorizedUser } from "@/hooks/useUser";
 
 const CompetitionDetails = () => {
     const { id } = useLocalSearchParams();
     const competitionId = Array.isArray(id) ? id[0] : id;
     const { competitionInfo, isLoading, error } = useCompetition(competitionId);
     const [following, setFollowing] = useState(false);
+    const { user } = useAuthorizedUser();
+
+    console.log(user);
 
     const followCompetition = () => {
         setFollowing(!following);
+        apiService.post(`following/competition/${competitionId}`, user.id);
     };
 
     if (isLoading) {
