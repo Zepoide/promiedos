@@ -31,7 +31,14 @@ const MatchDetails = () => {
   if (!match) {
     return (
       <Container>
-        <ThemedText>Match not found</ThemedText>
+        <ThemedView className=" flex flex-row justify-between items-center mx-2">
+          <BackButton />
+        </ThemedView>
+        <ThemedView className="flex flex-1 justify-center items-center">
+          <ThemedText className="text-3xl font-bold">
+            Match not found
+          </ThemedText>
+        </ThemedView>
       </Container>
     );
   }

@@ -8,6 +8,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import MatchesPerDay from "@/components/MatchesPerDay";
 import Icon from "@/components/Icon";
+import { useAuthorizedUser } from "@/hooks/useUser";
 
 const HomeScreen = () => {
   const { colorScheme, toggleColorScheme } = useColorScheme();

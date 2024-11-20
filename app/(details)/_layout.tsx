@@ -22,6 +22,13 @@ export default function DetailsLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="team/[id]"
+        options={{
+          title: "Match Details",
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
