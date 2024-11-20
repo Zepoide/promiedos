@@ -1,9 +1,9 @@
 import React from "react";
-import { Tabs, Stack } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 
 export default function TabLayout() {
   const { colorScheme } = useColorScheme();
@@ -23,19 +23,42 @@ export default function TabLayout() {
         options={{
           title: "Matches",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "football" : "football-outline"}
-              color={color}
-            />
-            // <MaterialCommunityIcons
-            //   name="soccer-field"
-            //   color={color}
-            //   size={24}
+            // <TabBarIcon
+            //     name={focused ? "football" : "football-outline"}
+            //     color={color}
             // />
+            <MaterialCommunityIcons
+              name="soccer-field"
+              color={color}
+              size={24}
+            />
           ),
         }}
       />
-      <Stack.Screen name="(details)" />
+      <Tabs.Screen
+        name="following"
+        options={{
+          title: "Following",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "star" : "star-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="account"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "person" : "person-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

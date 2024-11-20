@@ -61,7 +61,6 @@ const LogIn = () => {
 
       router.replace("/(tabs)/home");
     } catch (error: any) {
-      console.error(error);
       Alert.alert("Error", error.message);
     }
   };

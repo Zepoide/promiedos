@@ -1,4 +1,5 @@
 import { countries } from "@/constants/Countries";
+import MatchDetails from "../app/(details)/match/[id]";
 
 export interface Stadium {
   id: string;
@@ -22,6 +23,14 @@ export interface Match {
   scoreAway: number;
   status: string;
   venue: Stadium;
+  homeTeam?: {
+    logo: string | null;
+    name: string;
+  };
+  awayTeam?: {
+    logo: string | null;
+    name: string;
+  };
 }
 
 type CountryCode = keyof typeof countries;
@@ -29,7 +38,7 @@ export interface CompetitionDetails {
   id: string;
   name: string;
   country: string;
-  logo: string | null;
+  logo: string;
   standings: Standings[];
   matches: ?Match[];
 }
@@ -45,7 +54,7 @@ export interface Standings {
   played: number;
   points: number;
   position: number;
-  teamId: string;
+  team: Team;
   win: number;
 }
 
@@ -58,21 +67,21 @@ export interface Competition {
 export interface GroupedMatches {
   competitionId: string;
   competition: Competition;
-  matches: MatchPreview[];
+  matches: IMatchPreview[];
 }
 
-export interface MatchPreview {
+export interface IMatchPreview {
   id: string;
-  competitionId: string;
+  competitionId?: string;
   homeTeamId: string;
   awayTeamId: string;
   start_time: string; // ISO date string
-  scoreHome: number;
-  scoreAway: number;
-  status: string; // e.g., "closed", "scheduled", etc.
-  round: number;
-  stadiumId: string;
-  competition: Competition;
+  scoreHome: number | null;
+  scoreAway: number | null;
+  status?: string; // e.g., "closed", "scheduled", etc.
+  round?: number;
+  stadiumId?: string;
+  competition?: Competition;
   homeTeam: {
     name: string;
     logo: string | null;
@@ -80,5 +89,187 @@ export interface MatchPreview {
   awayTeam: {
     name: string;
     logo: string | null;
+  };
+}
+
+export interface MatchDetails extends Match {
+  homeTeam: Team;
+  awayTeam: Team;
+  stadium: Stadium;
+  competition: Competition;
+}
+
+export type MatchH2H = {
+  id: string;
+  competition: string;
+  start_time: string;
+  home_team: Team;
+  away_team: Team;
+  scoreHome: number;
+  scoreAway: number;
+};
+
+type TeamH2H = {
+  id: string;
+  name: string;
+  country: string;
+  country_code: string;
+  abbreviation: string;
+  qualifier: "home" | "away";
+  gender: "male" | "female" | "other";
+};
+
+interface Team {
+  id: string;
+  name: string;
+  shortName: string;
+  city: string;
+  country: string;
+  managerName: string;
+  stadiumId: string;
+  logo: string | null;
+  primary_color: string;
+  secondary_color: string;
+  number_color: string;
+}
+
+export interface H2HData {
+  homeTeam: Team;
+  awayTeam: Team;
+  lastMatches: MatchH2H[];
+}
+
+export interface IMatchInfo {
+  id: string;
+  competitionId: string;
+  homeTeamId: string;
+  awayTeamId: string;
+  start_time: string; // ISO 8601 formatted string
+  scoreHome: number;
+  scoreAway: number;
+  status: string;
+  round: number;
+  stadiumId: string;
+  competition: {
+    id: string;
+    name: string;
+    country: string;
+    logo: string;
+  };
+  stadium: {
+    id: string;
+    name: string;
+    city: string;
+    country: string;
+    capacity: number;
+  };
+}
+
+export interface TeamSummaryResponse {
+  team: {
+    id: string;
+    name: string;
+    shortName: string;
+    city: string;
+    country: string;
+    managerName: string;
+    stadiumId: string;
+    logo: string;
+    stadium: {
+      id: string;
+      name: string;
+      city: string;
+      country: string;
+      capacity: number;
+    };
+    primary_color: string;
+    secondary_color: string;
+    number_color: string;
+  };
+  next_match: {
+    id: string;
+    competitionId: string;
+    homeTeamId: string;
+    awayTeamId: string;
+    start_time: string; // ISO8601 format
+    scoreHome: number | null;
+    scoreAway: number | null;
+    status: string;
+    round: number;
+    stadiumId: string;
+    homeTeam: {
+      logo: string;
+      name: string;
+    };
+    awayTeam: {
+      logo: string;
+      name: string;
+    };
+    competition: {
+      name: string;
+    };
+  };
+  last_5_matches: {
+    id: string;
+    competitionId: string;
+    homeTeamId: string;
+    awayTeamId: string;
+    start_time: string; // ISO8601 format
+    scoreHome: number | null;
+    scoreAway: number | null;
+    status: string;
+    round: number;
+    stadiumId: string;
+    homeTeam: {
+      logo: string;
+      name: string;
+    };
+    awayTeam: {
+      logo: string;
+      name: string;
+    };
+  }[];
+}
+
+export interface Team {
+  id: string;
+  name: string;
+  shortName: string;
+  city: string;
+  country: string;
+  managerName: string;
+  stadiumId: string;
+  logo: string;
+  stadium: {
+    id: string;
+    name: string;
+    city: string;
+    country: string;
+    capacity: number;
+  };
+  primary_color?: string;
+  secondary_color?: string;
+  number_color?: string;
+}
+
+export interface FollowedTeamsResponse {
+  id: string;
+  competitionId: string;
+  homeTeamId: string;
+  awayTeamId: string;
+  start_time: string;
+  scoreHome: number | null;
+  scoreAway: number | null;
+  status: "not_started" | "in_progress" | "finished"; // or add more possible statuses
+  round: number;
+  stadiumId: string;
+  competition: Competition;
+  homeTeam: {
+    name: string;
+    logo: string;
+  };
+  awayTeam: {
+    name: string;
+    logo: string;
   };
 }

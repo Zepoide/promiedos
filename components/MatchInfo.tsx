@@ -1,54 +1,130 @@
 import React from "react";
+import Container from "./Container";
+import { ThemedText } from "./ThemedText";
+import { IMatchInfo } from "@/types/types";
+import apiService from "@/services/api.service";
+import { useQuery } from "@tanstack/react-query";
+import { ThemedView } from "./ThemedView";
+import { Text } from "react-native";
 import { Image } from "react-native";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { MatchPreview } from "../types/types";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { formatDate } from "@/lib/utils";
+import { useColorScheme } from "nativewind";
+import TeamForm from "./TeamForm";
+import { ActivityIndicator } from "react-native";
 
-interface MatchInfoProps {
-  match: MatchPreview;
-}
+const MatchInfo = ({ matchId }: { matchId: string }) => {
+  const { colorScheme } = useColorScheme();
+  const {
+    data: matchInfo,
+    isLoading,
+    error,
+  } = useQuery<IMatchInfo>({
+    queryKey: [`match-info-${matchId}`],
+    queryFn: () => apiService.get(`/matches/${matchId}/info`),
+  });
 
-const MatchInfo = ({ match }: MatchInfoProps) => {
+  if (isLoading) {
+    return (
+      <Container>
+        <ActivityIndicator size="large" color="green" />
+      </Container>
+    );
+  }
+
+  if (!matchInfo) {
+    return (
+      <Container>
+        <ThemedText>Match not found</ThemedText>
+      </Container>
+    );
+  }
+
+  const matchResults: any = [
+    {
+      homeTeam: "/team-logos/gimnasia.png",
+      awayTeam: "/team-logos/nob.png",
+      score: "1 - 0",
+      resultType: "win",
+    },
+    {
+      homeTeam: "/team-logos/nob.png",
+      awayTeam: "/team-logos/huracan.png",
+      score: "2 - 4",
+      resultType: "loss",
+    },
+    {
+      homeTeam: "/team-logos/union.png",
+      awayTeam: "/team-logos/nob.png",
+      score: "2 - 0",
+      resultType: "loss",
+    },
+    {
+      homeTeam: "/team-logos/nob.png",
+      awayTeam: "/team-logos/sarmiento.png",
+      score: "1 - 1",
+      resultType: "draw",
+    },
+    {
+      homeTeam: "/team-logos/godoy.png",
+      awayTeam: "/team-logos/nob.png",
+      score: "2 - 0",
+      resultType: "loss",
+    },
+  ];
+
   return (
-    <ThemedView className="flex-1 flex-row justify-around w-full py-4 px-5 border-t border-[#fafafa] dark:border-zinc-800">
-      <ThemedView className="flex-1 flex-col justify-center items-end mr-2 ">
-        <ThemedText className="font-semibold text-sm text-right">
-          {match.homeTeam.name}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView className="flex flex-row justify-evenly itemes-center m-auto gap-x-2">
-        <Image
-          resizeMode="contain"
-          source={{
-            uri:
-              match.homeTeam.logo ||
-              "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
-          }}
-          className="w-6 h-6"
-        />
+    <ThemedView className="flex-1 m-2">
+      <ThemedView type="primary" className="p-4 rounded-xl space-y-4">
+        <ThemedView className="flex-row items-center space-x-2">
+          <MaterialCommunityIcons
+            name="calendar-clock"
+            size={24}
+            color={colorScheme === "dark" ? "white" : "black"}
+          />
+          <ThemedText className=" text-lg">
+            {formatDate(new Date(matchInfo.start_time))}{" "}
+            {new Date(matchInfo.start_time)
+              .toLocaleTimeString()
+              .split(":")
+              .slice(0, 2)
+              .join(":")}
+          </ThemedText>
+        </ThemedView>
 
-        <ThemedText className="text-gray-500 m-auto font-bold">
-          {new Date(match.start_time)
-            .toLocaleTimeString()
-            .split(":")
-            .slice(0, 2)
-            .join(":")}
-        </ThemedText>
+        <ThemedView className="flex-row items-center space-x-2">
+          <Image
+            source={{ uri: matchInfo.competition.logo }}
+            resizeMode="contain"
+            className="w-6 h-6"
+          />
+          <ThemedText className=" text-lg">
+            {matchInfo.competition.name} - Round {matchInfo.round}
+          </ThemedText>
+        </ThemedView>
 
-        <Image
-          resizeMode="contain"
-          source={{
-            uri:
-              match.awayTeam.logo ||
-              "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
-          }}
-          className="w-6 h-6"
-        />
+        <ThemedView className="flex-row items-center space-x-2">
+          <MaterialCommunityIcons
+            name="stadium"
+            size={24}
+            color={colorScheme === "dark" ? "white" : "black"}
+          />
+          <ThemedText className=" text-lg">
+            {matchInfo.stadium.name} - {matchInfo.stadium.city}
+          </ThemedText>
+        </ThemedView>
       </ThemedView>
-      <ThemedView className="flex-1 flex-row items-center ml-2">
-        <ThemedText className="font-semibold text-sm text-left">
-          {match.awayTeam.name}
-        </ThemedText>
+
+      <ThemedView type="primary" className="p-4 mt-2 rounded-xl space-y-4">
+        <ThemedText className="text-lg font-bold ">Team form</ThemedText>
+        <ThemedView className="flex flex-row justify-between">
+          <ThemedView className="w-1/3">
+            <TeamForm teamId={matchInfo.homeTeamId} />
+          </ThemedView>
+          <ThemedView className="w-1/3">
+            <TeamForm teamId={matchInfo.awayTeamId} />
+          </ThemedView>
+        </ThemedView>
       </ThemedView>
     </ThemedView>
   );

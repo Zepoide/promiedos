@@ -1,30 +1,30 @@
 import React, { useState } from "react";
-import { Image, Pressable, TouchableOpacity } from "react-native";
+import { Image, Pressable, TouchableOpacity, FlatList } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { MatchPreview } from "@/types/types";
-import MatchInfo from "./MatchInfo";
+import { IMatchPreview } from "@/types/types";
+import MatchPreview from "./MatchPreview";
 import { Link, useRouter } from "expo-router";
 import { Competition } from "../types/types";
 import { flags } from "../constants/Flags";
 import { countries } from "@/constants/Countries";
 import Icon from "./Icon";
+import { useAuthorizedUser } from "@/hooks/useUser";
 
 const CompetitionMatches = ({
   competition,
   matches,
 }: {
   competition: Competition;
-  matches: MatchPreview[];
+  matches: IMatchPreview[];
 }) => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <ThemedView className="mt-2 mx-2">
+    <ThemedView className="mt-2 mx-2 ">
       <ThemedView
         type="secondary"
-        className={`flex flex-row p-3 justify-between items-center ${isOpen ? "rounded-t-lg" : "rounded-lg"} `}
+        className={`flex flex-row p-3 justify-between items-center rounded-t-lg  `}
       >
         <Pressable
           onPress={() => {
@@ -46,21 +46,13 @@ const CompetitionMatches = ({
             </ThemedText>
           </ThemedView>
         </Pressable>
-        <TouchableOpacity onPress={() => setIsOpen((value) => !value)}>
-          <Icon
-            name={isOpen ? `chevron-up` : `chevron-down`}
-            size={16}
-            color={"gray"}
-          />
-        </TouchableOpacity>
       </ThemedView>
-      {isOpen && (
-        <ThemedView type="primary" className="rounded-b-lg">
-          {matches.map((match) => (
-            <MatchInfo key={match.id} match={match}></MatchInfo>
-          ))}
-        </ThemedView>
-      )}
+
+      <ThemedView type="primary" className="rounded-b-lg">
+        {matches.map((match) => (
+          <MatchPreview key={match.id} match={match}></MatchPreview>
+        ))}
+      </ThemedView>
     </ThemedView>
   );
 };

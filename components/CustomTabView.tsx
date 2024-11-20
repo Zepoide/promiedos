@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "./ThemedView";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "nativewind";
 
 interface CustomTabViewProps {
   tabs: string[];
@@ -20,6 +22,7 @@ export default function CustomTabView({
       return { key: tab, title: tab };
     })
   );
+  const { colorScheme } = useColorScheme();
 
   const sceneMapObject = tabs.reduce((acc: any, key, index) => {
     acc[key] = pages[index];
@@ -50,6 +53,9 @@ export default function CustomTabView({
       renderScene={renderScene}
       onIndexChange={setIndex}
       renderTabBar={renderTabBar}
+      pagerStyle={{
+        backgroundColor: Colors[colorScheme ?? "light"].background,
+      }}
     />
   );
 }

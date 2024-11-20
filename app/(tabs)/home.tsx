@@ -7,7 +7,6 @@ import CustomTabView from "@/components/CustomTabView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import MatchesPerDay from "@/components/MatchesPerDay";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "@/components/Icon";
 import { useAuthorizedUser } from "@/hooks/useUser";
 
@@ -15,6 +14,7 @@ const HomeScreen = () => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
   const today = new Date();
   const [dates, setDates] = useState(generateDates(today));
+  const { user } = useAuthorizedUser();
 
   return (
     <Container>
