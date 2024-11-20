@@ -35,9 +35,10 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
     >
       <FlatList
         data={data}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <CompetitionMatches {...item}></CompetitionMatches>
         )}
+        keyExtractor={(item) => item.competitionId}
       ></FlatList>
     </ThemedView>
   );
@@ -48,7 +49,7 @@ export default MatchesPerDay;
 {
   /* <Collapsible title={item.competition.name}>
               {item.matches.map((match) => (
-                <MatchInfo key={match.id} match={match} />
+                <MatchPreview key={match.id} match={match} />
               ))}
             </Collapsible> */
 }

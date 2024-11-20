@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Image, Pressable, TouchableOpacity } from "react-native";
+import { Image, Pressable, TouchableOpacity, FlatList } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { MatchPreview } from "@/types/types";
-import MatchInfo from "./MatchInfo";
+import { IMatchPreview } from "@/types/types";
+import MatchPreview from "./MatchPreview";
 import { Link, useRouter } from "expo-router";
 import { Competition } from "../types/types";
 import { flags } from "../constants/Flags";
@@ -15,7 +15,7 @@ const CompetitionMatches = ({
   matches,
 }: {
   competition: Competition;
-  matches: MatchPreview[];
+  matches: IMatchPreview[];
 }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
@@ -57,7 +57,7 @@ const CompetitionMatches = ({
       {isOpen && (
         <ThemedView type="primary" className="rounded-b-lg">
           {matches.map((match) => (
-            <MatchInfo key={match.id} match={match}></MatchInfo>
+            <MatchPreview key={match.id} match={match}></MatchPreview>
           ))}
         </ThemedView>
       )}

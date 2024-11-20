@@ -1,4 +1,5 @@
 import { countries } from "@/constants/Countries";
+import MatchDetails from "../app/(details)/match/[id]";
 
 export interface Stadium {
   id: string;
@@ -22,6 +23,14 @@ export interface Match {
   scoreAway: number;
   status: string;
   venue: Stadium;
+  homeTeam?: {
+    logo: string | null;
+    name: string;
+  };
+  awayTeam?: {
+    logo: string | null;
+    name: string;
+  };
 }
 
 type CountryCode = keyof typeof countries;
@@ -61,18 +70,18 @@ export interface GroupedMatches {
   matches: MatchPreview[];
 }
 
-export interface MatchPreview {
+export interface IMatchPreview {
   id: string;
-  competitionId: string;
+  competitionId?: string;
   homeTeamId: string;
   awayTeamId: string;
   start_time: string; // ISO date string
   scoreHome: number;
   scoreAway: number;
-  status: string; // e.g., "closed", "scheduled", etc.
-  round: number;
-  stadiumId: string;
-  competition: Competition;
+  status?: string; // e.g., "closed", "scheduled", etc.
+  round?: number;
+  stadiumId?: string;
+  competition?: Competition;
   homeTeam: {
     name: string;
     logo: string | null;
@@ -80,5 +89,78 @@ export interface MatchPreview {
   awayTeam: {
     name: string;
     logo: string | null;
+  };
+}
+
+export interface MatchDetails extends Match {
+  homeTeam: Team;
+  awayTeam: Team;
+  stadium: Stadium;
+  competition: Competition;
+}
+
+export type MatchH2H = {
+  id: string;
+  competition: string;
+  start_time: string;
+  home_team: Team;
+  away_team: Team;
+  scoreHome: number;
+  scoreAway: number;
+};
+
+type TeamH2H = {
+  id: string;
+  name: string;
+  country: string;
+  country_code: string;
+  abbreviation: string;
+  qualifier: "home" | "away";
+  gender: "male" | "female" | "other";
+};
+
+interface Team {
+  id: string;
+  name: string;
+  shortName: string;
+  city: string;
+  country: string;
+  managerName: string;
+  stadiumId: string;
+  logo: string | null;
+  primary_color: string;
+  secondary_color: string;
+  number_color: string;
+}
+
+export interface H2HData {
+  homeTeam: Team;
+  awayTeam: Team;
+  lastMatches: MatchH2H[];
+}
+
+export interface IMatchInfo {
+  id: string;
+  competitionId: string;
+  homeTeamId: string;
+  awayTeamId: string;
+  start_time: string; // ISO 8601 formatted string
+  scoreHome: number;
+  scoreAway: number;
+  status: string;
+  round: number;
+  stadiumId: string;
+  competition: {
+    id: string;
+    name: string;
+    country: string;
+    logo: string;
+  };
+  stadium: {
+    id: string;
+    name: string;
+    city: string;
+    country: string;
+    capacity: number;
   };
 }

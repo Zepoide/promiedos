@@ -10,7 +10,7 @@ interface UseMatchesResult {
 }
 
 export default function useMatches(date: Date): UseMatchesResult {
-  async function fetchMatchInfo(date: Date): Promise<any> {
+  async function fetchMatchPreview(date: Date): Promise<any> {
     try {
       const response = await fetch(`${SERVER_URL}/matches?date=${date}`, {
         method: "GET",
@@ -35,7 +35,7 @@ export default function useMatches(date: Date): UseMatchesResult {
 
   const { data, isLoading, error } = useQuery<GroupedMatches[]>({
     queryKey: [`matches-${date}`],
-    queryFn: () => fetchMatchInfo(date),
+    queryFn: () => fetchMatchPreview(date),
   });
   return { data, isLoading, error };
 }
