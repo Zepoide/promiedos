@@ -152,7 +152,7 @@ const Register = () => {
           </ThemedView>
         </SafeAreaView>
       </TouchableWithoutFeedback>
-      <Link href="/(tabs)/home">
+      <Link replace href="/(tabs)/home">
         <ThemedText>HOLA</ThemedText>
       </Link>
     </KeyboardAvoidingView>

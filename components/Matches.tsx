@@ -32,7 +32,7 @@ export default function Matches({ matches }: { matches: Match[] }) {
           return (
             <ThemedView
               key={id}
-              style={styles.matchInfo}
+              style={styles.MatchPreview}
               lightColor={Colors["light"].background}
               darkColor={colors.SHARK}
             >
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
   },
-  matchInfo: {
+  MatchPreview: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly",

@@ -5,6 +5,7 @@ import { ScrollView, Image, TouchableOpacity } from "react-native";
 import useStandings from "@/hooks/useStandings";
 
 interface TableProps {
+
     competitionId: string;
     initialTab?: number;
     onTabChange?: (index: number) => void;
@@ -27,9 +28,10 @@ const Table: React.FC<TableProps> = ({
     const [activeTab, setActiveTab] = useState(initialTab);
     const columns = differentTabs[activeTab];
 
-    if (isLoading) {
-        return <ThemedText>Loading...</ThemedText>;
-    }
+  if (isLoading) {
+    return <ThemedText>Loading...</ThemedText>;
+  }
+
 
     const data = standings?.map((item) => {
         const goalDifference = item.goals_for - item.goals_against;
