@@ -9,7 +9,7 @@ interface MatchPreviewProps {
   match: IMatchPreview;
 }
 
-const MatchPreviewComponent = ({ match }: MatchPreviewProps) => {
+const MatchPreview = ({ match }: MatchPreviewProps) => {
   const router = useRouter();
   return (
     <Pressable
@@ -30,10 +30,9 @@ const MatchPreviewComponent = ({ match }: MatchPreviewProps) => {
           <Image
             resizeMode="contain"
             source={{
-              uri:
-                match.homeTeam.logo ||
-                "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
+              uri: match.homeTeam.logo || undefined,
             }}
+            defaultSource={require("../assets/images/logo-placeholder.png")}
             className="w-6 h-6"
           />
 
@@ -50,10 +49,9 @@ const MatchPreviewComponent = ({ match }: MatchPreviewProps) => {
           <Image
             resizeMode="contain"
             source={{
-              uri:
-                match.awayTeam.logo ||
-                "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
+              uri: match.awayTeam.logo || undefined,
             }}
+            defaultSource={require("../assets/images/logo-placeholder.png")}
             className="w-6 h-6"
           />
         </ThemedView>
@@ -67,4 +65,4 @@ const MatchPreviewComponent = ({ match }: MatchPreviewProps) => {
   );
 };
 
-export default MatchPreviewComponent;
+export default MatchPreview;

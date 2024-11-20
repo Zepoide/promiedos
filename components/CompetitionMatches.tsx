@@ -19,13 +19,12 @@ const CompetitionMatches = ({
   matches: IMatchPreview[];
 }) => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <ThemedView className="mt-2 mx-2 ">
       <ThemedView
         type="secondary"
-        className={`flex flex-row p-3 justify-between items-center ${isOpen ? "rounded-t-lg" : "rounded-lg"} `}
+        className={`flex flex-row p-3 justify-between items-center rounded-t-lg  `}
       >
         <Pressable
           onPress={() => {
@@ -47,21 +46,13 @@ const CompetitionMatches = ({
             </ThemedText>
           </ThemedView>
         </Pressable>
-        <TouchableOpacity onPress={() => setIsOpen((value) => !value)}>
-          <Icon
-            name={isOpen ? `chevron-up` : `chevron-down`}
-            size={16}
-            color={"gray"}
-          />
-        </TouchableOpacity>
       </ThemedView>
-      {isOpen && (
-        <ThemedView type="primary" className="rounded-b-lg">
-          {matches.map((match) => (
-            <MatchPreview key={match.id} match={match}></MatchPreview>
-          ))}
-        </ThemedView>
-      )}
+
+      <ThemedView type="primary" className="rounded-b-lg">
+        {matches.map((match) => (
+          <MatchPreview key={match.id} match={match}></MatchPreview>
+        ))}
+      </ThemedView>
     </ThemedView>
   );
 };

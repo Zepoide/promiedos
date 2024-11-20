@@ -16,6 +16,7 @@ import { countries } from "@/constants/Countries";
 import StadiumInfo from "@/components/StadiumInfo";
 import { ScrollView } from "react-native-gesture-handler";
 import { useLocalSearchParams } from "expo-router";
+import { useAuthorizedUser } from "@/hooks/useUser";
 
 const Overview = ({ teamId }: { teamId: string }) => {
   const recentMatches = [
@@ -141,9 +142,13 @@ const Overview = ({ teamId }: { teamId: string }) => {
 };
 
 const TeamDetails = () => {
-  const [following, setFollowing] = useState(false);
+  const { user, editUser } = useAuthorizedUser();
+
   const { id } = useLocalSearchParams();
   const teamId = Array.isArray(id) ? id[0] : id;
+  const [following, setFollowing] = useState(
+    user.followedTeams.some(({ id }) => teamId === id)
+  );
 
   const {
     data: teamInfo,
@@ -154,8 +159,23 @@ const TeamDetails = () => {
     queryFn: () => apiService.get(`/team/${teamId}`),
   });
 
-  const followTeam = () => {
-    setFollowing(!following);
+  const followTeam = async () => {
+    try {
+      const response = await apiService.post(
+        `/${following ? "unfollow" : "follow"}/team/${id}`,
+        {
+          userId: user.id,
+        }
+      );
+
+      const updatedUser = await response.json();
+
+      setFollowing(!following);
+
+      editUser(updatedUser);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -169,11 +189,10 @@ const TeamDetails = () => {
         <ThemedView className="basis-1/5">
           <Image
             source={{
-              uri:
-                teamInfo?.logo ||
-                "https://upload.wikimedia.org/wikipedia/commons/8/85/Logo_lpf_afa.png",
+              uri: teamInfo?.logo || undefined,
             }}
             style={{ width: 60, height: 60 }}
+            defaultSource={require("@/assets/images/logo-placeholder.png")}
             resizeMode="contain"
           />
         </ThemedView>

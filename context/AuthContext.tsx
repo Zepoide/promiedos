@@ -10,8 +10,12 @@ import React, {
 interface UserPayload {
   id: number;
   username: string;
-  followedTeams: string[];
-  folllowedCompetitions: string[];
+  followedTeams: {
+    id: string;
+  }[];
+  folllowedCompetitions: {
+    id: string;
+  }[];
 }
 
 type AuthContextType = {

@@ -56,10 +56,9 @@ const MatchDetails = () => {
             <Image
               resizeMode="contain"
               source={{
-                uri:
-                  match.homeTeam.logo ||
-                  "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
+                uri: match.homeTeam.logo || undefined,
               }}
+              defaultSource={require("@/assets/images/logo-placeholder.png")}
               className="w-12 h-12"
             />
           </TouchableOpacity>
@@ -86,10 +85,9 @@ const MatchDetails = () => {
             <Image
               resizeMode="contain"
               source={{
-                uri:
-                  match.awayTeam.logo ||
-                  "https://upload.wikimedia.org/wikipedia/commons/3/36/Escudo_V%C3%A9lez_Sarsfield.png",
+                uri: match.awayTeam.logo || undefined,
               }}
+              defaultSource={require("@/assets/images/logo-placeholder.png")}
               className="w-12 h-12"
             />
           </TouchableOpacity>

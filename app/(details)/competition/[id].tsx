@@ -20,9 +20,7 @@ const CompetitionDetails = () => {
   const { competitionInfo, isLoading } = useCompetition(competitionId);
   const { user, editUser } = useAuthorizedUser();
   const [following, setFollowing] = useState(
-    user.folllowedCompetitions.some(
-      (competitionId) => competitionId === competitionId
-    )
+    user.folllowedCompetitions.some((competitionId) => competitionId === id)
   );
 
   console.log("competitionInfo", competitionInfo);
@@ -70,10 +68,9 @@ const CompetitionDetails = () => {
         <ThemedView className="basis-1/5">
           <Image
             source={{
-              uri:
-                competitionInfo.logo ||
-                "https://upload.wikimedia.org/wikipedia/commons/8/85/Logo_lpf_afa.png",
+              uri: competitionInfo.logo,
             }}
+            defaultSource={require("@/assets/images/logo-placeholder.png")}
             style={{ width: 60, height: 60 }}
             resizeMode="contain"
           />
