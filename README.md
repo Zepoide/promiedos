@@ -9,6 +9,5 @@ The **Promiedos App** is a mobile application that provides users with the lates
 - **Live Soccer Data**: Real-time updates for matches, results, and stats.
 - **User Accounts**: Create and manage user profiles.
 - **Follow Teams**: Users can follow their favorite teams and receive updates.
+- **Follow Competitions**: Users can follow their favorite competitions and receive updates.
 - **Team Information**: Detailed information about teams, including lineups, fixtures, and standings.
-- **Push Notifications**: Get notified about live matches, goals, and other important events.
-- **Games Section**: Play daily soccer guessing games.
