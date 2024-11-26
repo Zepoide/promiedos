@@ -6,24 +6,19 @@ import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "@/services/api.service";
 import { ActivityIndicator } from "react-native";
-import Container from "./Container";
-
-export default function FollowedCompetitions({
-  competitionsIds,
-}: {
-  competitionsIds: any;
-}) {
+import Container from "../Container";
+export default function FollowedTeams({ teamsIds }: { teamsIds: any }) {
   const { user } = useAuthorizedUser();
   //   const followedTeams = user.followedTeams;
-  const idsArray = competitionsIds.map(({ id }: { id: string }) => id);
-  console.log(idsArray);
+  const idsArray = teamsIds.map(({ id }: { id: string }) => id);
+
   const {
-    data: followedCompetitions,
+    data: followedTeams,
     isLoading,
     error,
   } = useQuery<Team[]>({
-    queryFn: () => apiService.get(`/competitions/${JSON.stringify(idsArray)}`),
-    queryKey: [`competition-${competitionsIds}-info`],
+    queryFn: () => apiService.get(`/teams/${JSON.stringify(idsArray)}`),
+    queryKey: [`team-${teamsIds}-summary`],
   });
 
   if (isLoading) {
@@ -34,18 +29,16 @@ export default function FollowedCompetitions({
     );
   }
 
-  if (followedCompetitions?.length === 0) {
+  if (followedTeams?.length === 0) {
     return (
       <ThemedText className="font-bold text-center text-xl m-auto">
-        You do not follow any Competition
+        You do not follow any team
       </ThemedText>
     );
   }
-  console.log("aca", followedCompetitions);
-
   return (
     <FlatList
-      data={followedCompetitions}
+      data={followedTeams}
       renderItem={({ item }) => (
         <FollowingCard
           id={item.id}
@@ -53,7 +46,7 @@ export default function FollowedCompetitions({
           url={item.logo!}
           color={item.primary_color}
           text_color={item.number_color}
-          type="competition"
+          type="team"
         />
       )}
       numColumns={2}

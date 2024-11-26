@@ -6,7 +6,7 @@ import Container from "@/components/Container";
 import CustomTabView from "@/components/CustomTabView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import MatchesPerDay from "@/components/MatchesPerDay";
+import MatchesPerDay from "@/components/pages/MatchesPerDay";
 import Icon from "@/components/Icon";
 import { useAuthorizedUser } from "@/hooks/useUser";
 

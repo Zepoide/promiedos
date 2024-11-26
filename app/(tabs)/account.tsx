@@ -20,7 +20,7 @@ import apiService from "@/services/api.service";
 const Acount = () => {
   const router = useRouter();
   const { user, editUser } = useAuthorizedUser();
-  const [username, setUsername] = useState(user.name);
+  const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -74,7 +74,7 @@ const Acount = () => {
     <Container>
       <ThemedView className="p-6 space-y-6">
         <ThemedText className="text-2xl font-extrabold">Account</ThemedText>
-        <ThemedText className="text-xl ">Welcome {user.name}!</ThemedText>
+        <ThemedText className="text-xl ">Welcome {user.username}!</ThemedText>
 
         <ThemedView className="space-y-2">
           <ThemedText className="text-lg font-semibold">Username</ThemedText>
@@ -88,7 +88,7 @@ const Acount = () => {
             <TextInput
               value={username}
               onChangeText={setUsername}
-              placeholder={user.name}
+              placeholder={user.username}
               // placeholderTextColor="#666"
               className="flex-1 text-black dark:text-white "
             />

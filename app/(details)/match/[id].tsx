@@ -10,9 +10,9 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import useMatch from "@/hooks/useMatch";
 import { formatDate } from "@/lib/utils";
 import CustomTabView from "@/components/CustomTabView";
-import TableStandings from "@/components/TableStandings";
-import Head2Head from "@/components/Head2Head";
-import MatchInfo from "@/components/MatchInfo";
+import TableStandings from "@/components/pages/TableStandings";
+import Head2Head from "@/components/pages/Head2Head";
+import MatchInfo from "@/components/pages/MatchInfo";
 import { ActivityIndicator } from "react-native";
 
 const MatchDetails = () => {

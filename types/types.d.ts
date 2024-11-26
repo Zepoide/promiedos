@@ -1,5 +1,6 @@
 import { countries } from "@/constants/Countries";
 import MatchDetails from "../app/(details)/match/[id]";
+import { IMatchPreview } from "@/types/types";
 
 export interface Stadium {
   id: string;
@@ -72,23 +73,24 @@ export interface GroupedMatches {
 
 export interface IMatchPreview {
   id: string;
-  competitionId?: string;
-  homeTeamId: string;
-  awayTeamId: string;
-  start_time: string; // ISO date string
+  start_time: string; // Use `Date` if you want to work with date objects.
   scoreHome: number | null;
   scoreAway: number | null;
-  status?: string; // e.g., "closed", "scheduled", etc.
-  round?: number;
-  stadiumId?: string;
-  competition?: Competition;
-  homeTeam: {
+  status: string;
+  competition: {
+    id: string;
     name: string;
-    logo: string | null;
+    logo: string;
+  };
+  homeTeam: {
+    id: string;
+    name: string;
+    logo: string;
   };
   awayTeam: {
+    id: string;
     name: string;
-    logo: string | null;
+    logo: string;
   };
 }
 
@@ -136,7 +138,7 @@ interface Team {
 export interface H2HData {
   homeTeam: Team;
   awayTeam: Team;
-  lastMatches: MatchH2H[];
+  lastMatches: IMatchPreview[];
 }
 
 export interface IMatchInfo {

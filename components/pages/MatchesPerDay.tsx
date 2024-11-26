@@ -3,13 +3,13 @@ import { FlatList, ActivityIndicator, Pressable, Image } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import useMatches from "@/hooks/useMatches";
-import CompetitionMatches from "./CompetitionMatches";
+import CompetitionMatches from "../CompetitionMatches";
 import { useAuthorizedUser } from "@/hooks/useUser";
-import { FollowedTeamsResponse } from "@/types/types";
+import { IMatchPreview } from "@/types/types";
 import apiService from "@/services/api.service";
 import { useQuery } from "@tanstack/react-query";
-import MatchPreview from "./MatchPreview";
-import Container from "./Container";
+import MatchPreview from "../MatchPreview";
+import Container from "../Container";
 
 interface MatchesPerDayProps {
   date: Date;
@@ -19,7 +19,7 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
   const { data, isLoading } = useMatches(date);
   const { user } = useAuthorizedUser();
   const { data: followedTeamsMatches, isLoading: teamsIsLoading } = useQuery<
-    FollowedTeamsResponse[]
+    IMatchPreview[]
   >({
     queryKey: [`matches-team-${date}`],
     queryFn: () =>

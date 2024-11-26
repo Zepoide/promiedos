@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  Button,
 } from "react-native";
 import React from "react";
 import { ThemedText } from "@/components/ThemedText";
@@ -132,6 +133,14 @@ const LogIn = () => {
           </ThemedView>
         </SafeAreaView>
       </TouchableWithoutFeedback>
+
+      <Button
+        title="HOLA"
+        onPress={handleLogin({
+          email: "panchoseijas@gmail.com",
+          password: "Hola123",
+        })}
+      />
     </KeyboardAvoidingView>
   );
 };

@@ -8,8 +8,8 @@ import { Team } from "@/types/types";
 import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "@/services/api.service";
-import FollowedTeams from "@/components/FollowedTeams";
-import FollowedCompetitions from "@/components/FollowedCompetitions";
+import FollowedTeams from "@/components/pages/FollowedTeams";
+import FollowedCompetitions from "@/components/pages/FollowedCompetitions";
 
 const Following = () => {
   const { user } = useAuthorizedUser();
@@ -29,9 +29,7 @@ const Following = () => {
         pages={[
           () => <FollowedTeams teamsIds={user.followedTeams} />,
           () => (
-            <FollowedCompetitions
-              competitionsIds={user.folllowedCompetitions}
-            />
+            <FollowedCompetitions competitionsIds={user.followedCompetitions} />
           ),
         ]}
       />

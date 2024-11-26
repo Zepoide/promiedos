@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { ThemedText } from "./ThemedText";
-import { ThemedView } from "./ThemedView";
+import { ThemedText } from "../ThemedText";
+import { ThemedView } from "../ThemedView";
 import { ScrollView, Image, TouchableOpacity } from "react-native";
 import useStandings from "@/hooks/useStandings";
 import { ActivityIndicator } from "react-native";
-import Container from "./Container";
+import Container from "../Container";
+import SegmentedControl from "@react-native-segmented-control/segmented-control";
 
 interface TableProps {
   competitionId: string;
@@ -78,29 +79,18 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <>
-      <ThemedView type="primary" className="py-1 px-3">
-        <ThemedView type="secondary" className="flex-row rounded-full p-1">
-          {tabs.map((tab, index) => (
-            <TouchableOpacity
-              key={tab}
-              className={`flex-1 py-1 rounded-full items-center justify-center ${
-                index === activeTab ? "dark:bg-[#575757]" : ""
-              }`}
-              onPress={() => handleTabPress(index)}
-            >
-              <ThemedText
-                className={`text-xs font-semibold ${
-                  index === activeTab ? "text-green-500" : "text-white"
-                }`}
-              >
-                {tab}
-              </ThemedText>
-            </TouchableOpacity>
-          ))}
-        </ThemedView>
+      <ThemedView type="background" className="mt-2 py-1 px-3">
+        <SegmentedControl
+          values={tabs}
+          selectedIndex={activeTab}
+          onChange={(event) => {
+            handleTabPress(event.nativeEvent.selectedSegmentIndex);
+          }}
+          tintColor="#007618"
+        />
       </ThemedView>
 
-      <ThemedView type="secondary" className="m-4 mt-2 p-2 rounded-lg flex-1">
+      <ThemedView type="secondary" className="m-2 p-2 rounded-lg flex-1">
         {/* Table Header */}
         <ThemedView className="flex-row justify-start dark:bg-dark-secondary mb-0.5">
           {columns.map((col, index) => {

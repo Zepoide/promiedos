@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import { Image, Pressable, TouchableOpacity, FlatList } from "react-native";
+import React from "react";
+import { Image, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { IMatchPreview } from "@/types/types";
 import MatchPreview from "./MatchPreview";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Competition } from "../types/types";
 import { flags } from "../constants/Flags";
 import { countries } from "@/constants/Countries";
-import Icon from "./Icon";
-import { useAuthorizedUser } from "@/hooks/useUser";
 
 const CompetitionMatches = ({
   competition,

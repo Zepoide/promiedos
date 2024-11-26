@@ -6,19 +6,24 @@ import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "@/services/api.service";
 import { ActivityIndicator } from "react-native";
-import Container from "./Container";
-export default function FollowedTeams({ teamsIds }: { teamsIds: any }) {
+import Container from "@/components/Container";
+
+export default function FollowedCompetitions({
+  competitionsIds,
+}: {
+  competitionsIds: any;
+}) {
   const { user } = useAuthorizedUser();
   //   const followedTeams = user.followedTeams;
-  const idsArray = teamsIds.map(({ id }: { id: string }) => id);
-
+  const idsArray = competitionsIds.map(({ id }: { id: string }) => id);
+  console.log(idsArray);
   const {
-    data: followedTeams,
+    data: followedCompetitions,
     isLoading,
     error,
   } = useQuery<Team[]>({
-    queryFn: () => apiService.get(`/teams/${JSON.stringify(idsArray)}`),
-    queryKey: [`team-${teamsIds}-summary`],
+    queryFn: () => apiService.get(`/competitions/${JSON.stringify(idsArray)}`),
+    queryKey: [`competition-${competitionsIds}-info`],
   });
 
   if (isLoading) {
@@ -29,16 +34,18 @@ export default function FollowedTeams({ teamsIds }: { teamsIds: any }) {
     );
   }
 
-  if (followedTeams?.length === 0) {
+  if (followedCompetitions?.length === 0) {
     return (
       <ThemedText className="font-bold text-center text-xl m-auto">
-        You do not follow any team
+        You do not follow any Competition
       </ThemedText>
     );
   }
+  console.log("aca", followedCompetitions);
+
   return (
     <FlatList
-      data={followedTeams}
+      data={followedCompetitions}
       renderItem={({ item }) => (
         <FollowingCard
           id={item.id}
@@ -46,7 +53,7 @@ export default function FollowedTeams({ teamsIds }: { teamsIds: any }) {
           url={item.logo!}
           color={item.primary_color}
           text_color={item.number_color}
-          type="team"
+          type="competition"
         />
       )}
       numColumns={2}

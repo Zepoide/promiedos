@@ -1,16 +1,16 @@
 import React from "react";
-import Container from "./Container";
-import { ThemedText } from "./ThemedText";
+import Container from "../Container";
+import { ThemedText } from "../ThemedText";
 import { IMatchInfo } from "@/types/types";
 import apiService from "@/services/api.service";
 import { useQuery } from "@tanstack/react-query";
-import { ThemedView } from "./ThemedView";
+import { ThemedView } from "../ThemedView";
 import { Text } from "react-native";
 import { Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { formatDate } from "@/lib/utils";
 import { useColorScheme } from "nativewind";
-import TeamForm from "./TeamForm";
+import TeamForm from "../TeamForm";
 import { ActivityIndicator } from "react-native";
 
 const MatchInfo = ({ matchId }: { matchId: string }) => {

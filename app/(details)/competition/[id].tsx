@@ -9,10 +9,10 @@ import CustomTabView from "@/components/CustomTabView";
 import BackButton from "@/components/BackButton";
 import { useState } from "react";
 import FollowButton from "@/components/FollowButton";
-import TableStandings from "@/components/TableStandings";
+import TableStandings from "@/components/pages/TableStandings";
 import apiService from "@/services/api.service";
 import { useAuthorizedUser } from "@/hooks/useUser";
-import CompetitionFixtures from "@/components/CompetitionFixtures";
+import CompetitionFixtures from "@/components/pages/CompetitionFixtures";
 import { ActivityIndicator } from "react-native";
 
 const CompetitionDetails = () => {
@@ -21,7 +21,7 @@ const CompetitionDetails = () => {
   const { competitionInfo, isLoading } = useCompetition(competitionId);
   const { user, editUser } = useAuthorizedUser();
   const [following, setFollowing] = useState(
-    user.folllowedCompetitions.some(({ id }) => id === competitionId)
+    user.followedCompetitions.some(({ id }) => id === competitionId)
   );
 
   console.log("competitionInfo", competitionInfo);
