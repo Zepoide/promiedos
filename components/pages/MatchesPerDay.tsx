@@ -47,7 +47,7 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
   return (
     <ThemedView
       type="background"
-      className="flex-1 flex justify-center w-full "
+      className="flex-1 flex justify-center w-full mb-2"
     >
       {(followedTeamsMatches?.length ?? 0) > 0 ? (
         <ThemedView className="mt-2 mx-2 ">
@@ -84,7 +84,7 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
           <CompetitionMatches {...item}></CompetitionMatches>
         )}
         keyExtractor={(item) => item.competitionId}
-        bounces={false}
+        showsVerticalScrollIndicator={false}
       ></FlatList>
     </ThemedView>
   );
