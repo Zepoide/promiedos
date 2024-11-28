@@ -43,6 +43,22 @@ const MatchDetails = () => {
     );
   }
 
+  const matchStatusText = () => {
+    switch (match.status) {
+      case "not_started":
+        return new Date(match.start_time)
+          .toLocaleTimeString()
+          .split(":")
+          .slice(0, 2)
+          .join(":");
+      case "postponed":
+        return "Postponed";
+      case "abandoned":
+        return "Abandoned";
+      default:
+        return `${match.scoreHome} - ${match.scoreAway}`;
+    }
+  };
   return (
     <Container>
       <ThemedView className=" flex flex-row justify-between items-center mx-2">
@@ -68,15 +84,21 @@ const MatchDetails = () => {
           </ThemedText> */}
         </ThemedView>
         <ThemedView className="w-2/12 flex flex-col   justify-center items-center">
-          <ThemedText className=" m-auto font-semibold text-2xl">
-            {match.status === "not_started"
-              ? new Date(match.start_time)
-                  .toLocaleTimeString()
-                  .split(":")
-                  .slice(0, 2)
-                  .join(":")
-              : `${match.scoreHome} - ${match.scoreAway}`}
-          </ThemedText>
+          {["not_started", "closed"].includes(match.status) ? (
+            <ThemedText className=" m-auto font-semibold text-2xl">
+              {match.status === "not_started"
+                ? new Date(match.start_time)
+                    .toLocaleTimeString()
+                    .split(":")
+                    .slice(0, 2)
+                    .join(":")
+                : `${match.scoreHome} - ${match.scoreAway}`}
+            </ThemedText>
+          ) : (
+            <ThemedText className=" m-auto font-semibold text-xs">
+              {matchStatusText()}
+            </ThemedText>
+          )}
         </ThemedView>
         <ThemedView className="w-4/12 flex justify-center flex-col items-center  gap-y-2">
           <TouchableOpacity

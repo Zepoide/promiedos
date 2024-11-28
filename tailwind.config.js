@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const tintColorLight = "#000000";
+const tintColorLight = "#007618";
 const tintColorDark = "#84DC7B";
 
 
