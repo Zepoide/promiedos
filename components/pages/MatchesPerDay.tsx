@@ -10,6 +10,7 @@ import apiService from "@/services/api.service";
 import { useQuery } from "@tanstack/react-query";
 import MatchPreview from "../MatchPreview";
 import Container from "../Container";
+import { formatDate } from "@/lib/utils";
 
 interface MatchesPerDayProps {
   date: Date;

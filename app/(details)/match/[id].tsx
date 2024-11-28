@@ -69,7 +69,7 @@ const MatchDetails = () => {
         </ThemedView>
         <ThemedView className="w-2/12 flex flex-col   justify-center items-center">
           <ThemedText className=" m-auto font-semibold text-2xl">
-            {match.status === "not_started"
+            {["not_starded", "postponed", "abandoned"].includes(match.status)
               ? new Date(match.start_time)
                   .toLocaleTimeString()
                   .split(":")

@@ -2,7 +2,7 @@ import Container from "@/components/Container";
 import { ThemedView } from "@/components/ThemedView";
 import { useColorScheme } from "nativewind";
 import React, { useState } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { Alert, Modal, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import Calendar from "@/components/Calendar";
 
