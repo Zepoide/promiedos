@@ -49,13 +49,13 @@ const HomeScreen = () => {
         <ThemedText className="text-2xl font-extrabold p-3">
           PROMIEDOS
         </ThemedText>
-        <ThemedView className="flex flex-row items-center">
-          <Pressable style={{}} onPress={() => setModalVisible(true)}>
-            <ThemedText style={{}}>Show Modal</ThemedText>
-          </Pressable>
+        <ThemedView className="flex flex-row items-center p-3">
+          <TouchableOpacity style={{}} onPress={() => setModalVisible(true)}>
+            <Icon name="calendar-outline" size={24} />
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => toggleColorScheme()}
-            activeOpacity={0.8}
+            activeOpacity={0.7}
             className="p-3"
           >
             <Icon
@@ -75,20 +75,27 @@ const HomeScreen = () => {
         }}
       >
         <ThemedView className="flex-1 flex justify-center items-center">
-          <ThemedView type="background" className="flex m-2 rounded-lg p-2">
+          <ThemedView className="flex bg-light-tint dark:bg-dark-tint m-2 rounded-lg p-1">
             <ThemedView type="primary" className="p-2">
               <ThemedView className="flex-row justify-between">
                 <Pressable
                   style={[]}
-                  onPress={() => setSelectedDate(new Date())}
+                  onPress={() => {
+                    setSelectedDate(new Date());
+                    setModalVisible(!modalVisible);
+                  }}
                 >
-                  <ThemedText style={{}}>Today</ThemedText>
+                  <ThemedText className="font-bold text-light-tint dark:text-dark-tint">
+                    Today
+                  </ThemedText>
                 </Pressable>
                 <Pressable
                   style={[]}
                   onPress={() => setModalVisible(!modalVisible)}
                 >
-                  <ThemedText style={{}}>Close</ThemedText>
+                  <ThemedText className="font-bold text-light-tint dark:text-dark-tint">
+                    Close
+                  </ThemedText>
                 </Pressable>
               </ThemedView>
               <Calendar date={selectedDate} setDate={handleDateChange} />

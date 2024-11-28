@@ -58,6 +58,7 @@ export default function CustomTabView({ tabs, dates }: CustomTabViewProps) {
 
   return (
     <TabView
+      lazy
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}

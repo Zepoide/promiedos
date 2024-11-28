@@ -1,9 +1,8 @@
 import DateTimePicker from "react-native-ui-datepicker";
 import dayjs from "dayjs";
-import Container from "@/components/Container";
 import { useColorScheme } from "nativewind";
 import { Colors } from "@/constants/Colors";
-import React, { useState } from "react";
+import React from "react";
 
 interface CalendarProps {
   date: Date;
@@ -23,7 +22,7 @@ const Calendar = ({ date, setDate }: CalendarProps) => {
       headerTextStyle={{ color: Colors[colorScheme].tint }}
       headerButtonColor={Colors[colorScheme].tint}
       weekDaysContainerStyle={{
-        borderColor: Colors[colorScheme].primary,
+        borderColor: Colors[colorScheme].secondary,
       }}
       todayContainerStyle={{ borderColor: Colors[colorScheme].tint }}
       todayTextStyle={{ color: Colors[colorScheme].tint }}
