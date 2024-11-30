@@ -6,7 +6,7 @@ import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "@/services/api.service";
 import { ActivityIndicator } from "react-native";
-import Container from "../Container";
+import Container from "@/components/Container";
 export default function FollowedTeams({ teamsIds }: { teamsIds: any }) {
   const { user } = useAuthorizedUser();
   //   const followedTeams = user.followedTeams;

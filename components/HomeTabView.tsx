@@ -4,7 +4,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "./ThemedView";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
-import MatchesPerDay from "./pages/MatchesPerDay";
+import MatchesPerDay from "@/pages/MatchesPerDay";
 import { formatDate, generateDates } from "@/lib/utils";
 
 interface CustomTabViewProps {

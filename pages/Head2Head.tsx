@@ -1,13 +1,13 @@
 import React from "react";
-import Container from "../Container";
-import { ThemedText } from "../ThemedText";
+import Container from "@/components/Container";
+import { ThemedText } from "@/components/ThemedText";
 import { H2HData, IMatchPreview, MatchH2H } from "@/types/types";
 import apiService from "@/services/api.service";
 import { useQuery } from "@tanstack/react-query";
-import { ThemedView } from "../ThemedView";
+import { ThemedView } from "@/components/ThemedView";
 import { View, Text, FlatList } from "react-native";
-import MatchPreview from "../MatchPreview";
-import { formatDate } from "../../lib/utils";
+import MatchPreview from "@/components/MatchPreview";
+import { formatDate } from "@/lib/utils";
 import { ActivityIndicator } from "react-native";
 
 const Head2Head = ({ matchId }: { matchId: string }) => {

@@ -8,8 +8,8 @@ import { Team } from "@/types/types";
 import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "@/services/api.service";
-import FollowedTeams from "@/components/pages/FollowedTeams";
-import FollowedCompetitions from "@/components/pages/FollowedCompetitions";
+import FollowedTeams from "@/pages/FollowedTeams";
+import FollowedCompetitions from "@/pages/FollowedCompetitions";
 
 const Following = () => {
   const { user } = useAuthorizedUser();

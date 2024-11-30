@@ -3,14 +3,13 @@ import { FlatList, ActivityIndicator, Pressable, Image } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import useMatches from "@/hooks/useMatches";
-import CompetitionMatches from "../CompetitionMatches";
+import CompetitionMatches from "@/components/CompetitionMatches";
 import { useAuthorizedUser } from "@/hooks/useUser";
 import { IMatchPreview } from "@/types/types";
 import apiService from "@/services/api.service";
 import { useQuery } from "@tanstack/react-query";
-import MatchPreview from "../MatchPreview";
-import Container from "../Container";
-import { formatDate } from "@/lib/utils";
+import MatchPreview from "@/components/MatchPreview";
+import Container from "@/components/Container";
 
 interface MatchesPerDayProps {
   date: Date;

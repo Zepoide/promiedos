@@ -9,10 +9,10 @@ import CustomTabView from "@/components/CustomTabView";
 import BackButton from "@/components/BackButton";
 import { useState } from "react";
 import FollowButton from "@/components/FollowButton";
-import TableStandings from "@/components/pages/TableStandings";
+import TableStandings from "@/pages/TableStandings";
 import apiService from "@/services/api.service";
 import { useAuthorizedUser } from "@/hooks/useUser";
-import CompetitionFixtures from "@/components/pages/CompetitionFixtures";
+import CompetitionFixtures from "@/pages/CompetitionFixtures";
 import { ActivityIndicator } from "react-native";
 
 const CompetitionDetails = () => {

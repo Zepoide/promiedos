@@ -13,7 +13,7 @@ import Container from "@/components/Container";
 import HomeTabView from "@/components/HomeTabView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import MatchesPerDay from "@/components/pages/MatchesPerDay";
+import MatchesPerDay from "@/pages/MatchesPerDay";
 import Icon from "@/components/Icon";
 import Calendar from "@/components/Calendar";
 import CustomTabView from "@/components/CustomTabView";

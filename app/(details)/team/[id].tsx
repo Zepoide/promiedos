@@ -12,7 +12,7 @@ import apiService from "@/services/api.service";
 import { countries } from "@/constants/Countries";
 import { useLocalSearchParams } from "expo-router";
 import { useAuthorizedUser } from "@/hooks/useUser";
-import TeamOverview from "@/components/pages/TeamOverview";
+import TeamOverview from "@/pages/TeamOverview";
 
 const TeamDetails = () => {
   const { user, editUser } = useAuthorizedUser();

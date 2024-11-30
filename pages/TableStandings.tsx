@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { ThemedText } from "../ThemedText";
-import { ThemedView } from "../ThemedView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 import { ScrollView, Image, TouchableOpacity } from "react-native";
 import useStandings from "@/hooks/useStandings";
 import { ActivityIndicator } from "react-native";
-import Container from "../Container";
+import Container from "@/components/Container";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
 
 interface TableProps {
