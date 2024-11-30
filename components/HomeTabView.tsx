@@ -13,7 +13,6 @@ interface CustomTabViewProps {
 }
 
 export default function CustomTabView({ tabs, dates }: CustomTabViewProps) {
-  //   const [tabs, setTabs] = useState(dates.map((date) => formatDate(date)));
   const [index, setIndex] = useState(6);
   const [routes, setRoutes] = useState(
     tabs.map((tab, index) => {
@@ -41,7 +40,6 @@ export default function CustomTabView({ tabs, dates }: CustomTabViewProps) {
   const renderTabBar = (props: any) => (
     <TabBar
       {...props}
-      lazy={({ route }: any) => route.key === "1"}
       renderLabel={({ route, focused }) => (
         <ThemedText
           className={`text-sm ${focused ? "text-black dark:text-white " : "text-gray-500"}`}
@@ -58,7 +56,6 @@ export default function CustomTabView({ tabs, dates }: CustomTabViewProps) {
 
   return (
     <TabView
-      lazy
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}

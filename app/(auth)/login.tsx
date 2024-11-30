@@ -20,7 +20,8 @@ import ControllerForm from "@/components/ControllerForm";
 import { UserPayload } from "@/context/AuthContext";
 import { decodeBase64Url } from "@/lib/utils";
 import { Buffer } from "buffer";
-import useUser from "@/hooks/useUser";
+// import useUser from "@/hooks/useUser";
+import { userStore } from "@/store/userStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type FormData = {
@@ -31,7 +32,7 @@ type FormData = {
 const LogIn = () => {
   const { colorScheme } = useColorScheme();
   const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-  const { setUser } = useUser();
+  const { setUser } = userStore();
   const router = useRouter();
 
   const handleLogin = async ({ email, password }: FormData) => {

@@ -1,14 +1,17 @@
-import React from "react";
-import { Stack, Tabs } from "expo-router";
+import React, { useEffect } from "react";
+import { Stack, Tabs, useRouter } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { useAuthorizedUser } from "@/hooks/useUser";
+import { userStore } from "@/store/userStore";
 
 export default function TabLayout() {
   const { colorScheme } = useColorScheme();
-  useAuthorizedUser();
+  const { user } = userStore();
+  const router = useRouter();
+
   return (
     <Tabs
       screenOptions={{

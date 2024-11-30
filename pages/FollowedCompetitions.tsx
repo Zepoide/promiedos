@@ -1,20 +1,21 @@
 import FollowingCard from "@/components/FollowingCard";
 import { ThemedText } from "@/components/ThemedText";
-import { useAuthorizedUser } from "@/hooks/useUser";
+// import { useAuthorizedUser } from "@/hooks/useUser";
+import { userStore } from "@/store/userStore";
 import { Team } from "@/types/types";
 import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "@/services/api.service";
 import { ActivityIndicator } from "react-native";
 import Container from "@/components/Container";
+import Loader from "@/components/Loader";
 
 export default function FollowedCompetitions({
   competitionsIds,
 }: {
   competitionsIds: any;
 }) {
-  const { user } = useAuthorizedUser();
-  //   const followedTeams = user.followedTeams;
+  const { user } = userStore();
   const idsArray = competitionsIds.map(({ id }: { id: string }) => id);
   console.log(idsArray);
   const {
@@ -27,11 +28,7 @@ export default function FollowedCompetitions({
   });
 
   if (isLoading) {
-    return (
-      <Container>
-        <ActivityIndicator size="large" color="green" />
-      </Container>
-    );
+    return <Loader />;
   }
 
   if (followedCompetitions?.length === 0) {
@@ -41,7 +38,6 @@ export default function FollowedCompetitions({
       </ThemedText>
     );
   }
-  console.log("aca", followedCompetitions);
 
   return (
     <FlatList

@@ -11,16 +11,17 @@ import { useQuery } from "@tanstack/react-query";
 import apiService from "@/services/api.service";
 import { countries } from "@/constants/Countries";
 import { useLocalSearchParams } from "expo-router";
-import { useAuthorizedUser } from "@/hooks/useUser";
+// import { useAuthorizedUser } from "@/hooks/useUser";
+import { userStore } from "@/store/userStore";
 import TeamOverview from "@/pages/TeamOverview";
 
 const TeamDetails = () => {
-  const { user, editUser } = useAuthorizedUser();
+  const { user, editUser } = userStore();
 
   const { id } = useLocalSearchParams();
   const teamId = Array.isArray(id) ? id[0] : id;
   const [following, setFollowing] = useState(
-    user.followedTeams.some(({ id }) => teamId === id)
+    user!.followedTeams.some(({ id }) => teamId === id)
   );
 
   const {
@@ -37,7 +38,7 @@ const TeamDetails = () => {
       const response = await apiService.post(
         `/${following ? "unfollow" : "follow"}/team/${id}`,
         {
-          userId: user.id,
+          userId: user!.id,
         }
       );
 

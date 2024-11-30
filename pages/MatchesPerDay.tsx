@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, ActivityIndicator, Pressable, Image } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import useMatches from "@/hooks/useMatches";
 import CompetitionMatches from "@/components/CompetitionMatches";
-import { useAuthorizedUser } from "@/hooks/useUser";
+// import { useAuthorizedUser } from "@/hooks/useUser";
+import { userStore } from "@/store/userStore";
 import { IMatchPreview } from "@/types/types";
 import apiService from "@/services/api.service";
 import { useQuery } from "@tanstack/react-query";
 import MatchPreview from "@/components/MatchPreview";
 import Container from "@/components/Container";
+import Loader from "@/components/Loader";
 
 interface MatchesPerDayProps {
   date: Date;
@@ -17,23 +19,27 @@ interface MatchesPerDayProps {
 
 const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
   const { data, isLoading } = useMatches(date);
-  const { user } = useAuthorizedUser();
-  const { data: followedTeamsMatches, isLoading: teamsIsLoading } = useQuery<
-    IMatchPreview[]
-  >({
+  const { user } = userStore();
+  const {
+    data: followedTeamsMatches,
+    isLoading: teamsIsLoading,
+    refetch,
+  } = useQuery<IMatchPreview[]>({
     queryKey: [`matches-team-${date}`],
     queryFn: () =>
       apiService.get(
-        `/matches/teams/${JSON.stringify(user.followedTeams)}?date=${date}`
+        `/matches/teams/${JSON.stringify(user!.followedTeams)}?date=${date}`
       ),
   });
 
+  useEffect(() => {
+    if (user?.followedTeams) {
+      refetch();
+    }
+  }, [user?.followedTeams, refetch]);
+
   if (isLoading) {
-    return (
-      <Container>
-        <ActivityIndicator size="large" color="green" />
-      </Container>
-    );
+    return <Loader />;
   }
 
   if (data?.length === 0) {

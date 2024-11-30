@@ -1,14 +1,16 @@
 import FollowingCard from "@/components/FollowingCard";
 import { ThemedText } from "@/components/ThemedText";
-import { useAuthorizedUser } from "@/hooks/useUser";
+// import { useAuthorizedUser } from "@/hooks/useUser";
+import { userStore } from "@/store/userStore";
 import { Team } from "@/types/types";
 import { FlatList } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "@/services/api.service";
 import { ActivityIndicator } from "react-native";
 import Container from "@/components/Container";
+
 export default function FollowedTeams({ teamsIds }: { teamsIds: any }) {
-  const { user } = useAuthorizedUser();
+  const { user } = userStore();
   //   const followedTeams = user.followedTeams;
   const idsArray = teamsIds.map(({ id }: { id: string }) => id);
 

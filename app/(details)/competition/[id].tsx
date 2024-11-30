@@ -11,7 +11,9 @@ import { useState } from "react";
 import FollowButton from "@/components/FollowButton";
 import TableStandings from "@/pages/TableStandings";
 import apiService from "@/services/api.service";
-import { useAuthorizedUser } from "@/hooks/useUser";
+// import { useAuthorizedUser } from "@/hooks/useUser";
+import { userStore } from "@/store/userStore";
+
 import CompetitionFixtures from "@/pages/CompetitionFixtures";
 import { ActivityIndicator } from "react-native";
 
@@ -19,18 +21,17 @@ const CompetitionDetails = () => {
   const { id } = useLocalSearchParams();
   const competitionId = Array.isArray(id) ? id[0] : id;
   const { competitionInfo, isLoading } = useCompetition(competitionId);
-  const { user, editUser } = useAuthorizedUser();
+  const { user, editUser } = userStore();
   const [following, setFollowing] = useState(
-    user.followedCompetitions.some(({ id }) => id === competitionId)
+    user!.followedCompetitions.some(({ id }) => id === competitionId)
   );
 
-  console.log("competitionInfo", competitionInfo);
   const followCompetition = async () => {
     try {
       const response = await apiService.post(
         `/${following ? "unfollow" : "follow"}/competition/${competitionId}`,
         {
-          userId: user.id,
+          userId: user!.id,
         }
       );
 
