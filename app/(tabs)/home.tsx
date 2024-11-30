@@ -81,7 +81,7 @@ const HomeScreen = () => {
                 <Pressable
                   style={[]}
                   onPress={() => {
-                    setSelectedDate(new Date());
+                    setSelectedDate(today);
                     setModalVisible(!modalVisible);
                   }}
                 >

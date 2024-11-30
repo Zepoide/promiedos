@@ -4,10 +4,11 @@ import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { useAuthorizedUser } from "@/hooks/useUser";
 
 export default function TabLayout() {
   const { colorScheme } = useColorScheme();
-
+  useAuthorizedUser();
   return (
     <Tabs
       screenOptions={{
@@ -23,10 +24,6 @@ export default function TabLayout() {
         options={{
           title: "Matches",
           tabBarIcon: ({ color, focused }) => (
-            // <TabBarIcon
-            //     name={focused ? "football" : "football-outline"}
-            //     color={color}
-            // />
             <MaterialCommunityIcons
               name="soccer-field"
               color={color}

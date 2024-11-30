@@ -6,7 +6,7 @@ import {
 import apiService from "@/services/api.service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function useUser(): AuthContextType {
   const context = useContext(AuthContext);
@@ -20,7 +20,7 @@ export function useNotAuthorizedUser(): (user: UserPayload) => void {
   const { user, setUser } = useUser();
   useEffect(() => {
     if (user) {
-      router.push("/");
+      router.push("/(auth)/login");
       return;
     }
     AsyncStorage.getItem("user").then((user) => {
@@ -34,17 +34,30 @@ export function useNotAuthorizedUser(): (user: UserPayload) => void {
 }
 
 export function useAuthorizedUser(): {
-  user: UserPayload;
+  user: UserPayload | null;
   setUser: (user: UserPayload | null) => void;
   editUser: (user: UserPayload | null) => void;
+  isLoading: boolean;
 } {
   const { user, setUser } = useUser();
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (!user)
-      AsyncStorage.getItem("user").then((user) => {
-        if (user) setUser(JSON.parse(user));
-        else router.push("/login");
-      });
+    const checkUser = async () => {
+      const storedUser = await AsyncStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      } else {
+        router.push("/(auth)/login");
+      }
+      setLoading(false);
+    };
+
+    if (!user) {
+      checkUser();
+    } else {
+      setLoading(false);
+    }
   }, [user]);
 
   return {
@@ -60,5 +73,6 @@ export function useAuthorizedUser(): {
 
       setUser(updatedUser);
     },
+    isLoading: loading,
   };
 }

@@ -51,6 +51,7 @@ const ThemedInputUser = ({
         autoCorrect={false}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        placeholderTextColor={Colors[colorScheme ?? "light"].icon}
         className="flex-1 h-20 px-4 align-middle text-xl text-black dark:text-white"
         {...props}
       />

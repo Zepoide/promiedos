@@ -44,6 +44,7 @@ const Register = () => {
         email,
         password,
       });
+      console.log(response);
       if (response.ok) {
         router.push("/login");
       }

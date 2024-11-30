@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import ControllerForm from "@/components/ControllerForm";
 import { UserPayload } from "@/context/AuthContext";
 import { decodeBase64Url } from "@/lib/utils";
+import { Buffer } from "buffer";
 import useUser from "@/hooks/useUser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -46,19 +47,23 @@ const LogIn = () => {
       const json = await response.json();
       const jwtToken = json.token;
 
-      const parts = jwtToken.split(".");
+      const parts = jwtToken
+        .split(".")
+        .map((part: string) =>
+          Buffer.from(
+            part.replace(/-/g, "+").replace(/_/g, "/"),
+            "base64"
+          ).toString()
+        );
       if (parts.length !== 3) {
         throw new Error("Invalid JWT token format");
       }
-
-      const payload: UserPayload = JSON.parse(decodeBase64Url(parts[1]));
+      console.log(parts[1]);
+      const payload: UserPayload = JSON.parse(parts[1]);
       setUser(payload);
       await AsyncStorage.multiRemove(["user", "jwt"]);
       await AsyncStorage.setItem("user", JSON.stringify(payload));
       await AsyncStorage.setItem("jwt", jwtToken);
-
-      console.log("user login", AsyncStorage.getItem("user"));
-      console.log("jwt login", AsyncStorage.getItem("jwt"));
 
       router.replace("/(tabs)/home");
     } catch (error: any) {
@@ -134,13 +139,7 @@ const LogIn = () => {
         </SafeAreaView>
       </TouchableWithoutFeedback>
 
-      <Button
-        title="HOLA"
-        onPress={handleLogin({
-          email: "panchoseijas@gmail.com",
-          password: "Hola123",
-        })}
-      />
+      {/* <Button title="HOLA" onPress={() => router.replace("/(tabs)/home")} /> */}
     </KeyboardAvoidingView>
   );
 };
