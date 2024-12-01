@@ -27,7 +27,15 @@ const Calendar = ({ date, setDate }: CalendarProps) => {
       todayContainerStyle={{ borderColor: Colors[colorScheme].tint }}
       todayTextStyle={{ color: Colors[colorScheme].tint }}
       selectedItemColor={Colors[colorScheme].tint}
-      selectedTextStyle={{ color: "white" }}
+      selectedTextStyle={{ color: "black" }}
+      monthContainerStyle={{
+        backgroundColor: Colors[colorScheme].primary,
+        borderColor: Colors[colorScheme].secondary,
+      }}
+      yearContainerStyle={{
+        backgroundColor: Colors[colorScheme].primary,
+        borderColor: Colors[colorScheme].secondary,
+      }}
     />
   );
 };

@@ -26,6 +26,7 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
+    console.log(colorScheme);
     setStatusBarStyle(colorScheme === "light" ? "dark" : "light");
   }, [colorScheme]);
 
@@ -34,7 +35,7 @@ export default function RootLayout() {
       <GestureHandlerRootView className="flex-1 ">
         <BottomSheetModalProvider>
           <AuthProvider>
-            <StatusBar style={statusBarStyle} />
+            <StatusBar style={colorScheme === "light" ? "dark" : "light"} />
             <Stack>
               <Stack.Screen name="index" options={{ headerShown: false }} />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
