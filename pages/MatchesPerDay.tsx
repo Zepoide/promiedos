@@ -4,7 +4,6 @@ import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import useMatches from "@/hooks/useMatches";
 import CompetitionMatches from "@/components/CompetitionMatches";
-// import { useAuthorizedUser } from "@/hooks/useUser";
 import { userStore } from "@/store/userStore";
 import { IMatchPreview } from "@/types/types";
 import apiService from "@/services/api.service";

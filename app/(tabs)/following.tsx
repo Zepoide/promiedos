@@ -1,16 +1,12 @@
 import Container from "@/components/Container";
 import CustomTabView from "@/components/CustomTabView";
-import FollowingCard from "@/components/FollowingCard";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-// import { useAuthorizedUser } from "@/hooks/useUser";
 import { userStore } from "@/store/userStore";
-import { Team } from "@/types/types";
-import { FlatList } from "react-native";
-import { useQuery } from "@tanstack/react-query";
-import apiService from "@/services/api.service";
 import FollowedTeams from "@/pages/FollowedTeams";
 import FollowedCompetitions from "@/pages/FollowedCompetitions";
+import Icon from "@/components/Icon";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Following = () => {
   const { user } = userStore();
@@ -33,6 +29,11 @@ const Following = () => {
         <ThemedText className="text-2xl font-extrabold p-3">
           Following
         </ThemedText>
+        <ThemedView className="flex flex-row items-center p-3">
+          <TouchableOpacity onPress={() => {}} activeOpacity={0.8}>
+            <Icon name="add-circle-outline" size={24} />
+          </TouchableOpacity>
+        </ThemedView>
       </ThemedView>
       <CustomTabView
         tabs={["Teams", "Competition"]}

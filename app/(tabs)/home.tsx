@@ -15,6 +15,7 @@ import BottomSheet, {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import { Colors } from "@/constants/Colors";
+import { userStore } from "@/store/userStore";
 
 const HomeScreen = () => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
@@ -24,6 +25,7 @@ const HomeScreen = () => {
   const [tabs, setTabs] = useState(dates.map((date) => formatDate(date)));
   const [selectedDate, setSelectedDate] = useState(new Date());
   const animatedOpacity = useRef(new Animated.Value(0)).current;
+  const { toggleThemePreferance } = userStore();
 
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
@@ -81,7 +83,10 @@ const HomeScreen = () => {
             <Icon name="calendar-outline" size={24} />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => toggleColorScheme()}
+            onPress={() => {
+              toggleColorScheme();
+              toggleThemePreferance();
+            }}
             activeOpacity={0.7}
             className="p-3"
           >

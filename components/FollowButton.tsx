@@ -1,8 +1,6 @@
 import { Pressable } from "react-native";
 import { ThemedText } from "./ThemedText";
 
-import { GestureResponderEvent } from "react-native";
-
 interface FollowButtonProps {
   onPress: () => void;
   following?: boolean;

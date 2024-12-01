@@ -14,9 +14,10 @@ import { useLocalSearchParams } from "expo-router";
 // import { useAuthorizedUser } from "@/hooks/useUser";
 import { userStore } from "@/store/userStore";
 import TeamOverview from "@/pages/TeamOverview";
+import * as SecureStore from "expo-secure-store";
 
 const TeamDetails = () => {
-  const { user, editUser } = userStore();
+  const { user, follow, unfollow } = userStore();
 
   const { id } = useLocalSearchParams();
   const teamId = Array.isArray(id) ? id[0] : id;
@@ -35,18 +36,12 @@ const TeamDetails = () => {
 
   const followTeam = async () => {
     try {
-      const response = await apiService.post(
-        `/${following ? "unfollow" : "follow"}/team/${id}`,
-        {
-          userId: user!.id,
-        }
-      );
-
-      const updatedUser = await response.json();
-
+      if (following) {
+        await unfollow(teamId, "team");
+      } else {
+        await follow(teamId, "team");
+      }
       setFollowing(!following);
-
-      editUser(updatedUser);
     } catch (error) {
       console.error(error);
     }

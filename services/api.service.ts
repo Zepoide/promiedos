@@ -1,3 +1,5 @@
+import * as SecureStore from "expo-secure-store";
+
 export class ApiValidationError extends Error {
   public field: string;
   constructor(message: string, field: string) {
@@ -14,6 +16,7 @@ export class ApiService {
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + (await SecureStore.getItemAsync("jwt")),
       },
     });
     if (response.status >= 500) {
@@ -29,6 +32,9 @@ export class ApiService {
   async get(endpoint: string) {
     const response = await fetch(this.baseUrl + endpoint, {
       method: "GET",
+      headers: {
+        Authorization: "Bearer " + (await SecureStore.getItemAsync("jwt")),
+      },
     });
     if (response.status >= 500) {
       console.log(response.body, response.status);
@@ -44,6 +50,7 @@ export class ApiService {
   async put(endpoint: string, body: any, aditionalHeaders?: any) {
     const headers = {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + (await SecureStore.getItemAsync("jwt")),
       ...aditionalHeaders,
     };
     // console.log("headers", headers);
@@ -66,6 +73,7 @@ export class ApiService {
   async delete(endpoint: string) {
     const headers = {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + (await SecureStore.getItemAsync("jwt")),
     };
     const response = await fetch(this.baseUrl + endpoint, {
       method: "DELETE",
