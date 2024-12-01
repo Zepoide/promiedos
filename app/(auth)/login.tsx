@@ -22,7 +22,7 @@ import { decodeBase64Url } from "@/lib/utils";
 import { Buffer } from "buffer";
 // import useUser from "@/hooks/useUser";
 import { userStore } from "@/store/userStore";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 
 type FormData = {
   email: string;
@@ -62,9 +62,10 @@ const LogIn = () => {
       console.log(parts[1]);
       const payload: UserPayload = JSON.parse(parts[1]);
       setUser(payload);
-      await AsyncStorage.multiRemove(["user", "jwt"]);
-      await AsyncStorage.setItem("user", JSON.stringify(payload));
-      await AsyncStorage.setItem("jwt", jwtToken);
+      // await SecureStore.deleteItemAsync("user");
+      await SecureStore.deleteItemAsync("jwt");
+      // await SecureStore.setItemAsync("user", JSON.stringify(payload));
+      await SecureStore.setItemAsync("jwt", jwtToken);
 
       router.replace("/(tabs)/home");
     } catch (error: any) {

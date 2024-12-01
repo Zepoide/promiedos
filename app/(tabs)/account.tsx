@@ -10,13 +10,14 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { useRouter } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SubmitButton from "@/components/SubmitButton";
-// import { useAuthorizedUser } from "@/hooks/useUser";
 import { userStore } from "@/store/userStore";
 import apiService from "@/services/api.service";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 
 const Acount = () => {
   const router = useRouter();
@@ -29,7 +30,7 @@ const Acount = () => {
   const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
   const logout = async () => {
-    await AsyncStorage.clear();
+    await SecureStore.deleteItemAsync("jwt");
     router.replace("/(auth)/login");
   };
 
