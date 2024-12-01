@@ -7,7 +7,9 @@ import { Appearance } from "react-native";
 import { useState, useEffect } from "react";
 import { Colors } from "@/constants/Colors";
 import { NativeWindStyleSheet } from "nativewind";
-import { set } from "react-hook-form";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StyleSheet } from "react-native";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -29,15 +31,19 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <StatusBar style={statusBarStyle} />
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(details)" options={{ headerShown: false }} />
-        </Stack>
-      </AuthProvider>
+      <GestureHandlerRootView className="flex-1 ">
+        <BottomSheetModalProvider>
+          <AuthProvider>
+            <StatusBar style={statusBarStyle} />
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(details)" options={{ headerShown: false }} />
+            </Stack>
+          </AuthProvider>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </QueryClientProvider>
   );
 }
