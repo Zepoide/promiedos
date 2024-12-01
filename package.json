@@ -45,7 +45,6 @@
     "react-native-ui-datepicker": "^2.0.4",
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "~0.19.10",
-    "react-scan": "^0.0.34-native",
     "zustand": "^5.0.1"
   },
   "devDependencies": {

@@ -44,11 +44,11 @@ const Register = () => {
         email,
         password,
       });
-      console.log(response);
       if (response.ok) {
         router.push("/login");
       }
     } catch (error: any) {
+      console.log(JSON.stringify(error, null, 2));
       Alert.alert("Error", error.message);
     }
   };

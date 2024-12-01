@@ -6,7 +6,7 @@ import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import MatchesPerDay from "@/pages/MatchesPerDay";
 import { formatDate, generateDates } from "@/lib/utils";
-
+import { Dimensions } from "react-native";
 interface CustomTabViewProps {
   tabs: string[];
   dates: Date[];
@@ -21,6 +21,11 @@ export default function CustomTabView({ tabs, dates }: CustomTabViewProps) {
   );
 
   const { colorScheme } = useColorScheme();
+
+  const initialLayout = {
+    height: 0,
+    width: Dimensions.get("window").width,
+  };
 
   const renderScene = ({ route }: any) => {
     if (Number(route.key) <= dates.length) {
@@ -56,6 +61,10 @@ export default function CustomTabView({ tabs, dates }: CustomTabViewProps) {
 
   return (
     <TabView
+      lazy
+      // renderLazyPlaceholder={() => (
+      //   <ThemedView className="flex-1 bg-green-500" />
+      // )}
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}
@@ -63,6 +72,7 @@ export default function CustomTabView({ tabs, dates }: CustomTabViewProps) {
       pagerStyle={{
         backgroundColor: Colors[colorScheme ?? "light"].background,
       }}
+      initialLayout={initialLayout}
     />
   );
 }
