@@ -21,25 +21,19 @@ const CompetitionDetails = () => {
   const { id } = useLocalSearchParams();
   const competitionId = Array.isArray(id) ? id[0] : id;
   const { competitionInfo, isLoading } = useCompetition(competitionId);
-  const { user, editUser } = userStore();
+  const { user, follow, unfollow } = userStore();
   const [following, setFollowing] = useState(
     user!.followedCompetitions.some(({ id }) => id === competitionId)
   );
 
   const followCompetition = async () => {
     try {
-      const response = await apiService.post(
-        `/${following ? "unfollow" : "follow"}/competition/${competitionId}`,
-        {
-          userId: user!.id,
-        }
-      );
-
-      const updatedUser = await response.json();
-
+      if (following) {
+        await unfollow(competitionId, "competition");
+      } else {
+        await follow(competitionId, "competition");
+      }
       setFollowing(!following);
-
-      editUser(updatedUser);
     } catch (error) {
       console.error(error);
     }
