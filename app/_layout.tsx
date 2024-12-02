@@ -11,6 +11,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StyleSheet } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import Toast from "react-native-toast-message";
+import { userStore } from "@/store/userStore";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -22,12 +23,12 @@ export default function RootLayout() {
   const [statusBarStyle, setStatusBarStyle] = useState<"light" | "dark">(
     "light"
   );
+  const { themePreferance } = userStore();
   useEffect(() => {
-    setColorScheme("dark");
+    setColorScheme(themePreferance);
   }, []);
 
   useEffect(() => {
-    console.log(colorScheme);
     setStatusBarStyle(colorScheme === "light" ? "dark" : "light");
   }, [colorScheme]);
 

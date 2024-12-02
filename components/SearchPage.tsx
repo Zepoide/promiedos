@@ -34,7 +34,11 @@ const SearchPage = () => {
   const { user, follow, unfollow, addToSearchHistory } = userStore();
   const router = useRouter();
 
-  const { data: searchResults, isLoading } = useQuery<SearchResponse>({
+  const {
+    data: searchResults,
+    isLoading,
+    refetch,
+  } = useQuery<SearchResponse>({
     queryKey: ["search", debouncedQuery],
     queryFn: async () => {
       if (debouncedQuery.length > 0) {
@@ -61,6 +65,10 @@ const SearchPage = () => {
   const handleFilterPress = (filter: string) => {
     setSelectedFilter(filter);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [selectedFilter]);
 
   const renderItem = ({ item }: { item: SearchHistroyItem }) => {
     const type = item.id.includes("competitor") ? "teams" : "competitions";

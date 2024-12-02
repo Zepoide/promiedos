@@ -143,8 +143,6 @@ const LogIn = () => {
           </ThemedView>
         </SafeAreaView>
       </TouchableWithoutFeedback>
-
-      {/* <Button title="HOLA" onPress={() => router.replace("/(tabs)/home")} /> */}
     </KeyboardAvoidingView>
   );
 };
