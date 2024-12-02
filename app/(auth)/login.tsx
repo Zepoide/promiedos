@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  Button,
 } from "react-native";
 import React from "react";
 import { ThemedText } from "@/components/ThemedText";
@@ -17,9 +18,10 @@ import apiService from "@/services/api.service";
 import { useForm } from "react-hook-form";
 import ControllerForm from "@/components/ControllerForm";
 import { UserPayload } from "@/context/AuthContext";
-import { decodeBase64Url } from "@/lib/utils";
-import useUser from "@/hooks/useUser";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Buffer } from "buffer";
+import { userStore } from "@/store/userStore";
+import * as SecureStore from "expo-secure-store";
+import Toast from "react-native-toast-message";
 
 type FormData = {
   email: string;
@@ -29,11 +31,12 @@ type FormData = {
 const LogIn = () => {
   const { colorScheme } = useColorScheme();
   const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-  const { setUser } = useUser();
+  const { setUser } = userStore();
   const router = useRouter();
 
   const handleLogin = async ({ email, password }: FormData) => {
     try {
+      console.log(email);
       const response = await apiService.post("/auth/login", {
         email,
         password,
@@ -45,20 +48,28 @@ const LogIn = () => {
       const json = await response.json();
       const jwtToken = json.token;
 
-      const parts = jwtToken.split(".");
+      const parts = jwtToken
+        .split(".")
+        .map((part: string) =>
+          Buffer.from(
+            part.replace(/-/g, "+").replace(/_/g, "/"),
+            "base64"
+          ).toString()
+        );
       if (parts.length !== 3) {
         throw new Error("Invalid JWT token format");
       }
-
-      const payload: UserPayload = JSON.parse(decodeBase64Url(parts[1]));
+      console.log(parts[1]);
+      const payload: UserPayload = JSON.parse(parts[1]);
       setUser(payload);
-      await AsyncStorage.multiRemove(["user", "jwt"]);
-      await AsyncStorage.setItem("user", JSON.stringify(payload));
-      await AsyncStorage.setItem("jwt", jwtToken);
 
-      console.log("user login", AsyncStorage.getItem("user"));
-      console.log("jwt login", AsyncStorage.getItem("jwt"));
-
+      await SecureStore.deleteItemAsync("jwt");
+      await SecureStore.setItemAsync("jwt", jwtToken);
+      Toast.show({
+        type: "success",
+        text1: "Success",
+        text2: "Logged in",
+      });
       router.replace("/(tabs)/home");
     } catch (error: any) {
       Alert.alert("Error", error.message);

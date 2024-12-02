@@ -1,12 +1,21 @@
-import React from "react";
-import { Stack, Tabs } from "expo-router";
+import React, { useEffect } from "react";
+import { Stack, Tabs, useRouter } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { userStore } from "@/store/userStore";
 
 export default function TabLayout() {
   const { colorScheme } = useColorScheme();
+  const { user } = userStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/(auth)/login");
+    }
+  }, [user]);
 
   return (
     <Tabs
@@ -23,10 +32,6 @@ export default function TabLayout() {
         options={{
           title: "Matches",
           tabBarIcon: ({ color, focused }) => (
-            // <TabBarIcon
-            //     name={focused ? "football" : "football-outline"}
-            //     color={color}
-            // />
             <MaterialCommunityIcons
               name="soccer-field"
               color={color}

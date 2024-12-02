@@ -1,8 +1,13 @@
+import * as SecureStore from "expo-secure-store";
+
 export class ApiValidationError extends Error {
   public field: string;
-  constructor(message: string, field: string) {
+  public status?: number;
+
+  constructor(message: string, field: string, status?: number) {
     super(message);
     this.field = field;
+    this.status = status;
   }
 }
 
@@ -14,14 +19,15 @@ export class ApiService {
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + (await SecureStore.getItemAsync("jwt")),
       },
     });
     if (response.status >= 500) {
       console.log(response.body, response.status);
       throw new Error("Server error");
     } else if (response.status >= 400) {
-      const { message, field } = await response.json();
-      throw new ApiValidationError(message, field);
+      const { message, field, status } = await response.json();
+      throw new ApiValidationError(message, field, response.status);
     }
     return response;
   }
@@ -29,6 +35,9 @@ export class ApiService {
   async get(endpoint: string) {
     const response = await fetch(this.baseUrl + endpoint, {
       method: "GET",
+      headers: {
+        Authorization: "Bearer " + (await SecureStore.getItemAsync("jwt")),
+      },
     });
     if (response.status >= 500) {
       console.log(response.body, response.status);
@@ -44,9 +53,9 @@ export class ApiService {
   async put(endpoint: string, body: any, aditionalHeaders?: any) {
     const headers = {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + (await SecureStore.getItemAsync("jwt")),
       ...aditionalHeaders,
     };
-    // console.log("headers", headers);
 
     const response = await fetch(this.baseUrl + endpoint, {
       method: "PUT",
@@ -66,6 +75,7 @@ export class ApiService {
   async delete(endpoint: string) {
     const headers = {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + (await SecureStore.getItemAsync("jwt")),
     };
     const response = await fetch(this.baseUrl + endpoint, {
       method: "DELETE",

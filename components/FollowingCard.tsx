@@ -1,7 +1,8 @@
 import { Image, Pressable } from "react-native";
 import { ThemedView } from "./ThemedView";
 import { ThemedText } from "./ThemedText";
-import { useAuthorizedUser } from "@/hooks/useUser";
+// import { useAuthorizedUser } from "@/hooks/useUser";
+import { userStore } from "@/store/userStore";
 import { useRouter } from "expo-router";
 
 interface FollowingProps {

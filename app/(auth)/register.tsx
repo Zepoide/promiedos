@@ -17,6 +17,7 @@ import ControllerForm from "@/components/ControllerForm";
 import { useColorScheme } from "nativewind";
 import apiService from "@/services/api.service";
 import Icon from "@/components/Icon";
+import Toast from "react-native-toast-message";
 
 const Register = () => {
   const { colorScheme } = useColorScheme();
@@ -45,9 +46,15 @@ const Register = () => {
         password,
       });
       if (response.ok) {
+        Toast.show({
+          type: "success",
+          text1: "Success",
+          text2: "Account created",
+        });
         router.push("/login");
       }
     } catch (error: any) {
+      console.log(JSON.stringify(error, null, 2));
       Alert.alert("Error", error.message);
     }
   };

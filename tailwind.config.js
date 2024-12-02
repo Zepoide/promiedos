@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const tintColorLight = "#000000";
+const tintColorLight = "#007618";
 const tintColorDark = "#84DC7B";
 
 
@@ -10,6 +10,7 @@ module.exports = {
     "./app/**/*.{js,jsx,ts,tsx}",
     "./screens/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",
+    "./pages/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
@@ -17,7 +18,7 @@ module.exports = {
         light: {
           text: "#000000",
           primary: "#ffffff",
-          secondary: "#F5F5F5",
+          secondary: "#ebe4e4",
           background: "#FAFAFA",
           tint: tintColorLight,
           icon: "#687076",

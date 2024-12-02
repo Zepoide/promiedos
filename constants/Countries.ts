@@ -32,6 +32,8 @@ export const countries = {
   HUN: "Hungary",
   ROU: "Romania",
   ENG: "England",
+  COL: "Colombia",
+  PRY: "Paraguay",
 };
 
 export const iso3ToIso2Map: { [key: string]: string } = {

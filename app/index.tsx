@@ -1,11 +1,13 @@
 import { Redirect } from "expo-router";
-import useAuthorizedUser from "@/hooks/useUser";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { userStore } from "@/store/userStore";
 
 const Page = () => {
-  const { user } = useAuthorizedUser();
+  const { user } = userStore();
 
-  if (user) return <Redirect href="/(tabs)/home" />;
+  console.log(user);
+  if (user) {
+    return <Redirect href="/(tabs)/home" />;
+  }
 
   return <Redirect href="/(auth)/login" />;
 };

@@ -1,14 +1,14 @@
 import { FlatList } from "react-native";
 import React from "react";
-import { ThemedView } from "./ThemedView";
-import { ThemedText } from "./ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
 import apiService from "@/services/api.service";
 import { useQuery } from "@tanstack/react-query";
-import { IMatchInfo } from "@/types/types";
+import { IMatchPreview } from "@/types/types";
 import { formatDate } from "@/lib/utils";
 import MatchPreview from "@/components/MatchPreview";
 import { ActivityIndicator } from "react-native";
-import Container from "./Container";
+import Container from "@/components/Container";
 
 interface Props {
   competitionId: string;
@@ -19,7 +19,7 @@ const CompetitionFixtures = ({ competitionId }: Props) => {
     data: fixtures,
     isLoading,
     error,
-  } = useQuery<IMatchInfo[]>({
+  } = useQuery<IMatchPreview[]>({
     queryKey: [`competition-${competitionId}-fixture`],
     queryFn: () => apiService.get(`/competition/${competitionId}/fixture`),
   });
@@ -57,25 +57,7 @@ const CompetitionFixtures = ({ competitionId }: Props) => {
                 </ThemedText>
                 <ThemedText>{match.competition.name}</ThemedText>
               </ThemedView>
-              <MatchPreview
-                key={match.id}
-                match={{
-                  id: match.id,
-                  start_time: match.start_time,
-                  homeTeamId: match.homeTeam.id,
-                  awayTeamId: match.awayTeam.id,
-                  scoreHome: match.scoreHome,
-                  scoreAway: match.scoreAway,
-                  homeTeam: {
-                    name: match.homeTeam.name,
-                    logo: match.homeTeam.logo,
-                  },
-                  awayTeam: {
-                    name: match.awayTeam.name,
-                    logo: match.awayTeam.logo,
-                  },
-                }}
-              />
+              <MatchPreview key={match.id} match={{ ...match }} />
             </ThemedView>
           )}
         ></FlatList>

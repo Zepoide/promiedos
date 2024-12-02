@@ -25,9 +25,9 @@ const TeamForm = ({ teamId, skip }: TeamFormsProps) => {
 
   if (isLoading) {
     return (
-      <Container>
-        <ActivityIndicator size="large" color="green" />
-      </Container>
+      <ThemedView className="flex-1 items-center justify-center">
+        <ActivityIndicator size="large" color="gray" />
+      </ThemedView>
     );
   }
 
@@ -74,7 +74,7 @@ const TeamForm = ({ teamId, skip }: TeamFormsProps) => {
                 ? "bg-green-500"
                 : getMatchResult(teamId, match) === "lost"
                   ? "bg-red-500"
-                  : "bg-gray-600"
+                  : "bg-gray-400"
             }`}
           >
             <ThemedText className="font-bold">

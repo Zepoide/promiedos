@@ -11,6 +11,7 @@ interface MatchPreviewProps {
 
 const MatchPreview = ({ match }: MatchPreviewProps) => {
   const router = useRouter();
+
   return (
     <Pressable
       onPress={() => {
@@ -37,7 +38,7 @@ const MatchPreview = ({ match }: MatchPreviewProps) => {
           />
 
           <ThemedText className="text-gray-500 m-auto font-bold">
-            {!match.scoreHome && !match.scoreAway
+            {["not_started", "postponed", "abandoned"].includes(match.status)
               ? new Date(match.start_time)
                   .toLocaleTimeString()
                   .split(":")

@@ -9,36 +9,31 @@ import CustomTabView from "@/components/CustomTabView";
 import BackButton from "@/components/BackButton";
 import { useState } from "react";
 import FollowButton from "@/components/FollowButton";
-import TableStandings from "@/components/TableStandings";
+import TableStandings from "@/pages/TableStandings";
 import apiService from "@/services/api.service";
-import { useAuthorizedUser } from "@/hooks/useUser";
-import CompetitionFixtures from "@/components/CompetitionFixtures";
+// import { useAuthorizedUser } from "@/hooks/useUser";
+import { userStore } from "@/store/userStore";
+
+import CompetitionFixtures from "@/pages/CompetitionFixtures";
 import { ActivityIndicator } from "react-native";
 
 const CompetitionDetails = () => {
   const { id } = useLocalSearchParams();
   const competitionId = Array.isArray(id) ? id[0] : id;
   const { competitionInfo, isLoading } = useCompetition(competitionId);
-  const { user, editUser } = useAuthorizedUser();
+  const { user, follow, unfollow } = userStore();
   const [following, setFollowing] = useState(
-    user.folllowedCompetitions.some(({ id }) => id === competitionId)
+    user!.followedCompetitions.some(({ id }) => id === competitionId)
   );
 
-  console.log("competitionInfo", competitionInfo);
   const followCompetition = async () => {
     try {
-      const response = await apiService.post(
-        `/${following ? "unfollow" : "follow"}/competition/${competitionId}`,
-        {
-          userId: user.id,
-        }
-      );
-
-      const updatedUser = await response.json();
-
+      if (following) {
+        await unfollow(competitionId, "competition");
+      } else {
+        await follow(competitionId, "competition");
+      }
       setFollowing(!following);
-
-      editUser(updatedUser);
     } catch (error) {
       console.error(error);
     }

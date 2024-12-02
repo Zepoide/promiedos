@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { Image, Pressable, TouchableOpacity, FlatList } from "react-native";
+import React from "react";
+import { Image, Pressable } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { IMatchPreview } from "@/types/types";
 import MatchPreview from "./MatchPreview";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Competition } from "../types/types";
 import { flags } from "../constants/Flags";
 import { countries } from "@/constants/Countries";
-import Icon from "./Icon";
-import { useAuthorizedUser } from "@/hooks/useUser";
+import { FlatList } from "react-native-gesture-handler";
 
 const CompetitionMatches = ({
   competition,
@@ -20,19 +19,23 @@ const CompetitionMatches = ({
 }) => {
   const router = useRouter();
 
+  if (!matches || matches.length === 0) {
+    return null;
+  }
+
   return (
     <ThemedView className="mt-2 mx-2 ">
-      <ThemedView
-        type="secondary"
-        className={`flex flex-row p-3 justify-between items-center rounded-t-lg  `}
+      <Pressable
+        onPress={() => {
+          router.push({
+            pathname: "/(details)/competition/[id]",
+            params: { id: competition.id },
+          });
+        }}
       >
-        <Pressable
-          onPress={() => {
-            router.push({
-              pathname: "/(details)/competition/[id]",
-              params: { id: competition.id },
-            });
-          }}
+        <ThemedView
+          type="secondary"
+          className={`flex flex-row p-3 justify-between items-center rounded-t-lg  `}
         >
           <ThemedView className="flex flex-row justify-center items-center">
             <Image
@@ -45,12 +48,15 @@ const CompetitionMatches = ({
               {competition.name}
             </ThemedText>
           </ThemedView>
-        </Pressable>
-      </ThemedView>
+        </ThemedView>
+      </Pressable>
 
       <ThemedView type="primary" className="rounded-b-lg">
         {matches.map((match) => (
-          <MatchPreview key={match.id} match={match}></MatchPreview>
+          <MatchPreview
+            key={"competition" + match.id}
+            match={match}
+          ></MatchPreview>
         ))}
       </ThemedView>
     </ThemedView>

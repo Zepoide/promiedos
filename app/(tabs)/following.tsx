@@ -1,18 +1,61 @@
 import Container from "@/components/Container";
 import CustomTabView from "@/components/CustomTabView";
-import FollowingCard from "@/components/FollowingCard";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { useAuthorizedUser } from "@/hooks/useUser";
-import { Team } from "@/types/types";
-import { FlatList } from "react-native";
-import { useQuery } from "@tanstack/react-query";
-import apiService from "@/services/api.service";
-import FollowedTeams from "@/components/FollowedTeams";
-import FollowedCompetitions from "@/components/FollowedCompetitions";
+import { userStore } from "@/store/userStore";
+import FollowedTeams from "@/pages/FollowedTeams";
+import FollowedCompetitions from "@/pages/FollowedCompetitions";
+import Icon from "@/components/Icon";
+import BottomSheet, {
+  BottomSheetModal,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
+import { TouchableOpacity, Animated, TextInput, Keyboard } from "react-native";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "nativewind";
+import { useState, useRef, useCallback, useMemo } from "react";
+import SearchPage from "@/components/SearchPage";
 
 const Following = () => {
-  const { user } = useAuthorizedUser();
+  const { user } = userStore();
+  const { colorScheme } = useColorScheme();
+  const [modalVisible, setModalVisible] = useState(false);
+  const animatedOpacity = useRef(new Animated.Value(0)).current;
+
+  const sheetRef = useRef<BottomSheet>(null);
+
+  const snapPoints = useMemo(() => ["50%", "90%"], []);
+
+  const handleClosePress = useCallback(() => {
+    Animated.timing(animatedOpacity, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      setModalVisible(false);
+    });
+    sheetRef.current?.close();
+    Keyboard.dismiss();
+  }, []);
+
+  const handleOpenSheet = useCallback(() => {
+    setModalVisible(true);
+    Animated.timing(animatedOpacity, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+    sheetRef.current?.snapToIndex(0);
+  }, []);
+
+  const handleSheetChanges = useCallback(
+    (index: number) => {
+      if (index === -1) {
+        handleClosePress();
+      }
+    },
+    [handleClosePress]
+  );
 
   return (
     <Container>
@@ -23,18 +66,56 @@ const Following = () => {
         <ThemedText className="text-2xl font-extrabold p-3">
           Following
         </ThemedText>
+        <ThemedView className="flex flex-row items-center p-3">
+          <TouchableOpacity onPress={handleOpenSheet} activeOpacity={0.8}>
+            <Icon name="search-outline" size={24} />
+          </TouchableOpacity>
+        </ThemedView>
       </ThemedView>
       <CustomTabView
         tabs={["Teams", "Competition"]}
         pages={[
-          () => <FollowedTeams teamsIds={user.followedTeams} />,
+          () => <FollowedTeams teamsIds={user!.followedTeams} />,
           () => (
             <FollowedCompetitions
-              competitionsIds={user.folllowedCompetitions}
+              competitionsIds={user!.followedCompetitions}
             />
           ),
         ]}
       />
+      {modalVisible && (
+        <Animated.View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            opacity: animatedOpacity,
+          }}
+        >
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            activeOpacity={1}
+            onPress={handleClosePress}
+          />
+        </Animated.View>
+      )}
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={snapPoints}
+        enableDynamicSizing={false}
+        index={-1} // Initially closed
+        backgroundStyle={{
+          backgroundColor: Colors[colorScheme].secondary,
+        }}
+        handleIndicatorStyle={{ backgroundColor: Colors[colorScheme].text }}
+        onChange={handleSheetChanges}
+        enablePanDownToClose
+      >
+        <SearchPage />
+      </BottomSheet>
     </Container>
   );
 };
