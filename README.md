@@ -1,13 +1,15 @@
 # Promiedos
 
-## Description
+## Server
 
-The **Promiedos App** is a mobile application that provides users with the latest soccer data, match results, and statistics. Users can create accounts and follow their favorite teams to get personalized updates.
+https://github.com/panchoseijas/server-Promiedos/tree/entrega-final-g9
 
-## Features
+## .env
 
-- **Live Soccer Data**: Real-time updates for matches, results, and stats.
-- **User Accounts**: Create and manage user profiles.
-- **Follow Teams**: Users can follow their favorite teams and receive updates.
-- **Follow Competitions**: Users can follow their favorite competitions and receive updates.
-- **Team Information**: Detailed information about teams, including lineups, fixtures, and standings.
+EXPO_PUBLIC_SERVER_URL = "http://192.168.68.56:8080"
+
+## Pasos
+
+1 - Poner en EXPO_PUBLIC_SERVER_URL el link que se logea en la consola del server
+2 - npm i
+3 - npm run start
