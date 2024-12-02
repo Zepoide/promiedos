@@ -74,7 +74,7 @@ const TeamForm = ({ teamId, skip }: TeamFormsProps) => {
                 ? "bg-green-500"
                 : getMatchResult(teamId, match) === "lost"
                   ? "bg-red-500"
-                  : "bg-gray-600"
+                  : "bg-gray-400"
             }`}
           >
             <ThemedText className="font-bold">

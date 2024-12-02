@@ -12,7 +12,6 @@ import Calendar from "@/components/Calendar";
 import BottomSheet, {
   BottomSheetModal,
   BottomSheetView,
-  BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import { Colors } from "@/constants/Colors";
 import { userStore } from "@/store/userStore";

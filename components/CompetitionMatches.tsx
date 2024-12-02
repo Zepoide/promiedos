@@ -18,19 +18,22 @@ const CompetitionMatches = ({
 }) => {
   const router = useRouter();
 
+  console.log("competition", competition);
+  console.log("matches", matches);
+
   return (
     <ThemedView className="mt-2 mx-2 ">
-      <ThemedView
-        type="secondary"
-        className={`flex flex-row p-3 justify-between items-center rounded-t-lg  `}
+      <Pressable
+        onPress={() => {
+          router.push({
+            pathname: "/(details)/competition/[id]",
+            params: { id: competition.id },
+          });
+        }}
       >
-        <Pressable
-          onPress={() => {
-            router.push({
-              pathname: "/(details)/competition/[id]",
-              params: { id: competition.id },
-            });
-          }}
+        <ThemedView
+          type="secondary"
+          className={`flex flex-row p-3 justify-between items-center rounded-t-lg  `}
         >
           <ThemedView className="flex flex-row justify-center items-center">
             <Image
@@ -43,12 +46,15 @@ const CompetitionMatches = ({
               {competition.name}
             </ThemedText>
           </ThemedView>
-        </Pressable>
-      </ThemedView>
+        </ThemedView>
+      </Pressable>
 
       <ThemedView type="primary" className="rounded-b-lg">
         {matches.map((match) => (
-          <MatchPreview key={match.id} match={match}></MatchPreview>
+          <MatchPreview
+            key={"competition" + match.id}
+            match={match}
+          ></MatchPreview>
         ))}
       </ThemedView>
     </ThemedView>

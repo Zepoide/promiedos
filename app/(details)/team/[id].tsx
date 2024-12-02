@@ -15,6 +15,7 @@ import { useLocalSearchParams } from "expo-router";
 import { userStore } from "@/store/userStore";
 import TeamOverview from "@/pages/TeamOverview";
 import * as SecureStore from "expo-secure-store";
+import TeamPlayers from "@/pages/TeamPlayers";
 
 const TeamDetails = () => {
   const { user, follow, unfollow } = userStore();
@@ -75,8 +76,11 @@ const TeamDetails = () => {
         </ThemedView>
       </ThemedView>
       <CustomTabView
-        tabs={["Overview"]}
-        pages={[() => <TeamOverview teamId={teamId} />]}
+        tabs={["Overview", "Players"]}
+        pages={[
+          () => <TeamOverview teamId={teamId} />,
+          () => <TeamPlayers teamId={teamId} />,
+        ]}
       />
     </Container>
   );

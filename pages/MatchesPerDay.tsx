@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { FlatList, ActivityIndicator, Pressable, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, Pressable, Image, TouchableOpacity } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import useMatches from "@/hooks/useMatches";
@@ -9,25 +9,43 @@ import { IMatchPreview } from "@/types/types";
 import apiService from "@/services/api.service";
 import { useQuery } from "@tanstack/react-query";
 import MatchPreview from "@/components/MatchPreview";
-import Container from "@/components/Container";
 import Loader from "@/components/Loader";
+import AllMatches from "@/components/AllMatches";
+import { useRouter } from "expo-router";
+import { ScrollView } from "react-native-gesture-handler";
+
+interface FollowedMatchesResponse {
+  followedTeams: IMatchPreview[];
+  groupedByCompetition: {
+    competitionId: string;
+    competition: {
+      id: string;
+      name: string;
+      country: string;
+      logo: string;
+    };
+    matches: IMatchPreview[];
+  }[];
+}
 
 interface MatchesPerDayProps {
   date: Date;
 }
 
 const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
-  const { data, isLoading } = useMatches(date);
   const { user } = userStore();
-  const {
-    data: followedTeamsMatches,
-    isLoading: teamsIsLoading,
-    refetch,
-  } = useQuery<IMatchPreview[]>({
-    queryKey: [`matches-team-${date}`],
+  const router = useRouter();
+  const [showAll, setShowAll] = useState(false);
+
+  const { data, isLoading, refetch } = useQuery<FollowedMatchesResponse>({
+    queryKey: [
+      `matches-followed-team-${date}`,
+      user?.followedTeams,
+      user?.followedCompetitions,
+    ],
     queryFn: () =>
       apiService.get(
-        `/matches/teams/${JSON.stringify(user!.followedTeams)}?date=${date}`
+        `/matches?date=${date}&teamIds=${user?.followedTeams.map((team) => team.id).join(",")}&competitionIds=${user?.followedCompetitions.map((competition) => competition.id).join(",")}`
       ),
   });
 
@@ -41,7 +59,10 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
     return <Loader />;
   }
 
-  if (data?.length === 0) {
+  if (!data) {
+    return <ThemedText>Error</ThemedText>;
+  }
+  if (data?.followedTeams?.length === 0) {
     return (
       <ThemedView className="flex-1 flex items-center p-4 bg-white dark:bg-black">
         <ThemedText className="font-extrabold">No matches today</ThemedText>
@@ -49,16 +70,13 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
     );
   }
 
-  return (
-    <ThemedView
-      type="background"
-      className="flex-1 flex justify-center w-full mb-2"
-    >
-      {(followedTeamsMatches?.length ?? 0) > 0 ? (
-        <ThemedView className="mt-2 mx-2 ">
+  const renderItem = ({ item, index }: { item: any; index: number }) => {
+    if (item.id === "followed") {
+      return (
+        <ThemedView className="mx-2">
           <ThemedView
             type="secondary"
-            className={`flex flex-row p-3 justify-between items-center ${true ? "rounded-t-lg" : "rounded-lg"} `}
+            className={`flex flex-row p-3 justify-between items-center rounded-t-lg mt-2 `}
           >
             <ThemedView className="flex flex-row justify-center items-center">
               <ThemedText className="font-extrabold text-l">★</ThemedText>
@@ -67,30 +85,46 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
               </ThemedText>
             </ThemedView>
           </ThemedView>
-          <ThemedView
-            type="primary"
-            className="flex justify-center  rounded-b-lg"
-          >
-            <FlatList
-              data={followedTeamsMatches}
-              renderItem={({ item, index }) => (
-                <MatchPreview key={item.id} match={item}></MatchPreview>
-              )}
-              keyExtractor={(item) => item.id}
-              bounces={false}
-            ></FlatList>
-          </ThemedView>
+          {item.data.map((match: IMatchPreview) => (
+            <MatchPreview key={"followed" + match.id} match={match} />
+          ))}
         </ThemedView>
-      ) : null}
+      );
+    }
+    return (
+      <CompetitionMatches
+        competition={item.competition}
+        matches={item.data}
+      ></CompetitionMatches>
+    );
+  };
 
+  const listData = [
+    { id: "followed", data: data.followedTeams },
+    ...data.groupedByCompetition.map((item) => ({
+      id: item.competitionId,
+      competition: item.competition,
+      data: item.matches,
+    })),
+  ];
+
+  return (
+    <ThemedView
+      type="background"
+      className="flex-1 flex justify-center w-full mb-2"
+    >
       <FlatList
-        data={data}
-        renderItem={({ item, index }) => (
-          <CompetitionMatches {...item}></CompetitionMatches>
-        )}
-        keyExtractor={(item) => item.competitionId}
+        data={listData}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
-      ></FlatList>
+      />
+      {/* <TouchableOpacity onPress={() => setShowAll(!showAll)}>
+        <ThemedText className="text-center p-4">
+          {showAll ? "Hide All" : "Show All"}
+        </ThemedText>
+      </TouchableOpacity> */}
+      {/* {showAll && <AllMatches date={date} />} */}
     </ThemedView>
   );
 };
