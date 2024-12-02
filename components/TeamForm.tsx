@@ -25,9 +25,9 @@ const TeamForm = ({ teamId, skip }: TeamFormsProps) => {
 
   if (isLoading) {
     return (
-      <Container>
-        <ActivityIndicator size="large" color="green" />
-      </Container>
+      <ThemedView className="flex-1 items-center justify-center">
+        <ActivityIndicator size="large" color="gray" />
+      </ThemedView>
     );
   }
 

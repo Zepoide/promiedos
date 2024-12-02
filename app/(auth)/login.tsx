@@ -18,11 +18,10 @@ import apiService from "@/services/api.service";
 import { useForm } from "react-hook-form";
 import ControllerForm from "@/components/ControllerForm";
 import { UserPayload } from "@/context/AuthContext";
-import { decodeBase64Url } from "@/lib/utils";
 import { Buffer } from "buffer";
-// import useUser from "@/hooks/useUser";
 import { userStore } from "@/store/userStore";
 import * as SecureStore from "expo-secure-store";
+import Toast from "react-native-toast-message";
 
 type FormData = {
   email: string;
@@ -63,11 +62,14 @@ const LogIn = () => {
       console.log(parts[1]);
       const payload: UserPayload = JSON.parse(parts[1]);
       setUser(payload);
-      // await SecureStore.deleteItemAsync("user");
-      await SecureStore.deleteItemAsync("jwt");
-      // await SecureStore.setItemAsync("user", JSON.stringify(payload));
-      await SecureStore.setItemAsync("jwt", jwtToken);
 
+      await SecureStore.deleteItemAsync("jwt");
+      await SecureStore.setItemAsync("jwt", jwtToken);
+      Toast.show({
+        type: "success",
+        text1: "Success",
+        text2: "Logged in",
+      });
       router.replace("/(tabs)/home");
     } catch (error: any) {
       Alert.alert("Error", error.message);

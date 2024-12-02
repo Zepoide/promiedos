@@ -12,9 +12,12 @@ import { formatDate } from "@/lib/utils";
 import { useColorScheme } from "nativewind";
 import TeamForm from "@/components/TeamForm";
 import { ActivityIndicator } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useRouter } from "expo-router";
 
 const MatchInfo = ({ matchId }: { matchId: string }) => {
   const { colorScheme } = useColorScheme();
+  const router = useRouter();
   const {
     data: matchInfo,
     isLoading,
@@ -39,40 +42,6 @@ const MatchInfo = ({ matchId }: { matchId: string }) => {
       </Container>
     );
   }
-
-  const matchResults: any = [
-    {
-      homeTeam: "/team-logos/gimnasia.png",
-      awayTeam: "/team-logos/nob.png",
-      score: "1 - 0",
-      resultType: "win",
-    },
-    {
-      homeTeam: "/team-logos/nob.png",
-      awayTeam: "/team-logos/huracan.png",
-      score: "2 - 4",
-      resultType: "loss",
-    },
-    {
-      homeTeam: "/team-logos/union.png",
-      awayTeam: "/team-logos/nob.png",
-      score: "2 - 0",
-      resultType: "loss",
-    },
-    {
-      homeTeam: "/team-logos/nob.png",
-      awayTeam: "/team-logos/sarmiento.png",
-      score: "1 - 1",
-      resultType: "draw",
-    },
-    {
-      homeTeam: "/team-logos/godoy.png",
-      awayTeam: "/team-logos/nob.png",
-      score: "2 - 0",
-      resultType: "loss",
-    },
-  ];
-
   return (
     <ThemedView className="flex-1 m-2">
       <ThemedView type="primary" className="p-4 rounded-xl space-y-4">
@@ -92,16 +61,26 @@ const MatchInfo = ({ matchId }: { matchId: string }) => {
           </ThemedText>
         </ThemedView>
 
-        <ThemedView className="flex-row items-center space-x-2">
-          <Image
-            source={{ uri: matchInfo.competition.logo }}
-            resizeMode="contain"
-            className="w-6 h-6"
-          />
-          <ThemedText className=" text-lg">
-            {matchInfo.competition.name} - Round {matchInfo.round}
-          </ThemedText>
-        </ThemedView>
+        <TouchableOpacity
+          onPress={() =>
+            router.push({
+              pathname: "/(details)/competition/[id]",
+              params: { id: matchInfo.competition.id },
+            })
+          }
+          activeOpacity={0.8}
+        >
+          <ThemedView className="flex-row items-center space-x-2">
+            <Image
+              source={{ uri: matchInfo.competition.logo }}
+              resizeMode="contain"
+              className="w-6 h-6"
+            />
+            <ThemedText className=" text-lg">
+              {matchInfo.competition.name} - Round {matchInfo.round}
+            </ThemedText>
+          </ThemedView>
+        </TouchableOpacity>
 
         <ThemedView className="flex-row items-center space-x-2">
           <MaterialCommunityIcons

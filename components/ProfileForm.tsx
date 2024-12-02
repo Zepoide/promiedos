@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useForm, Controller, set } from "react-hook-form";
-import {
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { useForm, Controller } from "react-hook-form";
+import { TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ThemedView } from "@/components/ThemedView";
 import ThemedInput from "@/components/ThemedInput";
@@ -32,9 +27,9 @@ export default function ProfileForm() {
     password: "",
     confirmPassword: "",
   });
+  const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
-    //   reset(defaultValues);
     setDefaultValues({
       username: user!.username,
       email: user!.email,
@@ -42,8 +37,6 @@ export default function ProfileForm() {
       confirmPassword: "",
     });
   }, [user]);
-
-  //   console.log("user", user);
 
   const {
     control,
@@ -53,9 +46,21 @@ export default function ProfileForm() {
     setError,
     clearErrors,
     getValues,
+    watch,
   } = useForm<FormData>({
     defaultValues,
   });
+
+  const watchedValues = watch();
+
+  useEffect(() => {
+    const hasChanges = Object.keys(defaultValues).some(
+      (key) =>
+        defaultValues[key as keyof FormData] !==
+        watchedValues[key as keyof FormData]
+    );
+    setIsChanged(hasChanges);
+  }, [watchedValues, defaultValues]);
 
   const onSubmit = async ({
     username,
@@ -198,7 +203,7 @@ export default function ProfileForm() {
         <SubmitButton
           title="Update Profile"
           onPress={handleSubmit(onSubmit)}
-          disabled={Object.keys(errors).length > 0}
+          disabled={!isChanged}
         />
       </ThemedView>
     </ThemedView>
