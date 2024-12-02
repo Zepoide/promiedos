@@ -10,6 +10,7 @@ import { NativeWindStyleSheet } from "nativewind";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StyleSheet } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import Toast from "react-native-toast-message";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
@@ -31,20 +32,26 @@ export default function RootLayout() {
   }, [colorScheme]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <GestureHandlerRootView className="flex-1 ">
-        <BottomSheetModalProvider>
-          <AuthProvider>
-            <StatusBar style={colorScheme === "light" ? "dark" : "light"} />
-            <Stack>
-              <Stack.Screen name="index" options={{ headerShown: false }} />
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-              <Stack.Screen name="(details)" options={{ headerShown: false }} />
-            </Stack>
-          </AuthProvider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <GestureHandlerRootView className="flex-1 ">
+          <BottomSheetModalProvider>
+            <AuthProvider>
+              <StatusBar style={colorScheme === "light" ? "dark" : "light"} />
+              <Stack>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="(details)"
+                  options={{ headerShown: false }}
+                />
+              </Stack>
+            </AuthProvider>
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
+      </QueryClientProvider>
+      <Toast />
+    </>
   );
 }

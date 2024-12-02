@@ -6,13 +6,16 @@ import {
   TextInputProps,
   TouchableOpacity,
   Animated,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FieldError } from "react-hook-form";
 
 interface ThemedInputProps extends TextInputProps {
   label?: string;
-  error?: FieldError | string;
+  error?: FieldError | { message: string };
   value: string;
   icon: any;
   icon_right?: React.ReactNode;
@@ -28,7 +31,6 @@ const ThemedInput = ({
 }: ThemedInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const shakeAnimation = useRef(new Animated.Value(0)).current;
-
   useEffect(() => {
     if (error) {
       shake();
@@ -70,19 +72,19 @@ const ThemedInput = ({
           style={{
             transform: [{ translateX: shakeAnimation }],
           }}
-          className={`flex-row items-center border ${error ? "border-red-700" : "border-gray-700"} rounded-lg p-3`}
+          className={`flex-row items-center border ${error && error.message ? "border-red-700" : "border-gray-700"} rounded-lg p-3`}
         >
           <MaterialCommunityIcons
             name={icon}
             size={24}
-            color={`${error ? "#ef4444" : "#666"}`}
+            color={`${error && error.message ? "#ef4444" : "#666"}`}
             style={{ marginRight: 10 }}
           />
           <TextInput
             placeholderTextColor="#666"
             className="flex-1 text-black dark:text-white"
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+            // onFocus={() => setIsFocused(true)}
+            // onBlur={() => setIsFocused(false)}
             {...rest}
           />
           {icon_right}
