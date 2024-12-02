@@ -37,7 +37,7 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
   const { user } = userStore();
   const router = useRouter();
   const [showAll, setShowAll] = useState(false);
-
+  // const [listData, setListData] = useState<any[]>([]);
   const { data, isLoading, refetch } = useQuery<FollowedMatchesResponse>({
     queryKey: [
       `matches-followed-team-${date}`,
@@ -51,10 +51,10 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
   });
 
   useEffect(() => {
-    if (user?.followedTeams) {
+    if (user?.followedTeams || user?.followedCompetitions) {
       refetch();
     }
-  }, [user?.followedTeams, refetch]);
+  }, [user?.followedTeams, user?.followedCompetitions, refetch]);
 
   if (isLoading) {
     return <Loader />;
@@ -63,7 +63,12 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
   if (!data) {
     return <ThemedText>Error</ThemedText>;
   }
-  if (data?.followedTeams?.length === 0) {
+
+  if (
+    (data?.followedTeams?.length === 0 &&
+      data?.groupedByCompetition.length === 0) ||
+    (!data.followedTeams && !data.groupedByCompetition)
+  ) {
     return (
       <ThemedView className="flex-1 flex items-center p-2 bg-white dark:bg-black">
         <ThemedText className="font-extrabold">
@@ -83,7 +88,7 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
   }
 
   const renderItem = ({ item }: { item: any }) => {
-    if (item.id === "followed") {
+    if (item.id === "followed" && item.data.length > 0) {
       return (
         <ThemedView className="mx-2">
           <ThemedView
@@ -104,12 +109,13 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
       );
     }
     return (
-      <CompetitionMatches
-        competition={item.competition}
-        matches={item.data}
-      ></CompetitionMatches>
+      <CompetitionMatches competition={item.competition} matches={item.data} />
     );
   };
+
+  if (!data.followedTeams && !data.groupedByCompetition) {
+    return null;
+  }
 
   const listData = [
     { id: "followed", data: data.followedTeams },

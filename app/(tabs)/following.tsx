@@ -10,13 +10,11 @@ import BottomSheet, {
   BottomSheetModal,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import { TouchableOpacity, Animated, TextInput } from "react-native";
+import { TouchableOpacity, Animated, TextInput, Keyboard } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import { useState, useRef, useCallback, useMemo } from "react";
 import SearchPage from "@/components/SearchPage";
-import Calendar from "@/components/Calendar";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const Following = () => {
   const { user } = userStore();
@@ -37,6 +35,7 @@ const Following = () => {
       setModalVisible(false);
     });
     sheetRef.current?.close();
+    Keyboard.dismiss();
   }, []);
 
   const handleOpenSheet = useCallback(() => {

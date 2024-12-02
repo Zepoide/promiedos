@@ -8,6 +8,7 @@ import { useRouter } from "expo-router";
 import { Competition } from "../types/types";
 import { flags } from "../constants/Flags";
 import { countries } from "@/constants/Countries";
+import { FlatList } from "react-native-gesture-handler";
 
 const CompetitionMatches = ({
   competition,
@@ -17,6 +18,11 @@ const CompetitionMatches = ({
   matches: IMatchPreview[];
 }) => {
   const router = useRouter();
+
+  if (!matches || matches.length === 0) {
+    return null;
+  }
+
   return (
     <ThemedView className="mt-2 mx-2 ">
       <Pressable
