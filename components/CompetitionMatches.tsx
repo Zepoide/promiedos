@@ -17,10 +17,6 @@ const CompetitionMatches = ({
   matches: IMatchPreview[];
 }) => {
   const router = useRouter();
-
-  console.log("competition", competition);
-  console.log("matches", matches);
-
   return (
     <ThemedView className="mt-2 mx-2 ">
       <Pressable

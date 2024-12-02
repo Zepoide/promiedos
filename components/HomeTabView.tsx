@@ -40,6 +40,7 @@ export default function CustomTabView({ tabs, dates }: CustomTabViewProps) {
         return { key: index.toString(), title: tab };
       })
     );
+    setIndex(6);
   }, [tabs]);
 
   const renderTabBar = (props: any) => (

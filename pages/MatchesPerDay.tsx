@@ -13,6 +13,7 @@ import Loader from "@/components/Loader";
 import AllMatches from "@/components/AllMatches";
 import { useRouter } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
+import Icon from "@/components/Icon";
 
 interface FollowedMatchesResponse {
   followedTeams: IMatchPreview[];
@@ -64,13 +65,24 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
   }
   if (data?.followedTeams?.length === 0) {
     return (
-      <ThemedView className="flex-1 flex items-center p-4 bg-white dark:bg-black">
-        <ThemedText className="font-extrabold">No matches today</ThemedText>
+      <ThemedView className="flex-1 flex items-center p-2 bg-white dark:bg-black">
+        <ThemedText className="font-extrabold">
+          No followed matches today
+        </ThemedText>
+        <TouchableOpacity
+          onPress={() => setShowAll(!showAll)}
+          className="flex-row justify-center items-center bg-light-primary dark:bg-dark-primary p-2 rounded-lg mt-4"
+          activeOpacity={0.8}
+        >
+          <ThemedText className=" font-extrabold mr-2">Show all</ThemedText>
+          <Icon name={showAll ? "chevron-up" : "chevron-down"} size={20} />
+        </TouchableOpacity>
+        {showAll && <AllMatches date={date} />}
       </ThemedView>
     );
   }
 
-  const renderItem = ({ item, index }: { item: any; index: number }) => {
+  const renderItem = ({ item }: { item: any }) => {
     if (item.id === "followed") {
       return (
         <ThemedView className="mx-2">
@@ -119,12 +131,6 @@ const MatchesPerDay = ({ date }: MatchesPerDayProps) => {
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
-      {/* <TouchableOpacity onPress={() => setShowAll(!showAll)}>
-        <ThemedText className="text-center p-4">
-          {showAll ? "Hide All" : "Show All"}
-        </ThemedText>
-      </TouchableOpacity> */}
-      {/* {showAll && <AllMatches date={date} />} */}
     </ThemedView>
   );
 };

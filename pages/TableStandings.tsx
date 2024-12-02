@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { ScrollView, Image, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Pressable,
+  TouchableWithoutFeedback,
+} from "react-native";
 import useStandings from "@/hooks/useStandings";
 import { ActivityIndicator } from "react-native";
 import Container from "@/components/Container";
-import SegmentedControl from "@react-native-segmented-control/segmented-control";
+import { useRouter } from "expo-router";
 
 interface TableProps {
   competitionId: string;
@@ -19,8 +25,8 @@ const Table: React.FC<TableProps> = ({
   onTabChange,
 }) => {
   const { standings, isLoading } = useStandings(competitionId);
-  const tabs = ["Resumed", "Complete", "W/L"];
-
+  const tabs = ["Short", "Complete", "W/L"];
+  const router = useRouter();
   const differentTabs = [
     ["#", "Team", "P", "GD", "PTS"],
     ["#", "Team", "P", "W", "D", "L", "+/-", "GD", "PTS"],
@@ -37,6 +43,15 @@ const Table: React.FC<TableProps> = ({
       </Container>
     );
   }
+
+  const nameToId = (name: any): string => {
+    console.log(
+      name,
+      standings?.find((item) => item.team.name === name)?.team.id || ""
+    );
+    return standings?.find((item) => item.team.name === name)?.team.id || "";
+  };
+
   const data = standings?.map((item) => {
     const goalDifference = item.goals_for - item.goals_against;
     const formattedGoalDifference =
@@ -56,7 +71,7 @@ const Table: React.FC<TableProps> = ({
       return [
         item.position,
         item.team.logo,
-        item.team.name,
+        item.team.shortName,
         item.played,
         item.win,
         item.draw,
@@ -80,14 +95,27 @@ const Table: React.FC<TableProps> = ({
   return (
     <>
       <ThemedView type="background" className="mt-2 py-1 px-3">
-        <SegmentedControl
-          values={tabs}
-          selectedIndex={activeTab}
-          onChange={(event) => {
-            handleTabPress(event.nativeEvent.selectedSegmentIndex);
-          }}
-          tintColor="#007618"
-        />
+        <ThemedView type="secondary" className="flex-row rounded-full p-1">
+          {tabs.map((tab, index) => (
+            <TouchableOpacity
+              key={tab}
+              className={`flex-1 py-1 rounded-full items-center justify-center ${
+                index === activeTab ? "dark:bg-[#575757]" : ""
+              }`}
+              onPress={() => handleTabPress(index)}
+            >
+              <ThemedText
+                className={`text-xs font-semibold ${
+                  index === activeTab
+                    ? "text-green-500"
+                    : "text-black dark:text-white"
+                }`}
+              >
+                {tab}
+              </ThemedText>
+            </TouchableOpacity>
+          ))}
+        </ThemedView>
       </ThemedView>
 
       <ThemedView type="secondary" className="m-2 p-2 rounded-lg flex-1">
@@ -196,8 +224,16 @@ const Table: React.FC<TableProps> = ({
                 // Default rendering for other cells
                 return (
                   <React.Fragment key={cellIndex}>
-                    {cellIndex === 1 ? (
-                      <ThemedView className={`pl-2 ${widthClass}`}>
+                    <TouchableWithoutFeedback
+                      onPress={() => {
+                        if (typeof row[2] === "string") {
+                          router.push(`/(details)/team/${nameToId(row[2])}`);
+                        }
+                      }}
+                      className={`pl-2 ${widthClass}`}
+                      pressRetentionOffset={{ right: 5000 }}
+                    >
+                      {cellIndex === 1 ? (
                         <Image
                           resizeMode="contain"
                           source={{
@@ -206,16 +242,16 @@ const Table: React.FC<TableProps> = ({
                           defaultSource={require("@/assets/images/logo-placeholder.png")}
                           className="w-[20px] h-[20px]"
                         />
-                      </ThemedView>
-                    ) : (
-                      <ThemedText
-                        className={`text-center text-xs text-gray-600 dark:text-gray-200 ${widthClass} ${
-                          cellIndex === 0 ? "text-right mr-4" : ""
-                        }`}
-                      >
-                        {cell}
-                      </ThemedText>
-                    )}
+                      ) : (
+                        <ThemedText
+                          className={`text-center text-xs text-gray-600  dark:text-gray-200 ${widthClass} ${
+                            cellIndex === 0 ? "text-right mr-4" : ""
+                          }`}
+                        >
+                          {cell}
+                        </ThemedText>
+                      )}
+                    </TouchableWithoutFeedback>
                   </React.Fragment>
                 );
               })}
