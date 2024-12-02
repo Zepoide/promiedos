@@ -4,13 +4,18 @@ import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { useAuthorizedUser } from "@/hooks/useUser";
 import { userStore } from "@/store/userStore";
 
 export default function TabLayout() {
   const { colorScheme } = useColorScheme();
   const { user } = userStore();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/(auth)/login");
+    }
+  }, [user]);
 
   return (
     <Tabs

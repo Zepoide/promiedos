@@ -9,6 +9,7 @@ import {
   Button,
   TouchableOpacity,
   Alert,
+  Modal,
 } from "react-native";
 
 import { useRouter } from "expo-router";
@@ -16,23 +17,17 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SubmitButton from "@/components/SubmitButton";
 import { userStore } from "@/store/userStore";
 import apiService from "@/services/api.service";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as SecureStore from "expo-secure-store";
 
 const Acount = () => {
   const router = useRouter();
-  const { user, editUser } = userStore();
+  const { user, editUser, logout } = userStore();
+  const [logOutModalVisible, setLogOutModalVisible] = useState(false);
   const [username, setUsername] = useState(user!.username);
   const [email, setEmail] = useState(user!.email);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-
-  const logout = async () => {
-    await SecureStore.deleteItemAsync("jwt");
-    router.replace("/(auth)/login");
-  };
 
   const handleSubmit = async ({
     username,
@@ -46,6 +41,11 @@ const Acount = () => {
     }
     if (password && password.length < 6) {
       Alert.alert("Error", "Password must be at least 6 characters");
+      return;
+    }
+
+    if (password && !/[A-Z]/.test(password)) {
+      Alert.alert("Error", "Password must contain at least one capital letter");
       return;
     }
 
@@ -76,8 +76,14 @@ const Acount = () => {
     <Container>
       <ThemedView className="p-6 space-y-6">
         <ThemedText className="text-2xl font-extrabold">Account</ThemedText>
-        <ThemedText className="text-xl ">Welcome {user!.username}!</ThemedText>
-
+        <ThemedView className="flex-row justify-between items-center">
+          <ThemedText className="text-xl ">
+            Welcome {user!.username}!
+          </ThemedText>
+          <TouchableOpacity onPress={logout}>
+            <MaterialCommunityIcons name="logout" size={24} color="#666" />
+          </TouchableOpacity>
+        </ThemedView>
         <ThemedView className="space-y-2">
           <ThemedText className="text-lg font-semibold">Username</ThemedText>
           <ThemedView className="flex-row items-center border border-gray-700 rounded-lg p-3">
@@ -91,7 +97,7 @@ const Acount = () => {
               value={username}
               onChangeText={setUsername}
               placeholder={user!.username}
-              // placeholderTextColor="#666"
+              placeholderTextColor="#666"
               className="flex-1 text-black dark:text-white "
             />
           </ThemedView>
@@ -182,16 +188,47 @@ const Acount = () => {
             }
           />
         </ThemedView>
-        <ThemedView className="flex flex-end items-end p-6 space-y-6">
-          <Pressable onPress={logout}>
-            <ThemedText className="text-red-500 text-center font-semibold">
-              Logout
-            </ThemedText>
-          </Pressable>
-        </ThemedView>
       </ThemedView>
     </Container>
   );
 };
 
 export default Acount;
+
+// <Modal
+//   animationType="slide"
+//   transparent={true}
+//   visible={logOutModalVisible}
+//   onRequestClose={() => {
+//     setLogOutModalVisible(false);
+//   }}
+// >
+//   <ThemedView className="flex-1 justify-center items-center  bg-opacity-50">
+//     <ThemedView type="secondary" className="p-6 w-96 rounded-lg">
+//       <ThemedText className="text-lg text-center font-bold mb-4">
+//         Are you sure you want to logout?
+//       </ThemedText>
+//       <ThemedView className="flex-row justify-between">
+//         <TouchableOpacity
+//           onPress={() => setLogOutModalVisible(false)}
+//           className="bg-light-primary dark:bg-dark-primary p-2 rounded-lg"
+//           activeOpacity={0.8}
+//         >
+//           <ThemedText className="text-lg font-semibold ">
+//             Cancel
+//           </ThemedText>
+//         </TouchableOpacity>
+//         <Pressable
+//           onPress={() => {
+//             logout();
+//           }}
+//           className="bg-red-500 p-2 rounded-lg"
+//         >
+//           <ThemedText className="text-lg font-semibold text-white">
+//             Log out
+//           </ThemedText>
+//         </Pressable>
+//       </ThemedView>
+//     </ThemedView>
+//   </ThemedView>
+// </Modal>;

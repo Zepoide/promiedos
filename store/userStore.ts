@@ -23,7 +23,7 @@ interface AuthState {
   editUser: (user: UserPayload | null) => void;
   follow: (id: string, type: "team" | "competition") => Promise<void>;
   unfollow: (id: string, type: "team" | "competition") => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   searchHistory: SearchHistroy;
   addToSearchHistory: (
     result: SearchHistroyItem,
@@ -92,11 +92,9 @@ export const userStore = create<AuthState>()(
         set({ user: updatedUser });
       },
       logout: async () => {
-        const router = useRouter();
         await SecureStore.deleteItemAsync("jwt");
-        set({ user: null });
-        set({ searchHistory: { teams: [], competitions: [] } });
-        router.replace("/(auth)/login");
+        set({ user: null, searchHistory: { teams: [], competitions: [] } });
+        // router.replace("/(auth)/login");
       },
       addToSearchHistory: (
         result: SearchHistroyItem,
