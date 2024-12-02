@@ -50,7 +50,7 @@ const TeamDetails = () => {
 
   return (
     <Container>
-      <ThemedView className="flex flex-row justify-between items-center p-4">
+      <ThemedView className="flex flex-row justify-between items-center mx-2">
         <BackButton />
         <FollowButton onPress={followTeam} following={following} />
       </ThemedView>

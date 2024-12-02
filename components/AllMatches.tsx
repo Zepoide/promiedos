@@ -26,8 +26,7 @@ export default function AllMatches({ date }: { date: Date }) {
         )}
         keyExtractor={(item) => item.competitionId}
         showsVerticalScrollIndicator={false}
-        scrollEnabled={false}
-      ></FlatList>
+      />
     </ThemedView>
   );
 }
