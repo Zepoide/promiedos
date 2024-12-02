@@ -2,9 +2,12 @@ import * as SecureStore from "expo-secure-store";
 
 export class ApiValidationError extends Error {
   public field: string;
-  constructor(message: string, field: string) {
+  public status?: number;
+
+  constructor(message: string, field: string, status?: number) {
     super(message);
     this.field = field;
+    this.status = status;
   }
 }
 
@@ -23,8 +26,8 @@ export class ApiService {
       console.log(response.body, response.status);
       throw new Error("Server error");
     } else if (response.status >= 400) {
-      const { message, field } = await response.json();
-      throw new ApiValidationError(message, field);
+      const { message, field, status } = await response.json();
+      throw new ApiValidationError(message, field, response.status);
     }
     return response;
   }
@@ -53,7 +56,6 @@ export class ApiService {
       Authorization: "Bearer " + (await SecureStore.getItemAsync("jwt")),
       ...aditionalHeaders,
     };
-    // console.log("headers", headers);
 
     const response = await fetch(this.baseUrl + endpoint, {
       method: "PUT",
