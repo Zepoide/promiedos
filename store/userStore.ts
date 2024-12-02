@@ -1,9 +1,21 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { UserPayload } from "@/context/AuthContext";
 import apiService from "@/services/api.service";
 import * as SecureStore from "expo-secure-store";
 import { router, useRouter } from "expo-router";
+
+interface UserPayload {
+  id: number;
+  username: string;
+  email: string;
+  password?: string;
+  followedTeams: {
+    id: string;
+  }[];
+  followedCompetitions: {
+    id: string;
+  }[];
+}
 
 export interface SearchHistroyItem {
   id: string;
@@ -62,9 +74,7 @@ export const userStore = create<AuthState>()(
           router.replace("/(auth)/login");
           return;
         }
-        const response = await apiService.put("/user/update", data, {
-          Authorization: jwt,
-        });
+        const response = await apiService.put("/user/update/profile", data);
         const updatedUser = await response.json();
 
         set({ user: updatedUser });

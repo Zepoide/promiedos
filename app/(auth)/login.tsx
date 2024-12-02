@@ -37,6 +37,7 @@ const LogIn = () => {
 
   const handleLogin = async ({ email, password }: FormData) => {
     try {
+      console.log(email);
       const response = await apiService.post("/auth/login", {
         email,
         password,
