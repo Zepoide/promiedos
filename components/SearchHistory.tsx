@@ -66,7 +66,7 @@ export default function SearchHistory({
   };
 
   return (
-    <>
+    <ThemedView className="flex-1">
       <ThemedText className="text-lg font-bold mb-2">Recent</ThemedText>
       <FlatList
         data={
@@ -78,6 +78,6 @@ export default function SearchHistory({
         renderItem={renderItem}
         bounces={false}
       />
-    </>
+    </ThemedView>
   );
 }

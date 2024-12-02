@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { TouchableOpacity, Animated, View } from "react-native";
+import { TouchableOpacity, Animated } from "react-native";
 import { useColorScheme } from "nativewind";
 import { formatDate, generateDates } from "@/lib/utils";
 import Container from "@/components/Container";
@@ -8,7 +8,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import Icon from "@/components/Icon";
 import Calendar from "@/components/Calendar";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 import BottomSheet, {
   BottomSheetModal,
   BottomSheetView,
@@ -73,7 +73,7 @@ const HomeScreen = () => {
     <Container>
       <ThemedView
         type="primary"
-        className="flex-row justify-between items-center "
+        className="flex-row justify-between items-center"
       >
         <ThemedText className="text-2xl font-extrabold p-3">
           PROMIEDOS

@@ -18,6 +18,7 @@ import FollowButton from "@/components/FollowButton";
 import { useRouter } from "expo-router";
 import SearchHistory from "@/components/SearchHistory";
 import Loader from "@/components/Loader";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface SearchResponse {
   teams: SearchHistroyItem[];
@@ -109,79 +110,77 @@ const SearchPage = () => {
     );
   };
 
-  //   console.log(searchResults);
-
   return (
-    <Container>
-      <ThemedView
-        type="background"
-        className="flex-1 justify-center items-center p-2 "
-      >
-        <ThemedView className="w-full flex-row justify-center p-2 items-center  rounded-t-xl bg-light-primary dark:bg-dark-primary">
-          <Icon name="search-outline" size={24} />
-          <TextInput
-            className="flex-1 ml-2 text-black dark:text-white"
-            placeholder="Search"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            placeholderTextColor={"gray"}
-          />
-          {searchQuery.length > 0 && (
-            <TouchableOpacity onPress={() => setSearchQuery("")}>
-              <Icon name="close-outline" size={24} />
-            </TouchableOpacity>
-          )}
-        </ThemedView>
-        <ThemedView
-          type="primary"
-          className="flex-row w-full rounded-b-lg justify-start p-2 border-t-2 border-light-secondary dark:border-dark-secondary"
-        >
-          {filters.map((filter) => (
-            <TouchableOpacity
-              key={filter}
-              className={`p-2 m-1 rounded ${
-                selectedFilter === filter
-                  ? "bg-black dark:bg-white"
-                  : "bg-light-secondary dark:bg-dark-secondary"
-              }`}
-              onPress={() => handleFilterPress(filter)}
-            >
-              <ThemedText
-                className={`${selectedFilter === filter ? "text-white dark:text-black" : "text-black dark:text-white"}`}
-              >
-                {filter}
-              </ThemedText>
-            </TouchableOpacity>
-          ))}
-        </ThemedView>
-        <ThemedView className=" flex-1 w-full p-2">
-          {searchQuery.length === 0 && (
-            <SearchHistory
-              filter={
-                selectedFilter === "All"
-                  ? undefined
-                  : (selectedFilter.toLowerCase() as "teams" | "competitions")
-              }
-            />
-          )}
-          {isLoading && <Loader />}
-          {searchResults && !isLoading && (
-            <FlatList
-              data={
-                selectedFilter === "Teams"
-                  ? searchResults.teams
-                  : selectedFilter === "Competitions"
-                    ? searchResults.competitions
-                    : searchResults.teams?.concat(searchResults.competitions)
-              }
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              bounces={false}
-            />
-          )}
-        </ThemedView>
+    <ThemedView type="secondary" className="flex-1 p-2 ">
+      <ThemedView className="w-full flex-row justify-center p-2 items-center  rounded-t-xl bg-light-primary dark:bg-dark-primary">
+        <Icon name="search-outline" size={24} />
+        <TextInput
+          className="flex-1 ml-2 text-black dark:text-white"
+          placeholder="Search"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          placeholderTextColor={"gray"}
+        />
+        {searchQuery.length > 0 && (
+          <TouchableOpacity onPress={() => setSearchQuery("")}>
+            <Icon name="close-outline" size={24} />
+          </TouchableOpacity>
+        )}
       </ThemedView>
-    </Container>
+      <ThemedView
+        type="primary"
+        className="flex-row w-full rounded-b-lg justify-start p-2 border-t-2 border-light-secondary dark:border-dark-secondary"
+      >
+        {filters.map((filter) => (
+          <TouchableOpacity
+            key={filter}
+            className={`p-2 m-1 rounded ${
+              selectedFilter === filter
+                ? "bg-black dark:bg-white"
+                : "bg-light-secondary dark:bg-dark-secondary"
+            }`}
+            onPress={() => handleFilterPress(filter)}
+          >
+            <ThemedText
+              className={`${selectedFilter === filter ? "text-white dark:text-black" : "text-black dark:text-white"}`}
+            >
+              {filter}
+            </ThemedText>
+          </TouchableOpacity>
+        ))}
+      </ThemedView>
+      <ThemedView className="flex-1 w-full p-2">
+        {searchQuery.length === 0 && (
+          <SearchHistory
+            filter={
+              selectedFilter === "All"
+                ? undefined
+                : (selectedFilter.toLowerCase() as "teams" | "competitions")
+            }
+          />
+        )}
+        {isLoading && <Loader type="secondary" />}
+        {searchQuery.length > 0 && searchResults && !isLoading && (
+          <FlatList
+            data={
+              selectedFilter === "Teams"
+                ? searchResults.teams
+                : selectedFilter === "Competitions"
+                  ? searchResults.competitions
+                  : searchResults.teams?.concat(searchResults.competitions)
+            }
+            renderItem={renderItem}
+            ListEmptyComponent={
+              <ThemedText className="font-semibold text-lg text-center">
+                No results
+              </ThemedText>
+            }
+            keyExtractor={(item) => item.id}
+            bounces={false}
+          />
+        )}
+      </ThemedView>
+    </ThemedView>
   );
 };
 
