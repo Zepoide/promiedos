@@ -7,12 +7,12 @@ import { useColorScheme } from "nativewind";
 import MatchesPerDay from "@/pages/MatchesPerDay";
 import { formatDate, generateDates } from "@/lib/utils";
 import { Dimensions } from "react-native";
-interface CustomTabViewProps {
+interface HomeTabViewProps {
   tabs: string[];
   dates: Date[];
 }
 
-export default function CustomTabView({ tabs, dates }: CustomTabViewProps) {
+export default function HomeTabView({ tabs, dates }: HomeTabViewProps) {
   const [index, setIndex] = useState(6);
   const [routes, setRoutes] = useState(
     tabs.map((tab, index) => {
@@ -43,22 +43,26 @@ export default function CustomTabView({ tabs, dates }: CustomTabViewProps) {
     setIndex(6);
   }, [tabs]);
 
-  const renderTabBar = (props: any) => (
-    <TabBar
-      {...props}
-      renderLabel={({ route, focused }) => (
-        <ThemedText
-          className={`text-sm ${focused ? "text-black dark:text-white " : "text-gray-500"}`}
-        >
-          {route.title}
-        </ThemedText>
-      )}
-      indicatorStyle={{ backgroundColor: "green", height: 3 }}
-      className="bg-white dark:bg-dark-primary"
-      tabStyle={{ width: "auto", paddingHorizontal: 16 }}
-      scrollEnabled={true}
-    />
-  );
+  const renderTabBar = (props: any) => {
+    let { key, ...rest } = props;
+    return (
+      <TabBar
+        key={key}
+        {...rest}
+        renderLabel={({ route, focused }) => (
+          <ThemedText
+            className={`text-sm ${focused ? "text-black dark:text-white " : "text-gray-500"}`}
+          >
+            {route.title}
+          </ThemedText>
+        )}
+        indicatorStyle={{ backgroundColor: "green", height: 3 }}
+        className="bg-white dark:bg-dark-primary"
+        tabStyle={{ width: "auto", paddingHorizontal: 16 }}
+        scrollEnabled={true}
+      />
+    );
+  };
 
   return (
     <TabView

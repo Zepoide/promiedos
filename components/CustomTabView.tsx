@@ -30,22 +30,26 @@ export default function CustomTabView({
   }, {});
 
   const renderScene = SceneMap(sceneMapObject);
-  const renderTabBar = (props: any) => (
-    <TabBar
-      {...props}
-      renderLabel={({ route, focused }) => (
-        <ThemedText
-          className={`text-sm ${focused ? "text-black dark:text-white " : "text-gray-500"}`}
-        >
-          {route.title}
-        </ThemedText>
-      )}
-      indicatorStyle={{ backgroundColor: "green", height: 3 }}
-      className="bg-white dark:bg-dark-primary"
-      tabStyle={{ width: "auto", paddingHorizontal: 16 }}
-      scrollEnabled={true}
-    />
-  );
+  const renderTabBar = (props: any) => {
+    let { key, ...rest } = props;
+    return (
+      <TabBar
+        key={key}
+        {...rest}
+        renderLabel={({ route, focused }) => (
+          <ThemedText
+            className={`text-sm ${focused ? "text-black dark:text-white " : "text-gray-500"}`}
+          >
+            {route.title}
+          </ThemedText>
+        )}
+        indicatorStyle={{ backgroundColor: "green", height: 3 }}
+        className="bg-white dark:bg-dark-primary"
+        tabStyle={{ width: "auto", paddingHorizontal: 16 }}
+        scrollEnabled={true}
+      />
+    );
+  };
   return (
     <TabView
       navigationState={{ index, routes }}

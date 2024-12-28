@@ -12,6 +12,7 @@ import { StyleSheet } from "react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import Toast from "react-native-toast-message";
 import { userStore } from "@/store/userStore";
+import React from "react";
 
 NativeWindStyleSheet.setOutput({
   default: "native",
