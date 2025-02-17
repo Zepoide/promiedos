@@ -2,7 +2,7 @@
 
 ## Server
 
-https://github.com/panchoseijas/server-Promiedos/tree/entrega-final-g9
+https://github.com/panchoseijas/server-Promiedos/tree/entrega-final-g9-tamarit
 
 ## .env
 
